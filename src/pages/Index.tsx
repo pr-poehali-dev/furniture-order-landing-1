@@ -515,8 +515,8 @@ export default function Index() {
                 {[1,2,3,4,5].map(s => <Icon key={s} name="Star" size={20} className="star-filled" />)}
               </div>
               <span className="font-display font-bold text-gray-900 text-2xl">4.9</span>
-              <span className="text-gray-400">/</span>
-              <span className="text-gray-500">850+ отзывов на Яндекс.Картах</span>
+              <span className="text-gray-400"></span>
+              <span className="text-gray-500"></span>
             </div>
           </div>
 
@@ -552,9 +552,7 @@ export default function Index() {
               Закажите бесплатный<br />
               <span className="gradient-text">выезд замерщика</span>
             </h2>
-            <p className="text-white/60 text-lg mb-10">
-              Приедем с каталогом материалов, образцами фурнитуры и сделаем точные замеры. Никаких обязательств!
-            </p>
+            <p className="text-white/60 text-lg mb-10">Приедем и сделаем точные замеры.</p>
           </div>
 
           {!formSent ? (
