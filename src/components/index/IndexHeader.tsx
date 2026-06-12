@@ -116,47 +116,58 @@ export default function IndexHeader({ getImg, mobileMenu, setMobileMenu }: Index
             </div>
           </div>
 
-          {/* right stats card */}
-          <div className="lg:col-span-5 lg:pl-6" style={{ animation: "fade-up 1s ease-out forwards" }}>
-            <div className="relative backdrop-blur-xl bg-white/[0.06] border border-white/15 rounded-3xl p-7 shadow-2xl">
-              <div className="absolute -top-px left-8 right-8 h-px bg-gradient-to-r from-transparent via-orange-500/70 to-transparent" />
-              <div className="flex items-center gap-3 mb-6">
-                <div className="flex -space-x-2">
-                  {["#f97316", "#ea580c", "#fb923c"].map((c, i) => (
-                    <div key={i} className="w-9 h-9 rounded-full border-2 border-slate-900 flex items-center justify-center" style={{ background: c }}>
-                      <Icon name="User" size={15} className="text-white" />
-                    </div>
-                  ))}
-                </div>
-                <div>
-                  <div className="flex items-center gap-1 text-orange-400">
-                    {[...Array(5)].map((_, i) => <Icon key={i} name="Star" size={13} className="text-orange-400 fill-orange-400" />)}
+          {/* right animated composition */}
+          <div className="hidden lg:flex lg:col-span-5 items-center justify-center" style={{ animation: "fade-up 1s ease-out forwards" }}>
+            <div className="relative w-[26rem] h-[26rem]">
+              {/* rotating orbit ring */}
+              <div className="absolute inset-0 anim-spin-slow">
+                <div className="absolute inset-0 rounded-full border border-orange-500/20" />
+                <div className="absolute inset-8 rounded-full border border-dashed border-white/10" />
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-orange-500 shadow-lg shadow-orange-500/50" />
+                <div className="absolute bottom-6 right-10 w-2 h-2 rounded-full bg-amber-400" />
+              </div>
+
+              {/* central glowing core */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="relative">
+                  <div className="absolute inset-0 rounded-3xl anim-pulse-ring border border-orange-500/40" />
+                  <div className="relative w-32 h-32 rounded-3xl gradient-orange flex items-center justify-center shadow-2xl shadow-orange-500/40">
+                    <Icon name="Sofa" size={56} className="text-white" />
                   </div>
-                  <div className="text-white/60 text-xs mt-0.5">850+ довольных клиентов</div>
                 </div>
               </div>
 
-              <div className="grid grid-cols-3 gap-3 mb-6">
-                {[
-                  { num: "850+", label: "проектов" },
-                  { num: "4.9", label: "рейтинг" },
-                  { num: "15", label: "лет на рынке" },
-                ].map((s, i) => (
-                  <div key={i} className="rounded-2xl bg-white/[0.04] border border-white/10 p-4 text-center">
-                    <div className="font-display text-2xl sm:text-3xl font-bold gradient-text">{s.num}</div>
-                    <div className="text-white/50 text-[11px] mt-1">{s.label}</div>
+              {/* floating cards */}
+              <div className="absolute top-2 left-0 anim-float-slow" style={{ ["--rot" as string]: "-6deg" }}>
+                <div className="backdrop-blur-xl bg-white/10 border border-white/15 rounded-2xl px-4 py-3 shadow-xl flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-xl bg-green-500/20 flex items-center justify-center">
+                    <Icon name="ShieldCheck" size={18} className="text-green-400" />
                   </div>
-                ))}
+                  <div>
+                    <div className="text-white font-display font-bold text-sm">Гарантия 5 лет</div>
+                    <div className="text-white/50 text-[11px]">Фурнитура Blum</div>
+                  </div>
+                </div>
               </div>
 
-              <button
-                className="w-full btn-orange py-3.5 rounded-2xl text-sm text-white inline-flex items-center justify-center gap-2"
-                onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
-              >
-                <Icon name="Phone" size={16} className="text-white" />
-                Получить расчёт за 2 минуты
-              </button>
-              <div className="text-center text-white/40 text-xs mt-3">Перезвоним в течение 15 минут</div>
+              <div className="absolute bottom-6 right-0 anim-float-mid" style={{ ["--rot" as string]: "5deg" }}>
+                <div className="backdrop-blur-xl bg-white/10 border border-white/15 rounded-2xl px-4 py-3 shadow-xl flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-xl bg-orange-500/20 flex items-center justify-center">
+                    <Icon name="Zap" size={18} className="text-orange-400" />
+                  </div>
+                  <div>
+                    <div className="text-white font-display font-bold text-sm">21 день под ключ</div>
+                    <div className="text-white/50 text-[11px]">От замера до монтажа</div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="absolute top-1/2 -right-4 -translate-y-1/2 anim-float-slow" style={{ animationDelay: "1.5s", ["--rot" as string]: "0deg" }}>
+                <div className="backdrop-blur-xl bg-white/10 border border-white/15 rounded-2xl px-4 py-3 shadow-xl text-center">
+                  <div className="font-display text-2xl font-bold gradient-text">850+</div>
+                  <div className="text-white/50 text-[11px]">проектов</div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
