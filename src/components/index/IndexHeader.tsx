@@ -13,12 +13,12 @@ export default function IndexHeader({ getImg, mobileMenu, setMobileMenu }: Index
       <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-slate-950/40 border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-8 flex items-center justify-between h-16">
           <a href="#" className="flex items-center gap-2.5">
-            <div className="h-10 w-10 rounded-lg overflow-hidden relative">
+            <div className="h-10 w-10 overflow-hidden relative">
               <img
                 src="https://cdn.poehali.dev/projects/e84f41ff-e623-49a2-a773-de1e473421e0/bucket/eb1601f7-72c0-4086-9efd-c9eeb83d39ee.jpg"
                 alt="Логотип Свой Стиль"
-                className="absolute object-cover max-w-none mix-blend-screen"
-                style={{ width: "320%", height: "320%", left: "-110%", top: "-58%" }}
+                className="absolute left-1/2 -translate-x-1/2 max-w-none mix-blend-screen"
+                style={{ width: "300%", height: "auto", top: "-44%" }}
               />
             </div>
             <span className="font-display font-bold text-xl text-white tracking-wide">
