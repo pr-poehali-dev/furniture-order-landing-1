@@ -56,57 +56,114 @@ export default function IndexHeader({ getImg, mobileMenu, setMobileMenu }: Index
       {/* ===== HERO ===== */}
       <section className="relative min-h-screen flex items-center overflow-hidden">
         <div className="absolute inset-0">
-          <img src={getImg("hero")} alt="Мебель на заказ" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/85 to-slate-900/50" />
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-slate-950/60" />
+          <img src={getImg("hero")} alt="Мебель на заказ" className="w-full h-full object-cover scale-105" />
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/90 to-slate-950/40" />
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-slate-950/70" />
         </div>
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-8 w-full py-32">
-          <div className="max-w-2xl" style={{ animation: "fade-up 0.8s ease-out forwards" }}>
-            <div className="inline-flex items-center gap-2 bg-orange-500/10 border border-orange-500/30 rounded-full px-4 py-2 text-orange-400 text-sm font-semibold mb-6">
-              Гарантия 5 лет · Производство в Барнауле
+        {/* glow accents */}
+        <div className="absolute -top-32 -left-32 w-[40rem] h-[40rem] rounded-full bg-orange-500/20 blur-[120px] pointer-events-none" />
+        <div className="absolute bottom-0 right-0 w-[32rem] h-[32rem] rounded-full bg-orange-600/10 blur-[120px] pointer-events-none" />
+        <div className="absolute inset-0 opacity-[0.04] pointer-events-none" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.5) 1px, transparent 1px)", backgroundSize: "64px 64px" }} />
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-8 w-full py-32 grid lg:grid-cols-12 gap-10 items-center">
+          {/* left content */}
+          <div className="lg:col-span-7" style={{ animation: "fade-up 0.8s ease-out forwards" }}>
+            <div className="inline-flex items-center gap-2 backdrop-blur-md bg-white/5 border border-orange-500/30 rounded-full pl-2 pr-4 py-1.5 mb-7">
+              <span className="flex items-center gap-1.5 bg-orange-500 text-white text-xs font-bold px-2.5 py-1 rounded-full">
+                <Icon name="Sparkles" size={12} className="text-white" /> ТОП
+              </span>
+              <span className="text-white/80 text-sm font-medium">Производство в Барнауле · 15 лет на рынке</span>
             </div>
-            <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold text-white leading-[1.05] tracking-wide uppercase mb-6">
-              Корпусная мебель <span className="gradient-text">на заказ</span>
+
+            <h1 className="font-display text-5xl sm:text-6xl lg:text-[5.2rem] font-bold text-white leading-[0.98] tracking-tight uppercase mb-6">
+              Корпусная<br />мебель <span className="gradient-text">на заказ</span>
             </h1>
-            <p className="text-white/70 text-lg sm:text-xl leading-relaxed mb-3 max-w-xl">
-              Проектируем, производим и монтируем под ключ. Точно по размерам вашей квартиры.
+            <p className="text-white/65 text-lg sm:text-xl leading-relaxed mb-8 max-w-xl">
+              Проектируем, производим и монтируем под ключ. Точно по размерам вашей квартиры — без переплат и посредников.
             </p>
-            <div className="flex items-center gap-2 text-green-400 text-sm font-semibold mb-8">
-              <Icon name="Gift" size={16} className="text-green-400" />
-              Выезд замерщика и 3D-проект — <strong>бесплатно</strong>
-            </div>
-            <div className="flex flex-col sm:flex-row gap-4">
+
+            <div className="flex flex-col sm:flex-row gap-4 mb-10">
               <button
-                className="btn-orange px-8 py-4 rounded-xl text-base text-[#ffffff]"
+                className="group btn-orange px-8 py-4 rounded-2xl text-base text-white inline-flex items-center justify-center gap-2 shadow-lg shadow-orange-500/30"
                 onClick={() => document.getElementById("quiz")?.scrollIntoView({ behavior: "smooth" })}
               >
-                Рассчитать стоимость мебели
+                Рассчитать стоимость
+                <Icon name="ArrowRight" size={18} className="text-white transition-transform group-hover:translate-x-1" />
               </button>
               <button
-                className="px-8 py-4 rounded-xl text-base font-semibold text-white border border-white/25 hover:bg-white/10 transition-colors"
+                className="px-8 py-4 rounded-2xl text-base font-semibold text-white backdrop-blur-md bg-white/5 border border-white/20 hover:bg-white/10 hover:border-white/40 transition-all inline-flex items-center justify-center gap-2"
                 onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
               >
+                <Icon name="Ruler" size={18} className="text-white" />
                 Вызвать замерщика
               </button>
             </div>
-            <div className="flex items-center gap-8 mt-12">
-              <div>
-                <div className="font-display text-3xl font-bold gradient-text">850+</div>
-                <div className="text-white/50 text-xs mt-1">проектов</div>
-              </div>
-              <div className="w-px h-10 bg-white/15" />
-              <div>
-                <div className="font-display text-3xl font-bold gradient-text">4.9</div>
-                <div className="text-white/50 text-xs mt-1">рейтинг</div>
-              </div>
-              <div className="w-px h-10 bg-white/15" />
-              <div>
-                <div className="font-display text-3xl font-bold gradient-text">15</div>
-                <div className="text-white/50 text-xs mt-1">лет на рынке</div>
-              </div>
+
+            <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
+              {[
+                { icon: "Gift", text: "Замер и 3D-проект бесплатно" },
+                { icon: "ShieldCheck", text: "Гарантия 5 лет" },
+                { icon: "Zap", text: "21 день под ключ" },
+              ].map((b, i) => (
+                <div key={i} className="flex items-center gap-2 text-white/75 text-sm font-medium">
+                  <div className="w-7 h-7 rounded-lg bg-green-500/15 flex items-center justify-center">
+                    <Icon name={b.icon} size={15} className="text-green-400" />
+                  </div>
+                  {b.text}
+                </div>
+              ))}
             </div>
           </div>
+
+          {/* right stats card */}
+          <div className="lg:col-span-5 lg:pl-6" style={{ animation: "fade-up 1s ease-out forwards" }}>
+            <div className="relative backdrop-blur-xl bg-white/[0.06] border border-white/15 rounded-3xl p-7 shadow-2xl">
+              <div className="absolute -top-px left-8 right-8 h-px bg-gradient-to-r from-transparent via-orange-500/70 to-transparent" />
+              <div className="flex items-center gap-3 mb-6">
+                <div className="flex -space-x-2">
+                  {["#f97316", "#ea580c", "#fb923c"].map((c, i) => (
+                    <div key={i} className="w-9 h-9 rounded-full border-2 border-slate-900 flex items-center justify-center" style={{ background: c }}>
+                      <Icon name="User" size={15} className="text-white" />
+                    </div>
+                  ))}
+                </div>
+                <div>
+                  <div className="flex items-center gap-1 text-orange-400">
+                    {[...Array(5)].map((_, i) => <Icon key={i} name="Star" size={13} className="text-orange-400 fill-orange-400" />)}
+                  </div>
+                  <div className="text-white/60 text-xs mt-0.5">850+ довольных клиентов</div>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-3 gap-3 mb-6">
+                {[
+                  { num: "850+", label: "проектов" },
+                  { num: "4.9", label: "рейтинг" },
+                  { num: "15", label: "лет на рынке" },
+                ].map((s, i) => (
+                  <div key={i} className="rounded-2xl bg-white/[0.04] border border-white/10 p-4 text-center">
+                    <div className="font-display text-2xl sm:text-3xl font-bold gradient-text">{s.num}</div>
+                    <div className="text-white/50 text-[11px] mt-1">{s.label}</div>
+                  </div>
+                ))}
+              </div>
+
+              <button
+                className="w-full btn-orange py-3.5 rounded-2xl text-sm text-white inline-flex items-center justify-center gap-2"
+                onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
+              >
+                <Icon name="Phone" size={16} className="text-white" />
+                Получить расчёт за 2 минуты
+              </button>
+              <div className="text-center text-white/40 text-xs mt-3">Перезвоним в течение 15 минут</div>
+            </div>
+          </div>
+        </div>
+
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-white/40 animate-bounce pointer-events-none">
+          <span className="text-[10px] uppercase tracking-widest">Листайте</span>
+          <Icon name="ChevronDown" size={18} className="text-white/40" />
         </div>
       </section>
     </>
