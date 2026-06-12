@@ -1,18 +1,14 @@
 import { useState, useEffect, useRef } from "react";
 import Icon from "@/components/ui/icon";
-
-const KITCHEN_IMG = "https://cdn.poehali.dev/projects/e84f41ff-e623-49a2-a773-de1e473421e0/files/94405f4e-89ff-4b7f-8ba9-6b9924ab5799.jpg";
-const WARDROBE_IMG = "https://cdn.poehali.dev/projects/e84f41ff-e623-49a2-a773-de1e473421e0/files/6b2dc6af-8174-4fe7-a49e-42599a3ab7ca.jpg";
-const LIVING_IMG = "https://cdn.poehali.dev/projects/e84f41ff-e623-49a2-a773-de1e473421e0/files/08db6c6f-ef20-470b-a815-3980253e5a63.jpg";
-const KIDS_IMG = "https://cdn.poehali.dev/projects/e84f41ff-e623-49a2-a773-de1e473421e0/files/4087511f-b363-43f2-9729-f2065d01ffa9.jpg";
+import { useSiteImages } from "@/lib/siteImages";
 
 const PORTFOLIO = [
-  { img: KITCHEN_IMG, title: "Кухня МДФ эмаль", material: "Фурнитура Blum, столешница Pfleiderer", price: "от 185 000 ₽", tag: "Кухня" },
-  { img: WARDROBE_IMG, title: "Шкаф-купе в спальню", material: "ЛДСП Egger, система Hettich", price: "от 64 000 ₽", tag: "Шкаф" },
-  { img: LIVING_IMG, title: "Гостиная со стеллажами", material: "МДФ + шпон дуба, фурнитура Grass", price: "от 120 000 ₽", tag: "Гостиная" },
-  { img: KIDS_IMG, title: "Детская комната", material: "ЛДСП Egger, безопасные кромки", price: "от 78 000 ₽", tag: "Детская" },
-  { img: KITCHEN_IMG, title: "Угловая кухня в стиле loft", material: "МДФ плёнка, столешница из акрила", price: "от 210 000 ₽", tag: "Кухня" },
-  { img: WARDROBE_IMG, title: "Гардеробная система", material: "ЛДСП + алюминиевый профиль", price: "от 95 000 ₽", tag: "Гардеробная" },
+  { slot: "portfolio_1", title: "Кухня МДФ эмаль", material: "Фурнитура Blum, столешница Pfleiderer", price: "от 185 000 ₽", tag: "Кухня" },
+  { slot: "portfolio_2", title: "Шкаф-купе в спальню", material: "ЛДСП Egger, система Hettich", price: "от 64 000 ₽", tag: "Шкаф" },
+  { slot: "portfolio_3", title: "Гостиная со стеллажами", material: "МДФ + шпон дуба, фурнитура Grass", price: "от 120 000 ₽", tag: "Гостиная" },
+  { slot: "portfolio_4", title: "Детская комната", material: "ЛДСП Egger, безопасные кромки", price: "от 78 000 ₽", tag: "Детская" },
+  { slot: "portfolio_5", title: "Угловая кухня в стиле loft", material: "МДФ плёнка, столешница из акрила", price: "от 210 000 ₽", tag: "Кухня" },
+  { slot: "portfolio_6", title: "Гардеробная система", material: "ЛДСП + алюминиевый профиль", price: "от 95 000 ₽", tag: "Гардеробная" },
 ];
 
 const REVIEWS = [
@@ -77,6 +73,7 @@ function useScrollAnimation() {
 
 export default function Index() {
   useScrollAnimation();
+  const getImg = useSiteImages();
 
   const [quizStep, setQuizStep] = useState(0);
   const [quizAnswers, setQuizAnswers] = useState<string[]>([]);
@@ -229,7 +226,7 @@ export default function Index() {
 
           <div className="relative hidden lg:block">
             <div className="relative rounded-3xl overflow-hidden shadow-2xl" style={{ boxShadow: "0 32px 80px rgba(249,115,22,0.25)" }}>
-              <img src={KITCHEN_IMG} alt="Кухня на заказ" className="w-full h-[500px] object-cover" />
+              <img src={getImg("hero")} alt="Кухня на заказ" className="w-full h-[500px] object-cover" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
               <div className="absolute bottom-6 left-6 right-6 glass-card rounded-2xl px-5 py-4">
                 <div className="text-white font-display font-bold text-lg">Кухня «Loft White»</div>
@@ -267,10 +264,10 @@ export default function Index() {
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { img: KITCHEN_IMG, title: "Кухни", desc: "Угловые, прямые, П-образные. МДФ, ЛДСП, массив. Любая планировка.", icon: "UtensilsCrossed", color: "#f97316" },
-              { img: WARDROBE_IMG, title: "Шкафы-купе и гардеробные", desc: "Встроенные системы хранения под потолок с раздвижными дверями.", icon: "Shirt", color: "#ea580c" },
-              { img: KIDS_IMG, title: "Мебель для детской", desc: "Безопасные материалы, яркие цвета, трансформируемые системы.", icon: "Baby", color: "#fb923c" },
-              { img: LIVING_IMG, title: "Гостиные и прихожие", desc: "Стеллажи, тумбы под ТВ, обувницы, вешалки под ваш стиль.", icon: "Sofa", color: "#c2410c" },
+              { img: getImg("cat_kitchen"), title: "Кухни", desc: "Угловые, прямые, П-образные. МДФ, ЛДСП, массив. Любая планировка.", icon: "UtensilsCrossed", color: "#f97316" },
+              { img: getImg("cat_wardrobe"), title: "Шкафы-купе и гардеробные", desc: "Встроенные системы хранения под потолок с раздвижными дверями.", icon: "Shirt", color: "#ea580c" },
+              { img: getImg("cat_kids"), title: "Мебель для детской", desc: "Безопасные материалы, яркие цвета, трансформируемые системы.", icon: "Baby", color: "#fb923c" },
+              { img: getImg("cat_living"), title: "Гостиные и прихожие", desc: "Стеллажи, тумбы под ТВ, обувницы, вешалки под ваш стиль.", icon: "Sofa", color: "#c2410c" },
             ].map((cat, i) => (
               <div key={i} className="group card-hover animate-on-scroll rounded-2xl overflow-hidden border border-gray-100 shadow-sm bg-white">
                 <div className="relative h-52 overflow-hidden">
@@ -439,7 +436,7 @@ export default function Index() {
                 onClick={() => setSelectedProject(proj)}
               >
                 <div className="relative h-64 overflow-hidden">
-                  <img src={proj.img} alt={proj.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                  <img src={getImg(proj.slot)} alt={proj.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
                   <div className="absolute top-4 left-4">
                     <span className="bg-orange-500 text-white text-xs font-display font-semibold px-3 py-1 rounded-full uppercase tracking-wide">{proj.tag}</span>
@@ -474,7 +471,7 @@ export default function Index() {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="relative h-80">
-              <img src={selectedProject.img} alt={selectedProject.title} className="w-full h-full object-cover" />
+              <img src={getImg(selectedProject.slot)} alt={selectedProject.title} className="w-full h-full object-cover" />
               <button
                 className="absolute top-4 right-4 w-10 h-10 bg-black/50 rounded-full flex items-center justify-center text-white hover:bg-black/70 transition-colors"
                 onClick={() => setSelectedProject(null)}
@@ -675,6 +672,7 @@ export default function Index() {
             <div className="flex gap-4 text-xs">
               <a href="#" className="text-white/30 hover:text-orange-400 transition-colors">Политика конфиденциальности</a>
               <a href="#" className="text-white/30 hover:text-orange-400 transition-colors">Договор оферты</a>
+              <a href="/admin" className="text-white/30 hover:text-orange-400 transition-colors">Управление фото</a>
             </div>
           </div>
         </div>
