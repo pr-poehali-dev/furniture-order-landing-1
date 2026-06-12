@@ -149,10 +149,7 @@ export default function Index() {
             <a href="#reviews" className="hover:text-orange-400 transition-colors">Отзывы</a>
           </div>
           <div className="flex items-center gap-3">
-            <a href="tel:+74951234567" className="hidden md:flex items-center gap-2 text-white font-display font-semibold text-sm tracking-wide hover:text-orange-400 transition-colors">
-              <Icon name="Phone" size={14} className="text-orange-500" />
-              +7 (495) 123-45-67
-            </a>
+            <a href="tel:+74951234567" className="hidden md:flex items-center gap-2 text-white font-display font-semibold text-sm tracking-wide hover:text-orange-400 transition-colors">+7 (913) 274-85-19</a>
             <button
               className="btn-orange px-4 py-2 rounded-lg text-sm"
               onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
