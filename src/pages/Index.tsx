@@ -84,7 +84,7 @@ export default function Index() {
   const [selectedProject, setSelectedProject] = useState<null | typeof PORTFOLIO[0]>(null);
   const [chatOpen, setChatOpen] = useState(false);
   const [chatMessages, setChatMessages] = useState([
-    { from: "bot", text: "Привет! Я онлайн-консультант МебельМастер. Задайте любой вопрос о нашей мебели или стоимости." },
+    { from: "bot", text: "Привет! Я онлайн-консультант «Свой Стиль». Задайте любой вопрос о нашей мебели или стоимости." },
   ]);
   const [chatInput, setChatInput] = useState("");
   const [formName, setFormName] = useState("");
@@ -139,7 +139,7 @@ export default function Index() {
               <Icon name="Layers" size={16} className="text-white" />
             </div>
             <span className="font-display font-bold text-xl text-white tracking-wide">
-              МЕБЕЛЬ<span className="gradient-text">МАСТЕР</span>
+              СВОЙ<span className="gradient-text"> СТИЛЬ</span>
             </span>
           </div>
           <div className="hidden md:flex items-center gap-8 text-sm text-white/70">
@@ -620,11 +620,11 @@ export default function Index() {
                   <Icon name="Layers" size={16} className="text-white" />
                 </div>
                 <span className="font-display font-bold text-xl text-white tracking-wide">
-                  МЕБЕЛЬ<span className="gradient-text">МАСТЕР</span>
+                  СВОЙ<span className="gradient-text"> СТИЛЬ</span>
                 </span>
               </div>
               <p className="text-white/50 text-sm leading-relaxed">
-                Корпусная мебель на заказ в Москве и Подмосковье. Собственное производство с 2012 года.
+                Корпусная мебель на заказ в Москве и Подмосковье. Свой Стиль — производство с 2012 года.
               </p>
             </div>
 
@@ -670,13 +670,13 @@ export default function Index() {
               <div className="text-white/30 text-xs space-y-1">
                 <div>ИНН: 7701234567</div>
                 <div>ОГРН: 1127700000000</div>
-                <div>ООО «МебельМастер»</div>
+                <div>ООО «Свой Стиль»</div>
               </div>
             </div>
           </div>
 
           <div className="border-t border-white/10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
-            <p className="text-white/30 text-xs">© 2024 МебельМастер. Все права защищены.</p>
+            <p className="text-white/30 text-xs">© 2024 Свой Стиль. Все права защищены.</p>
             <div className="flex gap-4 text-xs">
               <a href="#" className="text-white/30 hover:text-orange-400 transition-colors">Политика конфиденциальности</a>
               <a href="#" className="text-white/30 hover:text-orange-400 transition-colors">Договор оферты</a>
