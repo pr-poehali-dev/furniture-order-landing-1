@@ -129,26 +129,26 @@ export default function Index() {
     <div className="min-h-screen" style={{ fontFamily: "'Golos Text', sans-serif", background: "#0a0f1a" }}>
 
       {/* NAVBAR */}
-      <nav className="fixed top-0 left-0 right-0 z-50 glass-card border-b border-white/10">
+      <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-slate-950/40 border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-8 flex items-center justify-between h-16">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded gradient-orange flex items-center justify-center">
+            <div className="w-8 h-8 rounded flex items-center justify-center bg-gradient-to-br from-sky-500 to-blue-700">
               <Icon name="Layers" size={16} className="text-white" />
             </div>
             <span className="font-display font-bold text-xl text-white tracking-wide">
-              СВОЙ<span className="gradient-text"> СТИЛЬ</span>
+              СВОЙ<span className="text-sky-400"> СТИЛЬ</span>
             </span>
           </div>
           <div className="hidden md:flex items-center gap-8 text-sm text-white/70">
-            <a href="#catalog" className="hover:text-orange-400 transition-colors">Каталог</a>
-            <a href="#portfolio" className="hover:text-orange-400 transition-colors">Портфолио</a>
-            <a href="#steps" className="hover:text-orange-400 transition-colors">Как работаем</a>
-            <a href="#reviews" className="hover:text-orange-400 transition-colors">Отзывы</a>
+            <a href="#catalog" className="hover:text-sky-400 transition-colors">Каталог</a>
+            <a href="#portfolio" className="hover:text-sky-400 transition-colors">Портфолио</a>
+            <a href="#steps" className="hover:text-sky-400 transition-colors">Как работаем</a>
+            <a href="#reviews" className="hover:text-sky-400 transition-colors">Отзывы</a>
           </div>
           <div className="flex items-center gap-3">
-            <a href="tel:+74951234567" className="hidden md:flex items-center gap-2 text-white font-display font-semibold text-sm tracking-wide hover:text-orange-400 transition-colors">+7 (913) 274-85-19</a>
+            <a href="tel:+74951234567" className="hidden md:flex items-center gap-2 text-white font-display font-semibold text-sm tracking-wide hover:text-sky-400 transition-colors">+7 (913) 274-85-19</a>
             <button
-              className="btn-orange px-4 py-2 rounded-lg text-sm"
+              className="px-4 py-2 rounded-lg text-sm font-semibold text-white bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-400 hover:to-blue-500 transition-colors"
               onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
             >Записаться на замер</button>
             <button className="md:hidden text-white" onClick={() => setMobileMenu(!mobileMenu)}>
@@ -157,92 +157,67 @@ export default function Index() {
           </div>
         </div>
         {mobileMenu && (
-          <div className="md:hidden glass-card border-t border-white/10 px-4 py-4 flex flex-col gap-4 text-white/80 text-sm">
+          <div className="md:hidden backdrop-blur-xl bg-slate-950/80 border-t border-white/10 px-4 py-4 flex flex-col gap-4 text-white/80 text-sm">
             <a href="#catalog" onClick={() => setMobileMenu(false)}>Каталог</a>
             <a href="#portfolio" onClick={() => setMobileMenu(false)}>Портфолио</a>
             <a href="#steps" onClick={() => setMobileMenu(false)}>Как работаем</a>
             <a href="#reviews" onClick={() => setMobileMenu(false)}>Отзывы</a>
-            <a href="tel:+74951234567" className="text-orange-400 font-semibold">+7 (495) 123-45-67</a>
+            <a href="tel:+74951234567" className="text-sky-400 font-semibold">+7 (913) 274-85-19</a>
           </div>
         )}
       </nav>
 
       {/* ===== HERO ===== */}
-      <section className="relative min-h-screen flex items-center overflow-hidden pt-16 noise-bg gradient-hero">
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <div className="absolute top-20 right-10 w-96 h-96 rounded-full opacity-10 animate-float" style={{ background: "radial-gradient(circle, #f97316, transparent)" }} />
-          <div className="absolute bottom-20 left-10 w-64 h-64 rounded-full opacity-8" style={{ background: "radial-gradient(circle, #ea580c, transparent)" }} />
-          <div className="absolute top-1/2 left-1/2 w-[600px] h-[600px] rounded-full opacity-5 -translate-x-1/2 -translate-y-1/2" style={{ background: "radial-gradient(circle, #f97316, transparent)" }} />
-          <div className="absolute inset-0 opacity-5" style={{ backgroundImage: "repeating-linear-gradient(0deg, transparent, transparent 60px, rgba(249,115,22,0.3) 60px, rgba(249,115,22,0.3) 61px), repeating-linear-gradient(90deg, transparent, transparent 60px, rgba(249,115,22,0.3) 60px, rgba(249,115,22,0.3) 61px)" }} />
+      <section className="relative min-h-screen flex items-center overflow-hidden">
+        <div className="absolute inset-0">
+          <img src={getImg("hero")} alt="Мебель на заказ" className="w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/85 to-slate-900/50" />
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-slate-950/60" />
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-8 w-full grid lg:grid-cols-2 gap-12 items-center py-20">
-          <div style={{ animation: "fade-up 0.8s ease-out forwards" }}>
-            <div className="inline-flex items-center gap-2 bg-orange-500/10 border border-orange-500/30 rounded-full px-4 py-2 text-orange-400 text-sm font-semibold mb-6">Гарантия х лет · Производство в Барнауле
-</div>
-            <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold text-white leading-tight tracking-wide uppercase mb-4">
-              Корпусная<br />
-              мебель<br />
-              <span className="gradient-text">на заказ</span>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-8 w-full py-32">
+          <div className="max-w-2xl" style={{ animation: "fade-up 0.8s ease-out forwards" }}>
+            <div className="inline-flex items-center gap-2 bg-sky-500/10 border border-sky-500/30 rounded-full px-4 py-2 text-sky-300 text-sm font-semibold mb-6">
+              Гарантия 5 лет · Производство в Барнауле
+            </div>
+            <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold text-white leading-[1.05] tracking-wide uppercase mb-6">
+              Корпусная мебель <span className="text-sky-400">на заказ</span>
             </h1>
-            <p className="text-white/60 text-lg sm:text-xl leading-relaxed mb-3">
-              Проектируем, производим и монтируем под ключ за <strong className="text-orange-400">х дней</strong>. Точно по размерам вашей квартиры.
+            <p className="text-white/70 text-lg sm:text-xl leading-relaxed mb-3 max-w-xl">
+              Проектируем, производим и монтируем под ключ. Точно по размерам вашей квартиры.
             </p>
-            <div className="flex items-center gap-2 text-green-400 text-sm font-semibold mb-8">
-              <Icon name="Gift" size={16} className="text-green-400" />
+            <div className="flex items-center gap-2 text-emerald-400 text-sm font-semibold mb-8">
+              <Icon name="Gift" size={16} className="text-emerald-400" />
               Выезд замерщика и 3D-проект — <strong>бесплатно</strong>
             </div>
             <div className="flex flex-col sm:flex-row gap-4">
               <button
-                className="btn-orange px-8 py-4 rounded-xl text-base text-[#ffffff] bg-orange-500"
+                className="px-8 py-4 rounded-xl text-base font-semibold text-white bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-400 hover:to-blue-500 transition-colors shadow-lg shadow-blue-900/40"
                 onClick={() => document.getElementById("quiz")?.scrollIntoView({ behavior: "smooth" })}
               >
                 Рассчитать стоимость мебели
               </button>
               <button
-                className="btn-outline-orange px-8 py-4 rounded-xl text-base text-[#ffffff]"
+                className="px-8 py-4 rounded-xl text-base font-semibold text-white border border-white/25 hover:bg-white/10 transition-colors"
                 onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
               >
                 Вызвать замерщика
               </button>
             </div>
-            <div className="flex items-center gap-8 mt-10">
-              <div className="text-center">
-                <div className="font-display text-3xl font-bold gradient-text">850+</div>
+            <div className="flex items-center gap-8 mt-12">
+              <div>
+                <div className="font-display text-3xl font-bold text-sky-400">850+</div>
                 <div className="text-white/50 text-xs mt-1">проектов</div>
               </div>
-              <div className="w-px h-10 bg-white/10" />
-              <div className="text-center">
-                <div className="font-display text-3xl font-bold gradient-text">4.9</div>
+              <div className="w-px h-10 bg-white/15" />
+              <div>
+                <div className="font-display text-3xl font-bold text-sky-400">4.9</div>
                 <div className="text-white/50 text-xs mt-1">рейтинг</div>
               </div>
-              <div className="w-px h-10 bg-white/10" />
-              <div className="text-center">
-                <div className="font-display text-3xl font-bold gradient-text">15</div>
+              <div className="w-px h-10 bg-white/15" />
+              <div>
+                <div className="font-display text-3xl font-bold text-sky-400">15</div>
                 <div className="text-white/50 text-xs mt-1">лет на рынке</div>
-              </div>
-            </div>
-          </div>
-
-          <div className="relative hidden lg:block">
-            <div className="relative rounded-3xl overflow-hidden shadow-2xl" style={{ boxShadow: "0 32px 80px rgba(249,115,22,0.25)" }}>
-              <img src={getImg("hero")} alt="Кухня на заказ" className="w-full h-[500px] object-cover" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-              <div className="absolute bottom-6 left-6 right-6 glass-card rounded-2xl px-5 py-4">
-                <div className="text-white font-display font-bold text-lg">Кухня «Loft White»</div>
-                <div className="text-white/60 text-sm">МДФ эмаль · Blum · 14 м²</div>
-                <div className="text-orange-400 font-display font-bold text-xl mt-1">195 000 ₽ под ключ</div>
-              </div>
-            </div>
-            <div className="absolute -top-4 -right-4 glass-card rounded-2xl px-4 py-3 border border-orange-500/30 animate-float">
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-full gradient-orange flex items-center justify-center">
-                  <Icon name="Clock" size={14} className="text-white" />
-                </div>
-                <div>
-                  <div className="text-white font-semibold text-sm">Срок: х день</div>
-                  <div className="text-white/50 text-xs">от замера до монтажа</div>
-                </div>
               </div>
             </div>
           </div>
