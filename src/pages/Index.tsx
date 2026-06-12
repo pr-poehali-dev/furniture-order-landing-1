@@ -156,9 +156,7 @@ export default function Index() {
             <button
               className="btn-orange px-4 py-2 rounded-lg text-sm"
               onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
-            >
-              Вызвать замерщика
-            </button>
+            >Записаться на замер</button>
             <button className="md:hidden text-white" onClick={() => setMobileMenu(!mobileMenu)}>
               <Icon name={mobileMenu ? "X" : "Menu"} size={24} />
             </button>
