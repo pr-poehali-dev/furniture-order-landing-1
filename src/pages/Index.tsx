@@ -194,7 +194,7 @@ export default function Index() {
               <span className="gradient-text">на заказ</span>
             </h1>
             <p className="text-white/60 text-lg sm:text-xl leading-relaxed mb-3">
-              Проектируем, производим и монтируем под ключ за <strong className="text-orange-400">21 день</strong>. Точно по размерам вашей квартиры.
+              Проектируем, производим и монтируем под ключ за <strong className="text-orange-400">х дней</strong>. Точно по размерам вашей квартиры.
             </p>
             <div className="flex items-center gap-2 text-green-400 text-sm font-semibold mb-8">
               <Icon name="Gift" size={16} className="text-green-400" />
@@ -202,13 +202,13 @@ export default function Index() {
             </div>
             <div className="flex flex-col sm:flex-row gap-4">
               <button
-                className="btn-orange px-8 py-4 rounded-xl text-base"
+                className="btn-orange px-8 py-4 rounded-xl text-base text-[#ffffff] bg-orange-500"
                 onClick={() => document.getElementById("quiz")?.scrollIntoView({ behavior: "smooth" })}
               >
                 Рассчитать стоимость мебели
               </button>
               <button
-                className="btn-outline-orange px-8 py-4 rounded-xl text-base"
+                className="btn-outline-orange px-8 py-4 rounded-xl text-base text-[#ffffff]"
                 onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
               >
                 Вызвать замерщика
