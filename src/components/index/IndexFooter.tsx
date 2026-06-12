@@ -111,25 +111,17 @@ export default function IndexFooter({
                   СВОЙ<span className="gradient-text"> СТИЛЬ</span>
                 </span>
               </div>
-              <p className="text-white/50 text-sm leading-relaxed">
-                Корпусная мебель на заказ в Москве и Подмосковье. Свой Стиль — производство с 2012 года.
-              </p>
+              <p className="text-white/50 text-sm leading-relaxed">Корпусная мебель на заказ в Барнауле и Алтайском крае. Свой Стиль — производство с 2012 года.</p>
             </div>
 
             <div>
               <h4 className="font-display font-semibold text-white uppercase tracking-wide text-sm mb-4">Контакты</h4>
               <div className="space-y-3">
-                <a href="tel:+74951234567" className="flex items-center gap-2 text-white/60 hover:text-orange-400 transition-colors text-sm">
-                  <Icon name="Phone" size={14} className="text-orange-500" />
-                  +7 (495) 123-45-67
-                </a>
-                <a href="mailto:info@mebel-master.ru" className="flex items-center gap-2 text-white/60 hover:text-orange-400 transition-colors text-sm">
-                  <Icon name="Mail" size={14} className="text-orange-500" />
-                  info@mebel-master.ru
-                </a>
+                <a href="tel:+74951234567" className="flex items-center gap-2 text-white/60 hover:text-orange-400 transition-colors text-sm">+7 (913) 274-85-19</a>
+                <a href="mailto:info@mebel-master.ru" className="flex items-center gap-2 text-white/60 hover:text-orange-400 transition-colors text-sm">mebel.ma@mail.ru</a>
                 <div className="flex items-start gap-2 text-white/60 text-sm">
                   <Icon name="MapPin" size={14} className="text-orange-500 mt-0.5 shrink-0" />
-                  <span>г. Москва, ул. Примерная, д. 1, шоурум (пн–сб 10:00–19:00)</span>
+                  <span>г. Барнаул, ул. Сергея Ускова, 23</span>
                 </div>
               </div>
             </div>
@@ -158,7 +150,7 @@ export default function IndexFooter({
               <div className="text-white/30 text-xs space-y-1">
                 <div>ИНН: 7701234567</div>
                 <div>ОГРН: 1127700000000</div>
-                <div>ООО «Свой Стиль»</div>
+                <div>ИП Нагайцев А.В.</div>
               </div>
             </div>
           </div>
