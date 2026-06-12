@@ -16,18 +16,52 @@ export type ImageSlot = {
   defaultUrl: string;
 };
 
+const PORTFOLIO_DEFAULTS: Record<string, string> = {
+  portfolio_1: KITCHEN_IMG,
+  portfolio_2: WARDROBE_IMG,
+  portfolio_3: LIVING_IMG,
+  portfolio_4: KIDS_IMG,
+  portfolio_5: KITCHEN_IMG,
+  portfolio_6: WARDROBE_IMG,
+};
+
+const PORTFOLIO_TITLES: Record<string, string> = {
+  portfolio_1: "Кухня МДФ эмаль",
+  portfolio_2: "Шкаф-купе в спальню",
+  portfolio_3: "Гостиная со стеллажами",
+  portfolio_4: "Детская комната",
+  portfolio_5: "Угловая кухня loft",
+  portfolio_6: "Гардеробная система",
+};
+
+// Сколько дополнительных фото-деталей на каждый проект
+export const PORTFOLIO_DETAIL_COUNT = 5;
+
+function buildPortfolioSlots(): ImageSlot[] {
+  const slots: ImageSlot[] = [];
+  for (let p = 1; p <= 6; p++) {
+    const key = `portfolio_${p}`;
+    const title = PORTFOLIO_TITLES[key];
+    slots.push({ key, label: `Портфолио · ${title} · Главное`, group: "Портфолио", defaultUrl: PORTFOLIO_DEFAULTS[key] });
+    for (let d = 1; d <= PORTFOLIO_DETAIL_COUNT; d++) {
+      slots.push({
+        key: `${key}_detail_${d}`,
+        label: `Портфолио · ${title} · Деталь ${d}`,
+        group: "Портфолио",
+        defaultUrl: "",
+      });
+    }
+  }
+  return slots;
+}
+
 export const IMAGE_SLOTS: ImageSlot[] = [
   { key: "hero", label: "Главное фото (Hero)", group: "Главный экран", defaultUrl: KITCHEN_IMG },
   { key: "cat_kitchen", label: "Каталог · Кухни", group: "Каталог", defaultUrl: KITCHEN_IMG },
   { key: "cat_wardrobe", label: "Каталог · Шкафы-купе", group: "Каталог", defaultUrl: WARDROBE_IMG },
   { key: "cat_kids", label: "Каталог · Детская", group: "Каталог", defaultUrl: KIDS_IMG },
   { key: "cat_living", label: "Каталог · Гостиные", group: "Каталог", defaultUrl: LIVING_IMG },
-  { key: "portfolio_1", label: "Портфолио · Проект 1", group: "Портфолио", defaultUrl: KITCHEN_IMG },
-  { key: "portfolio_2", label: "Портфолио · Проект 2", group: "Портфолио", defaultUrl: WARDROBE_IMG },
-  { key: "portfolio_3", label: "Портфолио · Проект 3", group: "Портфолио", defaultUrl: LIVING_IMG },
-  { key: "portfolio_4", label: "Портфолио · Проект 4", group: "Портфолио", defaultUrl: KIDS_IMG },
-  { key: "portfolio_5", label: "Портфолио · Проект 5", group: "Портфолио", defaultUrl: KITCHEN_IMG },
-  { key: "portfolio_6", label: "Портфолио · Проект 6", group: "Портфолио", defaultUrl: WARDROBE_IMG },
+  ...buildPortfolioSlots(),
 ];
 
 export function loadOverrides(): Record<string, string> {
@@ -57,6 +91,18 @@ export function getImageUrl(key: string): string {
   const slot = IMAGE_SLOTS.find((s) => s.key === key);
   const overrides = loadOverrides();
   return overrides[key] || slot?.defaultUrl || "";
+}
+
+// Возвращает галерею проекта: главное фото + загруженные детали (пустые слоты пропускаются)
+export function getProjectGallery(projectKey: string): string[] {
+  const overrides = loadOverrides();
+  const gallery: string[] = [getImageUrl(projectKey)];
+  for (let d = 1; d <= PORTFOLIO_DETAIL_COUNT; d++) {
+    const detailKey = `${projectKey}_detail_${d}`;
+    const url = overrides[detailKey];
+    if (url) gallery.push(url);
+  }
+  return gallery;
 }
 
 export function useSiteImages() {

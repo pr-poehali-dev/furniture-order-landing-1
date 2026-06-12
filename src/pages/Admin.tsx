@@ -39,7 +39,14 @@ function SlotCard({ slot }: { slot: ImageSlot }) {
   return (
     <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
       <div className="relative h-44 bg-gray-100">
-        <img src={currentUrl} alt={slot.label} className="w-full h-full object-cover" />
+        {currentUrl ? (
+          <img src={currentUrl} alt={slot.label} className="w-full h-full object-cover" />
+        ) : (
+          <div className="w-full h-full flex flex-col items-center justify-center text-gray-300 gap-1">
+            <Icon name="ImageOff" size={28} />
+            <span className="text-xs text-gray-400">Нет фото</span>
+          </div>
+        )}
         {uploading && (
           <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
             <div className="flex items-center gap-2 text-white text-sm">

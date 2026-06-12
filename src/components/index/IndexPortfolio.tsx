@@ -1,4 +1,6 @@
+import { useState, useEffect } from "react";
 import Icon from "@/components/ui/icon";
+import { getProjectGallery } from "@/lib/siteImages";
 
 export const PORTFOLIO = [
   { slot: "portfolio_1", title: "Кухня МДФ эмаль", material: "Фурнитура Blum, столешница Pfleiderer", price: "от 185 000 ₽", tag: "Кухня" },
@@ -17,6 +19,95 @@ const REVIEWS = [
   { name: "Елена М.", city: "Москва", text: "Долго выбирала компанию, остановилась на МебельМастер. Детская получилась именно такой, как хотела. Дочка в восторге!", rating: 5, date: "Февраль 2024" },
   { name: "Сергей Н.", city: "Химки", text: "Ребята работают строго по договору, никаких скрытых доплат. Шкаф-купе сделали за 18 дней — даже раньше обещанного!", rating: 5, date: "Апрель 2024" },
 ];
+
+function ProjectModal({ project, onClose }: { project: PortfolioItem; onClose: () => void }) {
+  const gallery = getProjectGallery(project.slot);
+  const [active, setActive] = useState(0);
+
+  useEffect(() => {
+    setActive(0);
+  }, [project.slot]);
+
+  const activeIndex = Math.min(active, gallery.length - 1);
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-4"
+      style={{ background: "rgba(0,0,0,0.85)" }}
+      onClick={onClose}
+    >
+      <div
+        className="bg-white rounded-3xl overflow-hidden max-w-2xl w-full shadow-2xl max-h-[92vh] overflow-y-auto"
+        style={{ animation: "scale-in 0.3s ease-out forwards" }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="relative h-80 bg-gray-100">
+          <img src={gallery[activeIndex]} alt={project.title} className="w-full h-full object-cover" />
+          <button
+            className="absolute top-4 right-4 w-10 h-10 bg-black/50 rounded-full flex items-center justify-center text-white hover:bg-black/70 transition-colors"
+            onClick={onClose}
+          >
+            <Icon name="X" size={18} />
+          </button>
+          <div className="absolute top-4 left-4">
+            <span className="bg-orange-500 text-white text-xs font-display font-semibold px-3 py-1 rounded-full uppercase">{project.tag}</span>
+          </div>
+
+          {gallery.length > 1 && (
+            <>
+              <button
+                className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/50 rounded-full flex items-center justify-center text-white hover:bg-black/70 transition-colors"
+                onClick={() => setActive((activeIndex - 1 + gallery.length) % gallery.length)}
+              >
+                <Icon name="ChevronLeft" size={20} />
+              </button>
+              <button
+                className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/50 rounded-full flex items-center justify-center text-white hover:bg-black/70 transition-colors"
+                onClick={() => setActive((activeIndex + 1) % gallery.length)}
+              >
+                <Icon name="ChevronRight" size={20} />
+              </button>
+              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/50 text-white text-xs font-semibold px-3 py-1 rounded-full">
+                {activeIndex + 1} / {gallery.length}
+              </div>
+            </>
+          )}
+        </div>
+
+        {gallery.length > 1 && (
+          <div className="flex gap-2 px-6 pt-4 overflow-x-auto">
+            {gallery.map((img, i) => (
+              <button
+                key={i}
+                onClick={() => setActive(i)}
+                className={`relative w-20 h-16 rounded-xl overflow-hidden shrink-0 border-2 transition-colors ${i === activeIndex ? "border-orange-500" : "border-transparent opacity-70 hover:opacity-100"}`}
+              >
+                <img src={img} alt={`${project.title} фото ${i + 1}`} className="w-full h-full object-cover" />
+              </button>
+            ))}
+          </div>
+        )}
+
+        <div className="p-6">
+          <h3 className="font-display text-2xl font-bold text-gray-900 uppercase tracking-wide">{project.title}</h3>
+          <p className="text-gray-500 mt-2">{project.material}</p>
+          <div className="flex items-center justify-between mt-4">
+            <div>
+              <div className="text-gray-400 text-sm">Стоимость под ключ</div>
+              <div className="font-display text-2xl font-bold text-orange-500">{project.price}</div>
+            </div>
+            <button
+              className="btn-orange px-6 py-3 rounded-xl text-sm"
+              onClick={() => { onClose(); document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" }); }}
+            >
+              Хочу такую же
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 interface IndexPortfolioProps {
   getImg: (key: string) => string;
@@ -51,6 +142,12 @@ export default function IndexPortfolio({ getImg, selectedProject, setSelectedPro
                   <div className="absolute top-4 left-4">
                     <span className="bg-orange-500 text-white text-xs font-display font-semibold px-3 py-1 rounded-full uppercase tracking-wide">{proj.tag}</span>
                   </div>
+                  {getProjectGallery(proj.slot).length > 1 && (
+                    <div className="absolute top-4 right-4 flex items-center gap-1 bg-black/55 text-white text-xs font-semibold px-2.5 py-1 rounded-full">
+                      <Icon name="Images" size={13} className="text-white" />
+                      {getProjectGallery(proj.slot).length}
+                    </div>
+                  )}
                   <div className="absolute bottom-0 left-0 right-0 p-5">
                     <h3 className="font-display font-bold text-white text-xl uppercase">{proj.title}</h3>
                     <p className="text-white/70 text-xs mt-1">{proj.material}</p>
@@ -70,46 +167,7 @@ export default function IndexPortfolio({ getImg, selectedProject, setSelectedPro
 
       {/* Portfolio Modal */}
       {selectedProject && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4"
-          style={{ background: "rgba(0,0,0,0.85)" }}
-          onClick={() => setSelectedProject(null)}
-        >
-          <div
-            className="bg-white rounded-3xl overflow-hidden max-w-2xl w-full shadow-2xl"
-            style={{ animation: "scale-in 0.3s ease-out forwards" }}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="relative h-80">
-              <img src={getImg(selectedProject.slot)} alt={selectedProject.title} className="w-full h-full object-cover" />
-              <button
-                className="absolute top-4 right-4 w-10 h-10 bg-black/50 rounded-full flex items-center justify-center text-white hover:bg-black/70 transition-colors"
-                onClick={() => setSelectedProject(null)}
-              >
-                <Icon name="X" size={18} />
-              </button>
-              <div className="absolute top-4 left-4">
-                <span className="bg-orange-500 text-white text-xs font-display font-semibold px-3 py-1 rounded-full uppercase">{selectedProject.tag}</span>
-              </div>
-            </div>
-            <div className="p-6">
-              <h3 className="font-display text-2xl font-bold text-gray-900 uppercase tracking-wide">{selectedProject.title}</h3>
-              <p className="text-gray-500 mt-2">{selectedProject.material}</p>
-              <div className="flex items-center justify-between mt-4">
-                <div>
-                  <div className="text-gray-400 text-sm">Стоимость под ключ</div>
-                  <div className="font-display text-2xl font-bold text-orange-500">{selectedProject.price}</div>
-                </div>
-                <button
-                  className="btn-orange px-6 py-3 rounded-xl text-sm"
-                  onClick={() => { setSelectedProject(null); document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" }); }}
-                >
-                  Хочу такую же
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <ProjectModal project={selectedProject} onClose={() => setSelectedProject(null)} />
       )}
 
       {/* ===== REVIEWS ===== */}
