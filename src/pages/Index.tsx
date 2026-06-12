@@ -181,10 +181,8 @@ export default function Index() {
 
         <div className="max-w-7xl mx-auto px-4 sm:px-8 w-full grid lg:grid-cols-2 gap-12 items-center py-20">
           <div style={{ animation: "fade-up 0.8s ease-out forwards" }}>
-            <div className="inline-flex items-center gap-2 bg-orange-500/10 border border-orange-500/30 rounded-full px-4 py-2 text-orange-400 text-sm font-semibold mb-6">
-              <Icon name="Star" size={14} className="text-orange-400" />
-              Гарантия 5 лет · Производство в Москве
-            </div>
+            <div className="inline-flex items-center gap-2 bg-orange-500/10 border border-orange-500/30 rounded-full px-4 py-2 text-orange-400 text-sm font-semibold mb-6">Гарантия х лет · Производство в Барнауле
+</div>
             <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold text-white leading-tight tracking-wide uppercase mb-4">
               Корпусная<br />
               мебель<br />
@@ -223,7 +221,7 @@ export default function Index() {
               </div>
               <div className="w-px h-10 bg-white/10" />
               <div className="text-center">
-                <div className="font-display text-3xl font-bold gradient-text">12</div>
+                <div className="font-display text-3xl font-bold gradient-text">15</div>
                 <div className="text-white/50 text-xs mt-1">лет на рынке</div>
               </div>
             </div>
@@ -245,7 +243,7 @@ export default function Index() {
                   <Icon name="Clock" size={14} className="text-white" />
                 </div>
                 <div>
-                  <div className="text-white font-semibold text-sm">Срок: 21 день</div>
+                  <div className="text-white font-semibold text-sm">Срок: х день</div>
                   <div className="text-white/50 text-xs">от замера до монтажа</div>
                 </div>
               </div>
