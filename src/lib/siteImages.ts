@@ -35,7 +35,7 @@ const PORTFOLIO_TITLES: Record<string, string> = {
 };
 
 // Сколько дополнительных фото-деталей на каждый проект
-export const PORTFOLIO_DETAIL_COUNT = 5;
+export const PORTFOLIO_DETAIL_COUNT = 14;
 
 function buildPortfolioSlots(): ImageSlot[] {
   const slots: ImageSlot[] = [];
