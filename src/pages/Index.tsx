@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useSiteImages } from "@/lib/siteImages";
 import IndexHeader from "@/components/index/IndexHeader";
 import IndexCatalog from "@/components/index/IndexCatalog";
-import IndexPortfolio, { PortfolioItem } from "@/components/index/IndexPortfolio";
+import IndexPortfolio from "@/components/index/IndexPortfolio";
 import IndexFooter from "@/components/index/IndexFooter";
 
 const QUIZ_QUESTIONS_COUNT = 4;
@@ -31,7 +31,6 @@ export default function Index() {
   const [quizStep, setQuizStep] = useState(0);
   const [quizAnswers, setQuizAnswers] = useState<string[]>([]);
   const [quizDone, setQuizDone] = useState(false);
-  const [selectedProject, setSelectedProject] = useState<null | PortfolioItem>(null);
   const [chatOpen, setChatOpen] = useState(false);
   const [chatMessages, setChatMessages] = useState([
     { from: "bot", text: "Привет! Я онлайн-консультант «Свой Стиль». Задайте любой вопрос о нашей мебели или стоимости." },
@@ -94,11 +93,7 @@ export default function Index() {
         handleFormSubmit={handleFormSubmit}
       />
 
-      <IndexPortfolio
-        getImg={getImg}
-        selectedProject={selectedProject}
-        setSelectedProject={setSelectedProject}
-      />
+      <IndexPortfolio getImg={getImg} />
 
       <IndexFooter
         formName={formName}

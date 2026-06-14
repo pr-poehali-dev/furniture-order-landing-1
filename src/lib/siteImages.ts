@@ -16,40 +16,115 @@ export type ImageSlot = {
   defaultUrl: string;
 };
 
-const PORTFOLIO_DEFAULTS: Record<string, string> = {
-  portfolio_1: KITCHEN_IMG,
-  portfolio_2: WARDROBE_IMG,
-  portfolio_3: LIVING_IMG,
-  portfolio_4: KIDS_IMG,
-  portfolio_5: KITCHEN_IMG,
-  portfolio_6: WARDROBE_IMG,
+// ===== СТРУКТУРА ПОРТФОЛИО: категории → проекты → фото =====
+export type PortfolioProject = {
+  slug: string;
+  slot: string;
+  title: string;
+  material: string;
+  price: string;
+  defaultImg: string;
 };
 
-const PORTFOLIO_TITLES: Record<string, string> = {
-  portfolio_1: "Кухня МДФ эмаль",
-  portfolio_2: "Шкаф-купе в спальню",
-  portfolio_3: "Гостиная со стеллажами",
-  portfolio_4: "Детская комната",
-  portfolio_5: "Угловая кухня loft",
-  portfolio_6: "Гардеробная система",
+export type PortfolioCategory = {
+  slug: string;
+  title: string;
+  tag: string;
+  description: string;
+  coverDefault: string;
+  projects: PortfolioProject[];
 };
+
+export const PORTFOLIO_CATEGORIES: PortfolioCategory[] = [
+  {
+    slug: "kitchens",
+    title: "Кухни",
+    tag: "Кухня",
+    description: "Кухни на заказ под ваши размеры и стиль",
+    coverDefault: KITCHEN_IMG,
+    projects: [
+      { slug: "kitchen-1", slot: "pf_kitchens_1", title: "Кухня МДФ эмаль", material: "Фурнитура Blum, столешница Pfleiderer", price: "от 185 000 ₽", defaultImg: KITCHEN_IMG },
+      { slug: "kitchen-2", slot: "pf_kitchens_2", title: "Угловая кухня loft", material: "МДФ плёнка, столешница из акрила", price: "от 210 000 ₽", defaultImg: KITCHEN_IMG },
+      { slug: "kitchen-3", slot: "pf_kitchens_3", title: "Кухня в скандинавском стиле", material: "ЛДСП Egger, фасады матовые", price: "от 160 000 ₽", defaultImg: KITCHEN_IMG },
+    ],
+  },
+  {
+    slug: "wardrobes",
+    title: "Шкафы-купе",
+    tag: "Шкаф",
+    description: "Вместительные шкафы-купе любой конфигурации",
+    coverDefault: WARDROBE_IMG,
+    projects: [
+      { slug: "wardrobe-1", slot: "pf_wardrobes_1", title: "Шкаф-купе в спальню", material: "ЛДСП Egger, система Hettich", price: "от 64 000 ₽", defaultImg: WARDROBE_IMG },
+      { slug: "wardrobe-2", slot: "pf_wardrobes_2", title: "Шкаф с зеркалом в прихожую", material: "ЛДСП + зеркало, профиль Aristo", price: "от 72 000 ₽", defaultImg: WARDROBE_IMG },
+    ],
+  },
+  {
+    slug: "living-rooms",
+    title: "Гостиные",
+    tag: "Гостиная",
+    description: "Стенки, стеллажи и ТВ-зоны для гостиной",
+    coverDefault: LIVING_IMG,
+    projects: [
+      { slug: "living-1", slot: "pf_living_1", title: "Гостиная со стеллажами", material: "МДФ + шпон дуба, фурнитура Grass", price: "от 120 000 ₽", defaultImg: LIVING_IMG },
+      { slug: "living-2", slot: "pf_living_2", title: "ТВ-зона с подсветкой", material: "МДФ глянец, LED-подсветка", price: "от 98 000 ₽", defaultImg: LIVING_IMG },
+    ],
+  },
+  {
+    slug: "dressing-rooms",
+    title: "Гардеробные",
+    tag: "Гардеробная",
+    description: "Системы хранения и гардеробные комнаты",
+    coverDefault: WARDROBE_IMG,
+    projects: [
+      { slug: "dressing-1", slot: "pf_dressing_1", title: "Гардеробная система", material: "ЛДСП + алюминиевый профиль", price: "от 95 000 ₽", defaultImg: WARDROBE_IMG },
+    ],
+  },
+  {
+    slug: "business",
+    title: "Мебель для бизнеса",
+    tag: "Бизнес",
+    description: "Мебель для офисов, кафе и магазинов",
+    coverDefault: LIVING_IMG,
+    projects: [
+      { slug: "business-1", slot: "pf_business_1", title: "Ресепшн для офиса", material: "МДФ, искусственный камень", price: "от 130 000 ₽", defaultImg: LIVING_IMG },
+      { slug: "business-2", slot: "pf_business_2", title: "Барная стойка для кафе", material: "ЛДСП, влагостойкая столешница", price: "от 110 000 ₽", defaultImg: KITCHEN_IMG },
+    ],
+  },
+];
+
+export function findCategory(slug: string): PortfolioCategory | undefined {
+  return PORTFOLIO_CATEGORIES.find((c) => c.slug === slug);
+}
+
+export function findProject(categorySlug: string, projectSlug: string): { category: PortfolioCategory; project: PortfolioProject } | undefined {
+  const category = findCategory(categorySlug);
+  const project = category?.projects.find((p) => p.slug === projectSlug);
+  if (category && project) return { category, project };
+  return undefined;
+}
 
 // Сколько дополнительных фото-деталей на каждый проект
 export const PORTFOLIO_DETAIL_COUNT = 14;
 
+export function categoryCoverKey(slug: string): string {
+  return `pf_cat_${slug}`;
+}
+
 function buildPortfolioSlots(): ImageSlot[] {
   const slots: ImageSlot[] = [];
-  for (let p = 1; p <= 6; p++) {
-    const key = `portfolio_${p}`;
-    const title = PORTFOLIO_TITLES[key];
-    slots.push({ key, label: `Портфолио · ${title} · Главное`, group: "Портфолио", defaultUrl: PORTFOLIO_DEFAULTS[key] });
-    for (let d = 1; d <= PORTFOLIO_DETAIL_COUNT; d++) {
-      slots.push({
-        key: `${key}_detail_${d}`,
-        label: `Портфолио · ${title} · Деталь ${d}`,
-        group: "Портфолио",
-        defaultUrl: "",
-      });
+  for (const category of PORTFOLIO_CATEGORIES) {
+    slots.push({ key: categoryCoverKey(category.slug), label: `Папка «${category.title}» · Обложка`, group: "Портфолио", defaultUrl: category.coverDefault });
+    for (const project of category.projects) {
+      slots.push({ key: project.slot, label: `${category.title} · ${project.title} · Главное`, group: "Портфолио", defaultUrl: project.defaultImg });
+      for (let d = 1; d <= PORTFOLIO_DETAIL_COUNT; d++) {
+        slots.push({
+          key: `${project.slot}_detail_${d}`,
+          label: `${category.title} · ${project.title} · Деталь ${d}`,
+          group: "Портфолио",
+          defaultUrl: "",
+        });
+      }
     }
   }
   return slots;
