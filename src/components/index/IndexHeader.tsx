@@ -74,9 +74,7 @@ export default function IndexHeader({ getImg, mobileMenu, setMobileMenu }: Index
             </div>
 
             <h1 className="font-display text-4xl sm:text-5xl lg:text-[3.75rem] font-medium text-white leading-[1.08] tracking-tight mb-6">Корпусная мебель на заказ</h1>
-            <p className="text-white/65 text-lg sm:text-xl leading-relaxed mb-8 max-w-xl">
-              Проектируем, производим и монтируем под ключ. Точно по размерам вашей квартиры — без переплат и посредников.
-            </p>
+            <p className="text-white/65 text-lg sm:text-xl leading-relaxed mb-8 max-w-xl">Проектируем, производим и монтируем  точно по размерам вашей квартиры — без переплат и посредников.</p>
 
             <div className="flex flex-col sm:flex-row gap-4 mb-10">
               <button
