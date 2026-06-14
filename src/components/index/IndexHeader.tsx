@@ -74,7 +74,8 @@ export default function IndexHeader({ getImg, mobileMenu, setMobileMenu }: Index
             </div>
 
             <h1 className="font-display text-4xl sm:text-5xl lg:text-[3.75rem] font-medium text-white leading-[1.08] tracking-tight mb-6">
-              Корпусная мебель<br /><span className="gradient-text font-semibold">на заказ</span> <span className="text-white/85 font-light">под ключ</span>
+              Корпусная мебель<br /><span className="gradient-text font-semibold">
+</span> <span className="text-white/85 font-light">под ключ</span>
             </h1>
             <p className="text-white/65 text-lg sm:text-xl leading-relaxed mb-8 max-w-xl">
               Проектируем, производим и монтируем под ключ. Точно по размерам вашей квартиры — без переплат и посредников.
