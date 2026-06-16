@@ -89,7 +89,7 @@ export default function IndexHeader({ getImg, mobileMenu, setMobileMenu }: Index
                 onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
               >
                 <Icon name="Ruler" size={18} className="text-white" />
-                Вызвать замерщика
+                Записаться на замер
               </button>
             </div>
 
