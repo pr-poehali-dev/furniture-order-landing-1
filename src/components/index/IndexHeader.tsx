@@ -22,7 +22,7 @@ export default function IndexHeader({ getImg, mobileMenu, setMobileMenu }: Index
               СВОЙ<span className="gradient-text"> СТИЛЬ</span>
             </span>
           </a>
-          <div className="hidden md:flex items-center gap-8 text-sm text-white/70">
+          <div className="hidden md:flex items-center gap-8 text-sm text-white/70 px-0">
             <a href="#catalog" className="hover:text-orange-400 transition-colors">Каталог</a>
             <a href="#portfolio" className="hover:text-orange-400 transition-colors">Портфолио</a>
             <a href="#steps" className="hover:text-orange-400 transition-colors">Как работаем</a>
@@ -31,7 +31,7 @@ export default function IndexHeader({ getImg, mobileMenu, setMobileMenu }: Index
           <div className="flex items-center gap-3">
             <a href="tel:+74951234567" className="hidden md:flex items-center gap-2 text-white font-display font-semibold text-sm tracking-wide hover:text-orange-400 transition-colors">+7 (913) 274-85-19</a>
             <button
-              className="btn-orange px-4 py-2 rounded-lg text-sm"
+              className="btn-orange px-4 py-2 rounded-lg text-xs"
               onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
             >Записаться на замер</button>
             <button className="md:hidden text-white" onClick={() => setMobileMenu(!mobileMenu)}>
