@@ -149,7 +149,7 @@ export default function IndexFooter({
               </div>
               <div className="text-white/30 text-xs space-y-1">
                 <div>ИНН: 222510796208</div>
-                <div>ОГРН: 1127700000000</div>
+                <div>ОГРН: 324220200022301</div>
                 <div>ИП Нагайцев А.В.</div>
               </div>
             </div>
