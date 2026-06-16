@@ -2,21 +2,20 @@ import Icon from "@/components/ui/icon";
 import QuizCalculator from "@/components/index/QuizCalculator";
 
 const STEPS = [
-  { icon: "Phone", num: "01", title: "Оставьте заявку", desc: "Позвоните или оставьте номер на сайте — перезвоним в течение 15 минут и ответим на все вопросы." },
-  { icon: "Ruler", num: "02", title: "Бесплатный выезд замерщика", desc: "Приедем с образцами материалов и каталогами фурнитуры. Сделаем точные замеры вашего помещения." },
+  { icon: "Phone", num: "01", title: "Оставьте заявку", desc: "Позвоните или оставьте номер на сайте — мы свяжемся с вами и ответим на все вопросы." },
+  { icon: "Ruler", num: "02", title: "Бесплатный выезд замерщика", desc: "Опытный мебельщик сделает точные замеры, проконсультирует на месте по всем вопросам и при необходимости предложит свои варианты." },
   { icon: "Monitor", num: "03", title: "3D-проект и расчёт", desc: "Создадим детальный 3D-проект и полный расчёт стоимости. Вносим правки до полного согласования." },
   { icon: "Factory", num: "04", title: "Производство на фабрике", desc: "Изготавливаем мебель на собственном производстве с контролем качества на каждом этапе." },
   { icon: "Truck", num: "05", title: "Доставка и монтаж", desc: "Привезём и профессионально установим мебель. Уберём весь строительный мусор — заходите и живите!" },
 ];
 
 const ADVANTAGES = [
-  { icon: "Factory", title: "Своё производство", desc: "Работаем без посредников. Полный цикл от дерева до монтажа — экономия до 30%" },
-  { icon: "FileText", title: "Договор на всё", desc: "Чёткие сроки и стоимость в договоре. Никаких «сюрпризов» на финише" },
-  { icon: "CheckCircle", title: "Контроль качества", desc: "Проверяем каждый элемент на производстве и при монтаже. QR-паспорт изделия" },
+  { icon: "Factory", title: "Своё производство", desc: "Работаем без посредников. Полный цикл производства от распила до монтажа." },
+  { icon: "FileText", title: "Договор и сроки", desc: "Чёткие сроки и стоимость прописаны в договоре. Соблюдаем их и сдаём проект вовремя." },
+  { icon: "CheckCircle", title: "Контроль качества", desc: "Проверяем каждый элемент на производстве и при монтаже. Качественная упаковка и бережная доставка." },
   { icon: "Award", title: "Австрийская фурнитура", desc: "Используем надёжную фурнитуру Blum и Makmart — плавный ход и долгий срок службы" },
   { icon: "Trash2", title: "Уборка после монтажа", desc: "Наша бригада убирает весь мусор и упаковку. Сдаём квартиру в идеальном порядке" },
-  { icon: "Zap", title: "30 дней под ключ", desc: "От замера до установки — один месяц. Соблюдаем сроки, прописанные в договоре" },
-  { icon: "CreditCard", title: "Рассрочка без %", desc: "Рассрочка напрямую от нашей компании, без банков и переплат. Платите частями в удобном темпе" },
+  { icon: "CreditCard", title: "Рассрочка без %", desc: "Рассрочка напрямую от нашей компании, без банков и переплат. Платежи по графику в договоре." },
 ];
 
 interface IndexCatalogProps {
@@ -40,28 +39,28 @@ export default function IndexCatalog({ getImg, handleFormSubmit }: IndexCatalogP
             </p>
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
               { img: getImg("cat_kitchen"), title: "Кухни", desc: "Угловые, прямые, П-образные. МДФ, ЛДСП, массив. Любая планировка.", icon: "UtensilsCrossed", color: "#f97316" },
-              { img: getImg("cat_wardrobe"), title: "Шкафы и гардеробные", desc: "Встроенные системы хранения под потолок с раздвижными дверями.", icon: "Shirt", color: "#ea580c" },
+              { img: getImg("cat_wardrobe"), title: "Шкафы и гардеробные", desc: "Вместительные системы хранения под ваш интерьер — распашные и купе. Продуманное наполнение до последнего сантиметра.", icon: "Shirt", color: "#ea580c" },
               { img: getImg("cat_kids"), title: "Мебель для детской", desc: "Безопасные материалы и яркие цвета. Удобные системы хранения для игрушек и вещей.", icon: "Baby", color: "#fb923c" },
               { img: getImg("cat_living"), title: "Гостиные и прихожие", desc: "Стеллажи, тумбы под ТВ, обувницы, вешалки под ваш стиль.", icon: "Sofa", color: "#c2410c" },
               { img: getImg("cat_bathroom"), title: "Санузлы", desc: "Влагостойкая мебель для ванной: тумбы, пеналы, шкафчики под раковину.", icon: "Bath", color: "#f97316" },
               { img: getImg("cat_business"), title: "Мебель для бизнеса", desc: "Ресепшн, барные стойки, торговое оборудование для офисов, кафе и магазинов.", icon: "Briefcase", color: "#ea580c" },
             ].map((cat, i) => (
-              <div key={i} className="group card-hover animate-on-scroll rounded-2xl overflow-hidden border border-gray-100 shadow-sm bg-white">
-                <div className="relative h-52 overflow-hidden">
+              <div key={i} className="group card-hover animate-on-scroll rounded-2xl overflow-hidden border border-gray-100 shadow-sm bg-white flex flex-col">
+                <div className="relative h-52 overflow-hidden flex-shrink-0">
                   <img src={cat.img} alt={cat.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
                   <div className="absolute top-4 left-4 w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: cat.color }}>
                     <Icon name={cat.icon} size={18} className="text-white" fallback="Package" />
                   </div>
                 </div>
-                <div className="p-5">
+                <div className="p-5 flex flex-col flex-1">
                   <h3 className="font-display font-bold text-gray-900 text-xl uppercase tracking-wide mb-2">{cat.title}</h3>
-                  <p className="text-gray-500 text-sm leading-relaxed mb-4">{cat.desc}</p>
+                  <p className="text-gray-500 text-sm leading-relaxed mb-4 flex-1">{cat.desc}</p>
                   <button
-                    className="btn-orange w-full py-2.5 rounded-xl text-sm"
+                    className="btn-orange w-full py-2.5 rounded-xl text-sm mt-auto"
                     onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
                   >
                     Хочу такую же
