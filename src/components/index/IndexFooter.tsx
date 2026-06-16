@@ -103,13 +103,13 @@ export default function IndexFooter({
         <div className="max-w-7xl mx-auto px-4 sm:px-8">
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
             <div>
-              <div className="flex items-center gap-1.5 mb-4">
+              <div className="flex items-center mb-4">
                 <img
                   src="https://cdn.poehali.dev/projects/e84f41ff-e623-49a2-a773-de1e473421e0/bucket/logo/svoy-stil-transparent.png"
                   alt="Логотип Свой Стиль"
-                  className="h-12 w-12 object-contain"
+                  className="h-14 w-14 object-contain"
                 />
-                <span className="font-display font-bold text-xl text-white tracking-wide">
+                <span className="font-display font-bold text-xl text-white tracking-wide -ml-1">
                   СВОЙ<span className="gradient-text"> СТИЛЬ</span>
                 </span>
               </div>
