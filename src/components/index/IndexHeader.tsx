@@ -22,30 +22,33 @@ export default function IndexHeader({ getImg, mobileMenu, setMobileMenu }: Index
               СВОЙ<span className="gradient-text"> СТИЛЬ</span>
             </span>
           </a>
-          <div className="hidden md:flex items-center gap-8 text-sm text-white/70 px-0">
-            <a href="#catalog" className="hover:text-orange-400 transition-colors">Каталог</a>
-            <a href="#portfolio" className="hover:text-orange-400 transition-colors">Портфолио</a>
-            <a href="#steps" className="hover:text-orange-400 transition-colors">Как работаем</a>
-            <a href="#reviews" className="hover:text-orange-400 transition-colors">Отзывы</a>
-          </div>
-          <div className="flex items-center gap-3">
-            <a href="tel:+74951234567" className="hidden md:flex items-center gap-2 text-white font-display font-semibold text-sm tracking-wide hover:text-orange-400 transition-colors">+7 (913) 274-85-19</a>
-            <button
-              className="btn-orange px-4 py-2 rounded-lg text-xs"
-              onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
-            >Записаться на замер</button>
-            <button className="md:hidden text-white" onClick={() => setMobileMenu(!mobileMenu)}>
-              <Icon name={mobileMenu ? "X" : "Menu"} size={24} />
-            </button>
-          </div>
+          <button
+            className="flex items-center gap-2.5 text-white backdrop-blur-md bg-white/5 border border-white/15 hover:bg-white/10 hover:border-white/30 transition-all rounded-xl px-4 py-2.5"
+            onClick={() => setMobileMenu(!mobileMenu)}
+            aria-label="Разделы"
+          >
+            <Icon name={mobileMenu ? "X" : "Menu"} size={20} className="text-white" />
+            <span className="font-display font-semibold text-sm tracking-wide">Разделы</span>
+          </button>
         </div>
         {mobileMenu && (
-          <div className="md:hidden backdrop-blur-xl bg-slate-950/80 border-t border-white/10 px-4 py-4 flex flex-col gap-4 text-white/80 text-sm">
-            <a href="#catalog" onClick={() => setMobileMenu(false)}>Каталог</a>
-            <a href="#portfolio" onClick={() => setMobileMenu(false)}>Портфолио</a>
-            <a href="#steps" onClick={() => setMobileMenu(false)}>Как работаем</a>
-            <a href="#reviews" onClick={() => setMobileMenu(false)}>Отзывы</a>
-            <a href="tel:+74951234567" className="text-orange-400 font-semibold">+7 (913) 274-85-19</a>
+          <div className="backdrop-blur-xl bg-slate-950/90 border-t border-white/10 px-4 py-4 flex flex-col gap-1 text-white/80 text-sm">
+            {[
+              { href: "#catalog", label: "Каталог", icon: "LayoutGrid" },
+              { href: "#portfolio", label: "Портфолио", icon: "Images" },
+              { href: "#steps", label: "Как работаем", icon: "ListChecks" },
+              { href: "#reviews", label: "Отзывы", icon: "Star" },
+            ].map((item) => (
+              <a
+                key={item.href}
+                href={item.href}
+                onClick={() => setMobileMenu(false)}
+                className="flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-white/5 hover:text-orange-400 transition-colors"
+              >
+                <Icon name={item.icon} size={18} className="text-orange-400" />
+                {item.label}
+              </a>
+            ))}
           </div>
         )}
       </nav>
