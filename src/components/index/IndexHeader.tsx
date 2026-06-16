@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import Icon from "@/components/ui/icon";
 
 interface IndexHeaderProps {
@@ -7,6 +8,19 @@ interface IndexHeaderProps {
 }
 
 export default function IndexHeader({ getImg, mobileMenu, setMobileMenu }: IndexHeaderProps) {
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!mobileMenu) return;
+    const handleClick = (e: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        setMobileMenu(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, [mobileMenu, setMobileMenu]);
+
   return (
     <>
       {/* NAVBAR */}
@@ -22,35 +36,48 @@ export default function IndexHeader({ getImg, mobileMenu, setMobileMenu }: Index
               СВОЙ<span className="gradient-text"> СТИЛЬ</span>
             </span>
           </a>
-          <button
-            className="flex items-center gap-2.5 text-white backdrop-blur-md bg-white/5 border border-white/15 hover:bg-white/10 hover:border-white/30 transition-all rounded-xl px-4 py-2.5"
-            onClick={() => setMobileMenu(!mobileMenu)}
-            aria-label="Разделы"
-          >
-            <Icon name={mobileMenu ? "X" : "Menu"} size={20} className="text-white" />
-            <span className="font-display font-semibold text-sm tracking-wide">Разделы</span>
-          </button>
-        </div>
-        {mobileMenu && (
-          <div className="backdrop-blur-xl bg-slate-950/90 border-t border-white/10 px-4 py-4 flex flex-col gap-1 text-white/80 text-sm">
-            {[
-              { href: "#catalog", label: "Каталог", icon: "LayoutGrid" },
-              { href: "#portfolio", label: "Портфолио", icon: "Images" },
-              { href: "#steps", label: "Как работаем", icon: "ListChecks" },
-              { href: "#reviews", label: "Отзывы", icon: "Star" },
-            ].map((item) => (
-              <a
-                key={item.href}
-                href={item.href}
-                onClick={() => setMobileMenu(false)}
-                className="flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-white/5 hover:text-orange-400 transition-colors"
-              >
-                <Icon name={item.icon} size={18} className="text-orange-400" />
-                {item.label}
-              </a>
-            ))}
+          <div className="relative" ref={menuRef}>
+            <button
+              className="flex items-center gap-2.5 text-white backdrop-blur-md bg-white/5 border border-white/15 hover:bg-white/10 hover:border-white/30 transition-all rounded-xl px-4 py-2.5"
+              onClick={() => setMobileMenu(!mobileMenu)}
+              aria-label="Разделы"
+            >
+              <Icon name={mobileMenu ? "X" : "Menu"} size={20} className="text-white" />
+              <span className="font-display font-semibold text-sm tracking-wide">Разделы</span>
+            </button>
+            {mobileMenu && (
+              <div className="absolute right-0 mt-2 w-56 backdrop-blur-xl bg-slate-950/90 border border-white/10 rounded-2xl shadow-2xl shadow-black/40 p-2 flex flex-col gap-1 text-white/80 text-sm">
+                {[
+                  { href: "#catalog", label: "Каталог", icon: "LayoutGrid" },
+                  { href: "#portfolio", label: "Портфолио", icon: "Images" },
+                  { href: "#steps", label: "Как работаем", icon: "ListChecks" },
+                  { href: "#reviews", label: "Отзывы", icon: "Star" },
+                ].map((item) => (
+                  <a
+                    key={item.href}
+                    href={item.href}
+                    onClick={() => setMobileMenu(false)}
+                    className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-white/5 hover:text-orange-400 transition-colors"
+                  >
+                    <Icon name={item.icon} size={18} className="text-orange-400" />
+                    {item.label}
+                  </a>
+                ))}
+                <div className="h-px bg-white/10 my-1" />
+                <a
+                  href="https://vk.com/svoystyle22"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => setMobileMenu(false)}
+                  className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-white/5 hover:text-orange-400 transition-colors"
+                >
+                  <Icon name="Share2" size={18} className="text-orange-400" />
+                  Мы ВКонтакте
+                </a>
+              </div>
+            )}
           </div>
-        )}
+        </div>
       </nav>
 
       {/* ===== HERO ===== */}
