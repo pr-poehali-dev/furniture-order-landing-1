@@ -96,7 +96,6 @@ export default function IndexHeader({ getImg, mobileMenu, setMobileMenu }: Index
             <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
               {[
                 { icon: "Gift", text: "Замер и 3D-проект бесплатно" },
-                { icon: "ShieldCheck", text: "Гарантия 5 лет" },
                 { icon: "Zap", text: "21 день под ключ" },
               ].map((b, i) => (
                 <div key={i} className="flex items-center gap-2 text-white/75 text-sm font-medium">
@@ -134,11 +133,11 @@ export default function IndexHeader({ getImg, mobileMenu, setMobileMenu }: Index
               <div className="absolute top-2 left-0 anim-float-slow" style={{ ["--rot" as string]: "-6deg" }}>
                 <div className="backdrop-blur-xl bg-white/10 border border-white/15 rounded-2xl px-4 py-3 shadow-xl flex items-center gap-3">
                   <div className="w-9 h-9 rounded-xl bg-green-500/20 flex items-center justify-center">
-                    <Icon name="ShieldCheck" size={18} className="text-green-400" />
+                    <Icon name="Gift" size={18} className="text-green-400" />
                   </div>
                   <div>
-                    <div className="text-white font-display font-bold text-sm">Гарантия 5 лет</div>
-                    <div className="text-white/50 text-[11px]">Фурнитура Blum</div>
+                    <div className="text-white font-display font-bold text-sm">Замер бесплатно</div>
+                    <div className="text-white/50 text-[11px]">И 3D-проект в подарок</div>
                   </div>
                 </div>
               </div>
