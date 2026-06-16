@@ -136,6 +136,8 @@ export const IMAGE_SLOTS: ImageSlot[] = [
   { key: "cat_wardrobe", label: "Каталог · Шкафы-купе", group: "Каталог", defaultUrl: WARDROBE_IMG },
   { key: "cat_kids", label: "Каталог · Детская", group: "Каталог", defaultUrl: KIDS_IMG },
   { key: "cat_living", label: "Каталог · Гостиные", group: "Каталог", defaultUrl: LIVING_IMG },
+  { key: "cat_bathroom", label: "Каталог · Санузлы", group: "Каталог", defaultUrl: WARDROBE_IMG },
+  { key: "cat_business", label: "Каталог · Мебель для бизнеса", group: "Каталог", defaultUrl: LIVING_IMG },
   ...buildPortfolioSlots(),
 ];
 

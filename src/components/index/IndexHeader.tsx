@@ -98,7 +98,7 @@ export default function IndexHeader({ getImg, mobileMenu, setMobileMenu }: Index
                 { icon: "Gift", text: "Замер и 3D-проект бесплатно" },
                 { icon: "CreditCard", text: "Рассрочка от компании без %" },
                 { icon: "Award", text: "Фурнитура Blum и Makmart" },
-                { icon: "Zap", text: "21 день под ключ" },
+                { icon: "Factory", text: "Своё производство в Барнауле" },
               ].map((b, i) => (
                 <div key={i} className="flex items-center gap-2 text-white/75 text-sm font-medium">
                   <div className="w-7 h-7 rounded-lg bg-green-500/15 flex items-center justify-center">
@@ -147,11 +147,11 @@ export default function IndexHeader({ getImg, mobileMenu, setMobileMenu }: Index
               <div className="absolute bottom-6 right-0 anim-float-mid" style={{ ["--rot" as string]: "5deg" }}>
                 <div className="backdrop-blur-xl bg-white/10 border border-white/15 rounded-2xl px-4 py-3 shadow-xl flex items-center gap-3">
                   <div className="w-9 h-9 rounded-xl bg-orange-500/20 flex items-center justify-center">
-                    <Icon name="Zap" size={18} className="text-orange-400" />
+                    <Icon name="Award" size={18} className="text-orange-400" />
                   </div>
                   <div>
-                    <div className="text-white font-display font-bold text-sm">21 день под ключ</div>
-                    <div className="text-white/50 text-[11px]">От замера до монтажа</div>
+                    <div className="text-white font-display font-bold text-sm">Фурнитура Blum</div>
+                    <div className="text-white/50 text-[11px]">И Makmart</div>
                   </div>
                 </div>
               </div>

@@ -14,7 +14,7 @@ const ADVANTAGES = [
   { icon: "CheckCircle", title: "Контроль качества", desc: "Проверяем каждый элемент на производстве и при монтаже. QR-паспорт изделия" },
   { icon: "Award", title: "Австрийская фурнитура", desc: "Используем надёжную фурнитуру Blum и Makmart — плавный ход и долгий срок службы" },
   { icon: "Trash2", title: "Уборка после монтажа", desc: "Наша бригада убирает весь мусор и упаковку. Сдаём квартиру в идеальном порядке" },
-  { icon: "Zap", title: "21 день под ключ", desc: "От замера до установки — три недели. Соблюдаем сроки или возвращаем 10% от суммы" },
+  { icon: "Zap", title: "30 дней под ключ", desc: "От замера до установки — один месяц. Соблюдаем сроки, прописанные в договоре" },
   { icon: "CreditCard", title: "Рассрочка без %", desc: "Рассрочка напрямую от нашей компании, без банков и переплат. Платите частями в удобном темпе" },
 ];
 
@@ -64,9 +64,11 @@ export default function IndexCatalog({ getImg, quizStep, quizDone, handleQuizAns
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
               { img: getImg("cat_kitchen"), title: "Кухни", desc: "Угловые, прямые, П-образные. МДФ, ЛДСП, массив. Любая планировка.", icon: "UtensilsCrossed", color: "#f97316" },
-              { img: getImg("cat_wardrobe"), title: "Шкафы-купе и гардеробные", desc: "Встроенные системы хранения под потолок с раздвижными дверями.", icon: "Shirt", color: "#ea580c" },
-              { img: getImg("cat_kids"), title: "Мебель для детской", desc: "Безопасные материалы, яркие цвета, трансформируемые системы.", icon: "Baby", color: "#fb923c" },
+              { img: getImg("cat_wardrobe"), title: "Шкафы и гардеробные", desc: "Встроенные системы хранения под потолок с раздвижными дверями.", icon: "Shirt", color: "#ea580c" },
+              { img: getImg("cat_kids"), title: "Мебель для детской", desc: "Безопасные материалы и яркие цвета. Удобные системы хранения для игрушек и вещей.", icon: "Baby", color: "#fb923c" },
               { img: getImg("cat_living"), title: "Гостиные и прихожие", desc: "Стеллажи, тумбы под ТВ, обувницы, вешалки под ваш стиль.", icon: "Sofa", color: "#c2410c" },
+              { img: getImg("cat_bathroom"), title: "Санузлы", desc: "Влагостойкая мебель для ванной: тумбы, пеналы, шкафчики под раковину.", icon: "Bath", color: "#f97316" },
+              { img: getImg("cat_business"), title: "Мебель для бизнеса", desc: "Ресепшн, барные стойки, торговое оборудование для офисов, кафе и магазинов.", icon: "Briefcase", color: "#ea580c" },
             ].map((cat, i) => (
               <div key={i} className="group card-hover animate-on-scroll rounded-2xl overflow-hidden border border-gray-100 shadow-sm bg-white">
                 <div className="relative h-52 overflow-hidden">
