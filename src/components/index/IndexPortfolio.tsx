@@ -81,7 +81,7 @@ export default function IndexPortfolio({ getImg }: IndexPortfolioProps) {
             {REVIEWS.map((rev, i) => (
               <div key={i} className="animate-on-scroll glass-card-light rounded-2xl p-6 card-hover">
                 <div className="flex mb-3">
-                  {[1,2,3,4,5].map(s => <Icon key={s} name="Star" size={14} className="star-filled" />)}
+                  {[1,2,3,4,5].map(s => <Icon key={s} name="Star" size={14} className={s <= rev.rating ? "star-filled" : "text-gray-300"} />)}
                 </div>
                 <p className="text-gray-600 text-sm leading-relaxed mb-4">«{rev.text}»</p>
                 <div className="flex items-center justify-between border-t border-gray-100 pt-4">
@@ -93,6 +93,18 @@ export default function IndexPortfolio({ getImg }: IndexPortfolioProps) {
                 </div>
               </div>
             ))}
+          </div>
+
+          <div className="text-center mt-12">
+            <a
+              href="https://2gis.ru/barnaul/firm/70000001089375194/tab/reviews"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-orange inline-flex items-center gap-2 px-8 py-3.5 rounded-xl text-sm"
+            >
+              <Icon name="MapPin" size={18} className="text-white" />
+              Все отзывы в 2ГИС
+            </a>
           </div>
         </div>
       </section>
