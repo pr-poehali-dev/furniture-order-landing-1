@@ -46,7 +46,7 @@ export default function IndexFooter({
         <div className="max-w-2xl mx-auto px-4 sm:px-8 relative z-10 text-center">
           <div className="animate-on-scroll">
             <div className="text-orange-500 font-display font-semibold text-sm tracking-widest uppercase mb-3">Бесплатно</div>
-            <h2 className="font-display text-4xl sm:text-5xl font-bold text-white uppercase tracking-wide mb-4">
+            <h2 className="font-display sm:text-5xl font-bold text-white uppercase tracking-wide mb-4 text-4xl">
               Закажите бесплатный<br />
               <span className="gradient-text">выезд замерщика</span>
             </h2>
@@ -148,7 +148,7 @@ export default function IndexFooter({
                 </a>
               </div>
               <div className="text-white/30 text-xs space-y-1">
-                <div>ИНН: 7701234567</div>
+                <div>ИНН: 222510796208</div>
                 <div>ОГРН: 1127700000000</div>
                 <div>ИП Нагайцев А.В.</div>
               </div>

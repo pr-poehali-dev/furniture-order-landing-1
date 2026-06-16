@@ -80,7 +80,7 @@ export default function IndexCatalog({ getImg, handleFormSubmit }: IndexCatalogP
         <div className="max-w-3xl mx-auto px-4 sm:px-8 relative z-10">
           <div className="animate-on-scroll text-center mb-12">
             <div className="text-orange-500 font-display font-semibold text-sm tracking-widest uppercase mb-3">Быстрый расчёт</div>
-            <h2 className="font-display text-4xl sm:text-5xl font-bold text-white uppercase tracking-wide mb-4">
+            <h2 className="font-display sm:text-5xl font-bold text-white uppercase tracking-wide mb-4 text-4xl">
               Узнайте цену за<br /><span className="gradient-text">2 минуты</span>
             </h2>
             <p className="text-white/60 text-lg">
@@ -97,7 +97,7 @@ export default function IndexCatalog({ getImg, handleFormSubmit }: IndexCatalogP
         <div className="max-w-7xl mx-auto px-4 sm:px-8">
           <div className="animate-on-scroll text-center mb-16">
             <div className="text-orange-500 font-display font-semibold text-sm tracking-widest uppercase mb-3">Процесс работы</div>
-            <h2 className="font-display text-4xl sm:text-5xl font-bold text-gray-900 uppercase tracking-wide">
+            <h2 className="font-display sm:text-5xl font-bold text-gray-900 uppercase tracking-wide text-4xl">
               5 шагов к новой мебели
             </h2>
           </div>
@@ -115,7 +115,7 @@ export default function IndexCatalog({ getImg, handleFormSubmit }: IndexCatalogP
                       <span className="text-orange-400 font-display font-bold text-xs">{step.num}</span>
                     </div>
                   </div>
-                  <h3 className="font-display font-bold text-gray-900 text-lg uppercase tracking-wide mb-2">{step.title}</h3>
+                  <h3 className="font-display text-gray-900 uppercase tracking-wide mb-2 font-bold text-lg">{step.title}</h3>
                   <p className="text-gray-500 text-sm leading-relaxed">{step.desc}</p>
                 </div>
               ))}
