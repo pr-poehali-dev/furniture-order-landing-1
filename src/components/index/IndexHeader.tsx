@@ -65,7 +65,7 @@ export default function IndexHeader({ getImg, mobileMenu, setMobileMenu }: Index
                 ))}
                 <div className="h-px bg-white/10 my-1" />
                 <a
-                  href="https://vk.com/svoystyle22"
+                  href="https://vk.com/barnaul_mebel22"
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => setMobileMenu(false)}
