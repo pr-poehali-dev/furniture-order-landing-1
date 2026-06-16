@@ -96,7 +96,8 @@ export default function IndexHeader({ getImg, mobileMenu, setMobileMenu }: Index
             <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
               {[
                 { icon: "Gift", text: "Замер и 3D-проект бесплатно" },
-                { icon: "CreditCard", text: "Рассрочка без %" },
+                { icon: "CreditCard", text: "Рассрочка от компании без %" },
+                { icon: "Award", text: "Фурнитура Blum и Makmart" },
                 { icon: "Zap", text: "21 день под ключ" },
               ].map((b, i) => (
                 <div key={i} className="flex items-center gap-2 text-white/75 text-sm font-medium">
