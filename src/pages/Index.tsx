@@ -5,8 +5,6 @@ import IndexCatalog from "@/components/index/IndexCatalog";
 import IndexPortfolio from "@/components/index/IndexPortfolio";
 import IndexFooter from "@/components/index/IndexFooter";
 
-const QUIZ_QUESTIONS_COUNT = 6;
-
 function useScrollAnimation() {
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -28,9 +26,6 @@ export default function Index() {
   useScrollAnimation();
   const getImg = useSiteImages();
 
-  const [quizStep, setQuizStep] = useState(0);
-  const [quizAnswers, setQuizAnswers] = useState<string[]>([]);
-  const [quizDone, setQuizDone] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
   const [chatMessages, setChatMessages] = useState([
     { from: "bot", text: "Привет! Я онлайн-консультант «Свой Стиль». Задайте любой вопрос о нашей мебели или стоимости." },
@@ -45,16 +40,6 @@ export default function Index() {
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [chatMessages]);
-
-  const handleQuizAnswer = (answer: string) => {
-    const newAnswers = [...quizAnswers, answer];
-    setQuizAnswers(newAnswers);
-    if (quizStep < QUIZ_QUESTIONS_COUNT - 1) {
-      setQuizStep(quizStep + 1);
-    } else {
-      setQuizDone(true);
-    }
-  };
 
   const handleSendChat = () => {
     if (!chatInput.trim()) return;
@@ -87,9 +72,6 @@ export default function Index() {
 
       <IndexCatalog
         getImg={getImg}
-        quizStep={quizStep}
-        quizDone={quizDone}
-        handleQuizAnswer={handleQuizAnswer}
         handleFormSubmit={handleFormSubmit}
       />
 

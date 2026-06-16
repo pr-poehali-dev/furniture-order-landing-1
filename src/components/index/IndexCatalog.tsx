@@ -1,4 +1,5 @@
 import Icon from "@/components/ui/icon";
+import QuizCalculator from "@/components/index/QuizCalculator";
 
 const STEPS = [
   { icon: "Phone", num: "01", title: "Оставьте заявку", desc: "Позвоните или оставьте номер на сайте — перезвоним в течение 15 минут и ответим на все вопросы." },
@@ -18,42 +19,12 @@ const ADVANTAGES = [
   { icon: "CreditCard", title: "Рассрочка без %", desc: "Рассрочка напрямую от нашей компании, без банков и переплат. Платите частями в удобном темпе" },
 ];
 
-const QUIZ_QUESTIONS = [
-  {
-    q: "Какую мебель хотите заказать?",
-    options: ["Кухню", "Шкаф"],
-  },
-  {
-    q: "Какая форма вам нужна?",
-    options: ["Прямой", "Угловой"],
-  },
-  {
-    q: "Какие двери для шкафа?",
-    options: ["Распашные", "Купе"],
-  },
-  {
-    q: "Примерная площадь помещения?",
-    options: ["До 8 м²", "8–15 м²", "15–25 м²", "Более 25 м²"],
-  },
-  {
-    q: "Какой материал предпочитаете?",
-    options: ["МДФ эмаль (эстетично)", "ЛДСП (надёжно, экономно)", "Шпон / массив (премиум)", "Не знаю, нужна консультация"],
-  },
-  {
-    q: "Когда планируете заказ?",
-    options: ["Сейчас — делаю ремонт", "Через 1–3 месяца", "Через полгода", "Просто интересует цена"],
-  },
-];
-
 interface IndexCatalogProps {
   getImg: (key: string) => string;
-  quizStep: number;
-  quizDone: boolean;
-  handleQuizAnswer: (answer: string) => void;
   handleFormSubmit: (e: React.FormEvent) => void;
 }
 
-export default function IndexCatalog({ getImg, quizStep, quizDone, handleQuizAnswer, handleFormSubmit }: IndexCatalogProps) {
+export default function IndexCatalog({ getImg, handleFormSubmit }: IndexCatalogProps) {
   return (
     <>
       {/* ===== CATALOG ===== */}
@@ -114,56 +85,11 @@ export default function IndexCatalog({ getImg, quizStep, quizDone, handleQuizAns
               Узнайте цену за<br /><span className="gradient-text">2 минуты</span>
             </h2>
             <p className="text-white/60 text-lg">
-              Ответьте на 4 вопроса — получите предварительный расчёт и скидку <strong className="text-orange-400">10%</strong> на первый заказ
+              Ответьте на несколько вопросов — получите предварительный расчёт и скидку <strong className="text-orange-400">10%</strong> на первый заказ
             </p>
           </div>
 
-          <div className="glass-card rounded-3xl p-8 border border-orange-500/20">
-            {!quizDone ? (
-              <>
-                <div className="flex items-center gap-3 mb-8">
-                  {QUIZ_QUESTIONS.map((_, i) => (
-                    <div key={i} className={`h-1.5 flex-1 rounded-full transition-all duration-300 ${i <= quizStep ? "bg-orange-500" : "bg-white/10"}`} />
-                  ))}
-                </div>
-                <div className="text-orange-400 text-sm font-semibold mb-3">Вопрос {quizStep + 1} из {QUIZ_QUESTIONS.length}</div>
-                <h3 className="font-display text-2xl font-bold text-white uppercase tracking-wide mb-6">
-                  {QUIZ_QUESTIONS[quizStep].q}
-                </h3>
-                <div className="grid sm:grid-cols-2 gap-3">
-                  {QUIZ_QUESTIONS[quizStep].options.map((opt, i) => (
-                    <button
-                      key={i}
-                      className="text-left px-5 py-4 rounded-xl border border-white/15 text-white/80 hover:border-orange-500 hover:bg-orange-500/10 hover:text-white transition-all duration-200 text-sm"
-                      onClick={() => handleQuizAnswer(opt)}
-                    >
-                      {opt}
-                    </button>
-                  ))}
-                </div>
-              </>
-            ) : (
-              <div className="text-center py-6">
-                <div className="w-16 h-16 gradient-orange rounded-full flex items-center justify-center mx-auto mb-6">
-                  <Icon name="CheckCircle" size={32} className="text-white" />
-                </div>
-                <h3 className="font-display text-3xl font-bold text-white uppercase mb-3">Отлично!</h3>
-                <p className="text-white/70 mb-2">Ваш предварительный расчёт готов.</p>
-                <p className="text-orange-400 font-bold text-xl mb-6">Скидка 10% уже зарезервирована за вами!</p>
-                <p className="text-white/50 text-sm mb-8">Оставьте номер телефона — менеджер перезвонит и назовёт точную цену</p>
-                <form className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto" onSubmit={handleFormSubmit}>
-                  <input
-                    type="tel"
-                    placeholder="+7 (___) ___-__-__"
-                    className="flex-1 bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-orange-500 text-sm"
-                  />
-                  <button type="submit" className="btn-orange px-6 py-3 rounded-xl text-sm whitespace-nowrap">
-                    Получить расчёт
-                  </button>
-                </form>
-              </div>
-            )}
-          </div>
+          <QuizCalculator handleFormSubmit={handleFormSubmit} />
         </div>
       </section>
 
