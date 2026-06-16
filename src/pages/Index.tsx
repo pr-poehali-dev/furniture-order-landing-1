@@ -5,7 +5,7 @@ import IndexCatalog from "@/components/index/IndexCatalog";
 import IndexPortfolio from "@/components/index/IndexPortfolio";
 import IndexFooter from "@/components/index/IndexFooter";
 
-const QUIZ_QUESTIONS_COUNT = 4;
+const QUIZ_QUESTIONS_COUNT = 5;
 
 function useScrollAnimation() {
   useEffect(() => {
