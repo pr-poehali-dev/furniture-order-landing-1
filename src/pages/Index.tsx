@@ -63,7 +63,7 @@ export default function Index() {
   };
 
   return (
-    <div className="min-h-screen" style={{ fontFamily: "'Golos Text', sans-serif", background: "#0a0f1a" }}>
+    <div className="min-h-screen" style={{ fontFamily: "'Inter', sans-serif", background: "#0a0f1a" }}>
       <IndexHeader
         getImg={getImg}
         mobileMenu={mobileMenu}

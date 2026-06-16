@@ -97,14 +97,14 @@
 
   body {
     @apply bg-background text-foreground;
-    font-family: "Golos Text", sans-serif;
+    font-family: "Inter", sans-serif;
   }
 
   h1,
   h2,
   h3,
   h4 {
-    font-family: "Oswald", sans-serif;
+    font-family: "Montserrat", sans-serif;
   }
 }
 
