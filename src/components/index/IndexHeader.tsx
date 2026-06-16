@@ -14,9 +14,9 @@ export default function IndexHeader({ getImg, mobileMenu, setMobileMenu }: Index
         <div className="max-w-7xl mx-auto px-4 sm:px-8 flex items-center justify-between h-16">
           <a href="#" className="flex items-center gap-2.5">
             <img
-              src="https://cdn.poehali.dev/projects/e84f41ff-e623-49a2-a773-de1e473421e0/bucket/4aed8e22-ae93-40b5-936c-e961762ec225.jpg"
+              src="https://cdn.poehali.dev/projects/e84f41ff-e623-49a2-a773-de1e473421e0/bucket/logo/svoy-stil-transparent.png"
               alt="Логотип Свой Стиль"
-              className="h-10 w-10 object-contain mix-blend-screen"
+              className="h-10 w-10 object-contain"
             />
             <span className="font-display font-bold text-xl text-white tracking-wide">
               СВОЙ<span className="gradient-text"> СТИЛЬ</span>
