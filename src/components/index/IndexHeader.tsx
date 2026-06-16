@@ -30,13 +30,6 @@ export default function IndexHeader({ getImg, mobileMenu, setMobileMenu }: Index
           </div>
           <div className="flex items-center gap-3">
             <a href="tel:+74951234567" className="hidden md:flex items-center gap-2 text-white font-display font-semibold text-sm tracking-wide hover:text-orange-400 transition-colors">+7 (913) 274-85-19</a>
-            <a
-              href="https://vk.com/barnaul_mebel22"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Мы ВКонтакте"
-              className="hidden md:flex w-9 h-9 rounded-lg border border-white/15 items-center justify-center text-white/70 hover:text-orange-400 hover:border-orange-500/50 transition-colors text-sm font-bold"
-            >ВК</a>
             <button
               className="btn-orange px-4 py-2 rounded-lg text-sm"
               onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
