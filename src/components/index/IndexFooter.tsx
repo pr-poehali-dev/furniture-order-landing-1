@@ -140,11 +140,8 @@ export default function IndexFooter({
             <div>
               <h4 className="font-display font-semibold text-white uppercase tracking-wide text-sm mb-4">Мы в соцсетях</h4>
               <div className="flex gap-3 mb-6">
-                <a href="#" className="w-10 h-10 glass-card rounded-xl flex items-center justify-center hover:border-orange-500/50 transition-colors group">
+                <a href="#" target="_blank" rel="noopener noreferrer" className="w-10 h-10 glass-card rounded-xl flex items-center justify-center hover:border-orange-500/50 transition-colors group">
                   <span className="text-white/60 group-hover:text-orange-400 text-sm font-bold">ВК</span>
-                </a>
-                <a href="#" className="w-10 h-10 glass-card rounded-xl flex items-center justify-center hover:border-orange-500/50 transition-colors group">
-                  <Icon name="Send" size={16} className="text-white/60 group-hover:text-orange-400" />
                 </a>
               </div>
               <div className="text-white/30 text-xs space-y-1">
