@@ -3,6 +3,7 @@ import { useSiteImages } from "@/lib/siteImages";
 import IndexHeader from "@/components/index/IndexHeader";
 import IndexCatalog from "@/components/index/IndexCatalog";
 import IndexPortfolio from "@/components/index/IndexPortfolio";
+import IndexSeoText from "@/components/index/IndexSeoText";
 import IndexFooter from "@/components/index/IndexFooter";
 
 function useScrollAnimation() {
@@ -76,6 +77,8 @@ export default function Index() {
       />
 
       <IndexPortfolio getImg={getImg} />
+
+      <IndexSeoText />
 
       <IndexFooter
         formName={formName}
