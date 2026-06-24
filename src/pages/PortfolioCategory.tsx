@@ -1,11 +1,22 @@
 import { Link, useParams } from "react-router-dom";
 import Icon from "@/components/ui/icon";
 import { findCategory, getProjectGallery, useSiteImages } from "@/lib/siteImages";
+import { useSeo } from "@/lib/useSeo";
 
 export default function PortfolioCategory() {
   const { categorySlug } = useParams<{ categorySlug: string }>();
   const getImg = useSiteImages();
   const category = categorySlug ? findCategory(categorySlug) : undefined;
+
+  useSeo(
+    category
+      ? {
+          title: `${category.title} на заказ в Барнауле — фото и цены | Свой Стиль`,
+          description: `${category.title} на заказ по вашим размерам в Барнауле. ${category.description}. Бесплатный замер и расчёт стоимости. Производство «Свой Стиль» с 2012 года.`,
+          canonicalPath: `/portfolio/${category.slug}`,
+        }
+      : { title: "Категория не найдена | Свой Стиль" }
+  );
 
   if (!category) {
     return (

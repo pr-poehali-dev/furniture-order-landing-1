@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import Icon from "@/components/ui/icon";
 import { findProject, getProjectGallery, useSiteImages } from "@/lib/siteImages";
+import { useSeo } from "@/lib/useSeo";
 
 export default function PortfolioProject() {
   const { categorySlug, projectSlug } = useParams<{ categorySlug: string; projectSlug: string }>();
@@ -9,6 +10,16 @@ export default function PortfolioProject() {
   const navigate = useNavigate();
   const found = categorySlug && projectSlug ? findProject(categorySlug, projectSlug) : undefined;
   const [active, setActive] = useState(0);
+
+  useSeo(
+    found
+      ? {
+          title: `${found.project.title} на заказ в Барнауле — ${found.project.price} | Свой Стиль`,
+          description: `${found.project.title} на заказ в Барнауле по вашим размерам. ${found.project.material}. Стоимость под ключ ${found.project.price}. Бесплатный замер от производителя «Свой Стиль».`,
+          canonicalPath: `/portfolio/${categorySlug}/${projectSlug}`,
+        }
+      : { title: "Проект не найден | Свой Стиль" }
+  );
 
   if (!found) {
     return (
