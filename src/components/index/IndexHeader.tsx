@@ -115,10 +115,10 @@ export default function IndexHeader({ getImg, mobileMenu, setMobileMenu }: Index
                 <Icon name="ArrowRight" size={18} className="text-white transition-transform group-hover:translate-x-1" />
               </button>
               <button
-                className="px-8 py-4 rounded-2xl text-base font-semibold text-white backdrop-blur-md bg-white/5 border border-white/20 hover:bg-white/10 hover:border-white/40 transition-all inline-flex items-center justify-center gap-2"
+                className="btn-outline-orange px-8 py-4 rounded-2xl text-base inline-flex items-center justify-center gap-2 bg-white/5 backdrop-blur-md"
                 onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
               >
-                <Icon name="Ruler" size={18} className="text-white" />
+                <Icon name="Ruler" size={18} />
                 Записаться на замер
               </button>
             </div>
