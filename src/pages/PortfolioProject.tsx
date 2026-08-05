@@ -14,8 +14,8 @@ export default function PortfolioProject() {
   useSeo(
     found
       ? {
-          title: `${found.project.title} на заказ в Барнауле — ${found.project.price} | Свой Стиль`,
-          description: `${found.project.title} на заказ в Барнауле по вашим размерам. ${found.project.material}. Стоимость под ключ ${found.project.price}. Бесплатный замер от производителя «Свой Стиль».`,
+          title: `${found.project.title} на заказ в Барнауле | Свой Стиль`,
+          description: `${found.project.title} на заказ в Барнауле по вашим размерам. ${found.project.material}. Бесплатный замер от производителя «Свой Стиль».`,
           canonicalPath: `/portfolio/${categorySlug}/${projectSlug}`,
         }
       : { title: "Проект не найден | Свой Стиль" }
@@ -103,11 +103,7 @@ export default function PortfolioProject() {
           <div className="p-6 sm:p-8">
             <h1 className="font-display text-3xl font-bold text-gray-900 uppercase tracking-wide">{project.title}</h1>
             <p className="text-gray-500 mt-2">{project.material}</p>
-            <div className="flex flex-wrap items-center justify-between gap-4 mt-6">
-              <div>
-                <div className="text-gray-400 text-sm">Стоимость под ключ</div>
-                <div className="font-display text-3xl font-bold text-orange-500">{project.price}</div>
-              </div>
+            <div className="flex justify-end mt-6">
               <button
                 className="btn-orange px-7 py-3.5 rounded-xl text-sm"
                 onClick={() => navigate("/#contact")}

@@ -11,7 +11,7 @@ export default function PortfolioCategory() {
   useSeo(
     category
       ? {
-          title: `${category.title} на заказ в Барнауле — фото и цены | Свой Стиль`,
+          title: `${category.title} на заказ в Барнауле — фото работ | Свой Стиль`,
           description: `${category.title} на заказ по вашим размерам в Барнауле. ${category.description}. Бесплатный замер и расчёт стоимости. Производство «Свой Стиль» с 2012 года.`,
           canonicalPath: `/portfolio/${category.slug}`,
         }
@@ -71,8 +71,7 @@ export default function PortfolioCategory() {
                   <div className="absolute bottom-0 left-0 right-0 p-5">
                     <h3 className="font-display font-bold text-white text-xl uppercase">{proj.title}</h3>
                     <p className="text-white/70 text-xs mt-1">{proj.material}</p>
-                    <div className="flex items-center justify-between mt-3">
-                      <span className="text-orange-400 font-display font-bold text-lg">{proj.price}</span>
+                    <div className="flex items-center justify-end mt-3">
                       <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center group-hover:bg-orange-500 transition-colors duration-300">
                         <Icon name="ArrowRight" size={14} className="text-white" />
                       </div>
