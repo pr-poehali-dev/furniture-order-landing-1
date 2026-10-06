@@ -301,6 +301,38 @@ export async function saveOverride(key: string, url: string) {
   notify();
 }
 
+export async function saveOverrides(items: Record<string, string>) {
+  await postImages(items);
+  const next = { ...serverImages };
+  for (const [key, url] of Object.entries(items)) {
+    if (url) next[key] = url;
+    else delete next[key];
+  }
+  serverImages = next;
+  notify();
+}
+
+export function projectDetailKeys(projectKey: string): string[] {
+  return Array.from({ length: PORTFOLIO_DETAIL_COUNT }, (_, i) => `${projectKey}_detail_${i + 1}`);
+}
+
+async function shrinkImage(file: File): Promise<Blob> {
+  const MAX = 2000;
+  try {
+    const bitmap = await createImageBitmap(file);
+    const scale = Math.min(1, MAX / Math.max(bitmap.width, bitmap.height));
+    if (scale === 1 && file.size < 1.5 * 1024 * 1024) return file;
+    const canvas = document.createElement("canvas");
+    canvas.width = Math.round(bitmap.width * scale);
+    canvas.height = Math.round(bitmap.height * scale);
+    canvas.getContext("2d")?.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+    const blob = await new Promise<Blob | null>((r) => canvas.toBlob(r, "image/jpeg", 0.85));
+    return blob || file;
+  } catch {
+    return file;
+  }
+}
+
 export async function resetOverride(key: string) {
   await postImages({ [key]: "" });
   const next = { ...serverImages };
@@ -341,17 +373,18 @@ export function useSiteImages() {
 }
 
 export async function uploadImage(file: File): Promise<string> {
+  const blob = await shrinkImage(file);
   const base64 = await new Promise<string>((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = () => resolve(reader.result as string);
     reader.onerror = reject;
-    reader.readAsDataURL(file);
+    reader.readAsDataURL(blob);
   });
 
   const res = await fetch(UPLOAD_URL, {
     method: "POST",
     headers: { "Content-Type": "application/json", "X-Admin-Password": getAdminPassword() },
-    body: JSON.stringify({ file: base64, contentType: file.type }),
+    body: JSON.stringify({ file: base64, contentType: blob.type || file.type }),
   });
 
   if (!res.ok) {

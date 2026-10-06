@@ -13,7 +13,10 @@ import {
   getAdminPassword,
   loadSiteImages,
   migrateLocal,
+  PORTFOLIO_CATEGORIES,
+  categoryCoverKey,
 } from "@/lib/siteImages";
+import ProjectGalleryCard from "@/components/admin/ProjectGalleryCard";
 
 function AdminLogin({ onSuccess }: { onSuccess: () => void }) {
   const [password, setPassword] = useState("");
@@ -154,6 +157,8 @@ function SlotCard({ slot }: { slot: ImageSlot }) {
 
 export default function Admin() {
   const [authed, setAuthed] = useState(() => !!getAdminPassword());
+  const [activeCat, setActiveCat] = useState(PORTFOLIO_CATEGORIES[0].slug);
+  const category = PORTFOLIO_CATEGORIES.find((c) => c.slug === activeCat);
 
   const handleLogin = () => {
     setAuthed(true);
@@ -202,7 +207,7 @@ export default function Admin() {
           </p>
         </div>
 
-        {GROUPS.map((group) => (
+        {GROUPS.filter((g) => g !== "Портфолио").map((group) => (
           <section key={group} className="mb-10">
             <h2 className="font-display font-bold text-gray-900 text-2xl uppercase tracking-wide mb-4 flex items-center gap-2">
               <span className="w-1.5 h-6 gradient-orange rounded-full" />
@@ -215,6 +220,42 @@ export default function Admin() {
             </div>
           </section>
         ))}
+
+        <section className="mb-10">
+          <h2 className="font-display font-bold text-gray-900 text-2xl uppercase tracking-wide mb-2 flex items-center gap-2">
+            <span className="w-1.5 h-6 gradient-orange rounded-full" />
+            Портфолио
+          </h2>
+          <p className="text-gray-500 text-sm mb-5">
+            Выберите папку и нажмите «Добавить фото» у нужного проекта. Можно выделить сразу несколько фото (Ctrl или Shift).
+            Первое фото — главное, его видно на обложке. Наведите на миниатюру, чтобы сделать фото главным или удалить его.
+          </p>
+
+          <div className="flex flex-wrap gap-2 mb-6">
+            {PORTFOLIO_CATEGORIES.map((c) => (
+              <button
+                key={c.slug}
+                onClick={() => setActiveCat(c.slug)}
+                className={`px-4 py-2 rounded-xl text-sm font-semibold transition-colors ${activeCat === c.slug ? "bg-orange-500 text-white" : "bg-white border border-gray-200 text-gray-700 hover:border-orange-400"}`}
+              >
+                {c.title} <span className="opacity-70">· {c.projects.length}</span>
+              </button>
+            ))}
+          </div>
+
+          {category && (
+            <>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-5">
+                <SlotCard slot={IMAGE_SLOTS.find((s) => s.key === categoryCoverKey(category.slug))!} />
+              </div>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                {category.projects.map((p) => (
+                  <ProjectGalleryCard key={p.slug} project={p} />
+                ))}
+              </div>
+            </>
+          )}
+        </section>
       </main>
     </div>
   );
