@@ -18,6 +18,8 @@ export default function ProjectGalleryCard({ project }: { project: PortfolioProj
   const [busy, setBusy] = useState(false);
   const [progress, setProgress] = useState<{ done: number; total: number } | null>(null);
   const [message, setMessage] = useState<{ type: "error" | "info"; text: string } | null>(null);
+  const [dragFrom, setDragFrom] = useState<number | null>(null);
+  const [dragOver, setDragOver] = useState<number | null>(null);
 
   const overrides = loadOverrides();
   const mainKey = project.slot;
@@ -98,6 +100,14 @@ export default function ProjectGalleryCard({ project }: { project: PortfolioProj
     }
   };
 
+  const moveTo = (from: number, to: number) => {
+    if (from === to || from < 0 || to < 0) return;
+    const list = [...photos];
+    const [item] = list.splice(from, 1);
+    list.splice(to, 0, item);
+    runChange(list);
+  };
+
   const removeAt = (i: number) => runChange(photos.filter((_, idx) => idx !== i));
   const makeMain = (i: number) => runChange([photos[i], ...photos.filter((_, idx) => idx !== i)]);
 
@@ -130,12 +140,48 @@ export default function ProjectGalleryCard({ project }: { project: PortfolioProj
         {photos.length > 0 && (
           <div className="grid grid-cols-5 gap-1.5 mb-3">
             {photos.map((url, i) => (
-              <div key={url + i} className={`group relative aspect-square rounded-lg overflow-hidden border-2 ${i === 0 ? "border-orange-500" : "border-transparent"}`}>
-                <img src={url} alt="" className="w-full h-full object-cover" />
+              <div
+                key={url + i}
+                draggable={!busy}
+                onDragStart={(e) => {
+                  setDragFrom(i);
+                  e.dataTransfer.effectAllowed = "move";
+                }}
+                onDragOver={(e) => {
+                  if (dragFrom === null) return;
+                  e.preventDefault();
+                  if (dragOver !== i) setDragOver(i);
+                }}
+                onDragLeave={() => setDragOver((v) => (v === i ? null : v))}
+                onDrop={(e) => {
+                  e.preventDefault();
+                  if (dragFrom !== null) moveTo(dragFrom, i);
+                  setDragFrom(null);
+                  setDragOver(null);
+                }}
+                onDragEnd={() => {
+                  setDragFrom(null);
+                  setDragOver(null);
+                }}
+                className={`group relative aspect-square rounded-lg overflow-hidden border-2 cursor-grab active:cursor-grabbing transition-all ${
+                  dragOver === i && dragFrom !== i ? "border-orange-400 scale-105 ring-2 ring-orange-300" : i === 0 ? "border-orange-500" : "border-transparent"
+                } ${dragFrom === i ? "opacity-40" : ""}`}
+              >
+                <img src={url} alt="" draggable={false} className="w-full h-full object-cover pointer-events-none" />
                 {i === 0 && (
                   <span className="absolute bottom-0 inset-x-0 bg-orange-500 text-white text-[9px] font-semibold text-center leading-4">ГЛАВНОЕ</span>
                 )}
-                <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-1">
+                <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex flex-wrap items-center justify-center content-center gap-1">
+                  {i > 0 && (
+                    <button onClick={() => moveTo(i, i - 1)} disabled={busy} title="Сдвинуть влево" className="w-6 h-6 rounded-full bg-white/90 flex items-center justify-center text-gray-700">
+                      <Icon name="ChevronLeft" size={12} />
+                    </button>
+                  )}
+                  {i < photos.length - 1 && (
+                    <button onClick={() => moveTo(i, i + 1)} disabled={busy} title="Сдвинуть вправо" className="w-6 h-6 rounded-full bg-white/90 flex items-center justify-center text-gray-700">
+                      <Icon name="ChevronRight" size={12} />
+                    </button>
+                  )}
                   {i !== 0 && (
                     <button onClick={() => makeMain(i)} disabled={busy} title="Сделать главным" className="w-6 h-6 rounded-full bg-white/90 flex items-center justify-center text-orange-500">
                       <Icon name="Star" size={12} />
