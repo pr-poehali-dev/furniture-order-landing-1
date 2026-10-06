@@ -8,6 +8,10 @@ import {
   saveOverrides,
   uploadImage,
   useSiteImages,
+  getProjectTitle,
+  getProjectMaterial,
+  titleKey,
+  materialKey,
 } from "@/lib/siteImages";
 import ProjectDescriptionEditor from "@/components/admin/ProjectDescriptionEditor";
 
@@ -135,9 +139,25 @@ export default function ProjectGalleryCard({ project }: { project: PortfolioProj
       </div>
 
       <div className="p-4 flex flex-col flex-1">
-        <div className="font-display font-bold text-gray-900 text-sm uppercase tracking-wide">{project.title}</div>
-        <div className="text-gray-400 text-xs mt-0.5 mb-3">{project.material}</div>
+        <div className="font-display font-bold text-gray-900 text-sm uppercase tracking-wide">{getProjectTitle(project)}</div>
+        <div className="text-gray-400 text-xs mt-0.5 mb-3">{getProjectMaterial(project)}</div>
 
+        <ProjectDescriptionEditor
+          projectKey={titleKey(project.slot)}
+          label="Название"
+          defaultValue={project.title}
+          multiline={false}
+          max={80}
+          placeholder="Например: Угловая кухня в стиле лофт"
+        />
+        <ProjectDescriptionEditor
+          projectKey={materialKey(project.slot)}
+          label="Материалы"
+          defaultValue={project.material}
+          multiline={false}
+          max={150}
+          placeholder="Например: МДФ эмаль, фурнитура Blum"
+        />
         <ProjectDescriptionEditor projectKey={project.slot} />
 
         {photos.length > 0 && (

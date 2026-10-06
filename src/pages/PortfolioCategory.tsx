@@ -1,6 +1,6 @@
 import { Link, useParams } from "react-router-dom";
 import Icon from "@/components/ui/icon";
-import { findCategory, getProjectGallery, useSiteImages } from "@/lib/siteImages";
+import { findCategory, getProjectGallery, getProjectTitle, getProjectMaterial, useSiteImages } from "@/lib/siteImages";
 import { useSeo } from "@/lib/useSeo";
 
 export default function PortfolioCategory() {
@@ -60,7 +60,7 @@ export default function PortfolioCategory() {
                 className="group cursor-pointer card-hover rounded-2xl overflow-hidden shadow-md block bg-white"
               >
                 <div className="relative h-64 overflow-hidden">
-                  <img src={getImg(proj.slot)} alt={proj.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                  <img src={getImg(proj.slot)} alt={getProjectTitle(proj)} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
                   {count > 1 && (
                     <div className="absolute top-4 right-4 flex items-center gap-1 bg-black/55 text-white text-xs font-semibold px-2.5 py-1 rounded-full">
@@ -69,8 +69,8 @@ export default function PortfolioCategory() {
                     </div>
                   )}
                   <div className="absolute bottom-0 left-0 right-0 p-5">
-                    <h3 className="font-display font-bold text-white text-xl uppercase">{proj.title}</h3>
-                    <p className="text-white/70 text-xs mt-1">{proj.material}</p>
+                    <h3 className="font-display font-bold text-white text-xl uppercase">{getProjectTitle(proj)}</h3>
+                    <p className="text-white/70 text-xs mt-1">{getProjectMaterial(proj)}</p>
                     <div className="flex items-center justify-end mt-3">
                       <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center group-hover:bg-orange-500 transition-colors duration-300">
                         <Icon name="ArrowRight" size={14} className="text-white" />

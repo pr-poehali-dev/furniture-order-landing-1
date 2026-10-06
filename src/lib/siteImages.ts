@@ -242,6 +242,17 @@ export function getProjectText(projectKey: string): string {
   return serverTexts[projectKey] || "";
 }
 
+export const titleKey = (slot: string) => `${slot}_title`;
+export const materialKey = (slot: string) => `${slot}_material`;
+
+export function getProjectTitle(project: PortfolioProject): string {
+  return serverTexts[titleKey(project.slot)] || project.title;
+}
+
+export function getProjectMaterial(project: PortfolioProject): string {
+  return serverTexts[materialKey(project.slot)] ?? project.material;
+}
+
 export async function saveProjectText(projectKey: string, text: string): Promise<string> {
   const res = await fetch(IMAGES_API_URL, {
     method: "POST",

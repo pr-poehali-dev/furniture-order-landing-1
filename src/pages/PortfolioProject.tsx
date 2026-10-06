@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import Icon from "@/components/ui/icon";
-import { findProject, getProjectGallery, getProjectText, useSiteImages } from "@/lib/siteImages";
+import { findProject, getProjectGallery, getProjectText, getProjectTitle, getProjectMaterial, useSiteImages } from "@/lib/siteImages";
 import { useSeo } from "@/lib/useSeo";
 
 export default function PortfolioProject() {
@@ -10,12 +10,14 @@ export default function PortfolioProject() {
   const navigate = useNavigate();
   const found = categorySlug && projectSlug ? findProject(categorySlug, projectSlug) : undefined;
   const [active, setActive] = useState(0);
+  const pTitle = found ? getProjectTitle(found.project) : "";
+  const pMaterial = found ? getProjectMaterial(found.project) : "";
 
   useSeo(
     found
       ? {
-          title: `${found.project.title} на заказ в Барнауле | Свой Стиль`,
-          description: `${found.project.title} на заказ в Барнауле по вашим размерам. ${found.project.material}. Бесплатный замер от производителя «Свой Стиль».`,
+          title: `${pTitle} на заказ в Барнауле | Свой Стиль`,
+          description: `${pTitle} на заказ в Барнауле по вашим размерам. ${pMaterial ? pMaterial + ". " : ""}Бесплатный замер от производителя «Свой Стиль».`,
           canonicalPath: `/portfolio/${categorySlug}/${projectSlug}`,
         }
       : { title: "Проект не найден | Свой Стиль" }
@@ -57,12 +59,12 @@ export default function PortfolioProject() {
           <Icon name="ChevronRight" size={14} />
           <Link to={`/portfolio/${category.slug}`} className="hover:text-orange-500">{category.title}</Link>
           <Icon name="ChevronRight" size={14} />
-          <span className="text-gray-600">{project.title}</span>
+          <span className="text-gray-600">{pTitle}</span>
         </div>
 
         <div className="bg-white rounded-3xl overflow-hidden shadow-md">
           <div className="relative h-[420px] bg-gray-100">
-            <img src={gallery[activeIndex]} alt={project.title} className="w-full h-full object-cover" />
+            <img src={gallery[activeIndex]} alt={pTitle} className="w-full h-full object-cover" />
             <div className="absolute top-4 left-4">
               <span className="bg-orange-500 text-white text-xs font-display font-semibold px-3 py-1 rounded-full uppercase">{category.tag}</span>
             </div>
@@ -95,15 +97,15 @@ export default function PortfolioProject() {
                   onClick={() => setActive(i)}
                   className={`relative w-24 h-20 rounded-xl overflow-hidden shrink-0 border-2 transition-colors ${i === activeIndex ? "border-orange-500" : "border-transparent opacity-70 hover:opacity-100"}`}
                 >
-                  <img src={img} alt={`${project.title} фото ${i + 1}`} className="w-full h-full object-cover" />
+                  <img src={img} alt={`${pTitle} фото ${i + 1}`} className="w-full h-full object-cover" />
                 </button>
               ))}
             </div>
           )}
 
           <div className="p-6 sm:p-8">
-            <h1 className="font-display text-3xl font-bold text-gray-900 uppercase tracking-wide">{project.title}</h1>
-            <p className="text-gray-500 mt-2">{project.material}</p>
+            <h1 className="font-display text-3xl font-bold text-gray-900 uppercase tracking-wide">{pTitle}</h1>
+            <p className="text-gray-500 mt-2">{pMaterial}</p>
             {description && (
               <p className="text-gray-700 mt-5 leading-relaxed whitespace-pre-line">{description}</p>
             )}
