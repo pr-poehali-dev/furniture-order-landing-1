@@ -1,7 +1,8 @@
 {
   "tests": [
-    {"name": "Список фото", "method": "GET", "path": "/", "expectedStatus": 200, "expectedBody": {"images": {}}, "bodyMatcher": "partial"},
+    {"name": "Список фото и описаний", "method": "GET", "path": "/", "expectedStatus": 200, "expectedBody": {"images": {}, "texts": {}}, "bodyMatcher": "partial"},
     {"name": "Сохранение без пароля запрещено", "method": "POST", "path": "/", "body": {"items": {"hero": "https://cdn.poehali.dev/x.jpg"}}, "expectedStatus": 401},
+    {"name": "Описание без пароля запрещено", "method": "POST", "path": "/", "body": {"action": "save_text", "key": "pf_kitchens_1", "text": "test"}, "expectedStatus": 401},
     {"name": "Вход с неверным паролем", "method": "POST", "path": "/", "headers": {"X-Admin-Password": "wrong-password"}, "body": {"action": "login"}, "expectedStatus": 401}
   ]
 }

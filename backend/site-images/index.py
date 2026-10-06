@@ -7,6 +7,7 @@ import psycopg2
 SCHEMA = os.environ.get('MAIN_DB_SCHEMA', 't_p97508351_furniture_order_land')
 KEY_RE = re.compile(r'^[a-z0-9_]{1,128}$')
 URL_PREFIX = 'https://cdn.poehali.dev/'
+MAX_TEXT = 2000
 
 CORS = {
     'Access-Control-Allow-Origin': '*',
@@ -55,11 +56,31 @@ def handler(event: dict, context) -> dict:
 
         if method == 'GET':
             cur.execute(f'SELECT slot_key, url FROM {SCHEMA}.site_images')
-            rows = cur.fetchall()
-            return respond(200, {'images': {k: u for k, u in rows}})
+            images = {k: u for k, u in cur.fetchall()}
+            cur.execute(f'SELECT project_key, description FROM {SCHEMA}.project_texts')
+            texts = {k: d for k, d in cur.fetchall()}
+            return respond(200, {'images': images, 'texts': texts})
 
         if method == 'POST':
             body = json.loads(event.get('body') or '{}')
+
+            if body.get('action') == 'save_text':
+                key = body.get('key')
+                text = body.get('text') or ''
+                if not isinstance(key, str) or not KEY_RE.match(key) or not isinstance(text, str):
+                    return respond(400, {'error': 'Неверные данные'})
+                text = text.strip()[:MAX_TEXT]
+                if text:
+                    cur.execute(
+                        f'INSERT INTO {SCHEMA}.project_texts (project_key, description, updated_at) VALUES (%s, %s, NOW()) '
+                        f'ON CONFLICT (project_key) DO UPDATE SET description = EXCLUDED.description, updated_at = NOW()',
+                        (key, text),
+                    )
+                else:
+                    cur.execute(f'DELETE FROM {SCHEMA}.project_texts WHERE project_key = %s', (key,))
+                conn.commit()
+                return respond(200, {'ok': True, 'text': text})
+
             items = body.get('items') or {}
             if not isinstance(items, dict) or not items:
                 return respond(400, {'error': 'Нет данных для сохранения'})

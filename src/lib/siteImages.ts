@@ -236,6 +236,28 @@ export async function adminLogin(password: string): Promise<boolean> {
 }
 
 let serverImages: Record<string, string> = {};
+let serverTexts: Record<string, string> = {};
+
+export function getProjectText(projectKey: string): string {
+  return serverTexts[projectKey] || "";
+}
+
+export async function saveProjectText(projectKey: string, text: string): Promise<string> {
+  const res = await fetch(IMAGES_API_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "X-Admin-Password": getAdminPassword() },
+    body: JSON.stringify({ action: "save_text", key: projectKey, text }),
+  });
+  if (!res.ok) throw new Error("Не удалось сохранить описание");
+  const data = await res.json();
+  const saved: string = data.text || "";
+  const next = { ...serverTexts };
+  if (saved) next[projectKey] = saved;
+  else delete next[projectKey];
+  serverTexts = next;
+  notify();
+  return saved;
+}
 let loadPromise: Promise<void> | null = null;
 
 function notify() {
@@ -282,6 +304,7 @@ export function loadSiteImages(): Promise<void> {
       if (!res.ok) throw new Error("Не удалось загрузить фото");
       const data = await res.json();
       serverImages = data.images || {};
+      serverTexts = data.texts || {};
       notify();
       await migrateLocal().catch(() => undefined);
     })().catch(() => {

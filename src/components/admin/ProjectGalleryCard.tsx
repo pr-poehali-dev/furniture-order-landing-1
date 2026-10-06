@@ -9,6 +9,7 @@ import {
   uploadImage,
   useSiteImages,
 } from "@/lib/siteImages";
+import ProjectDescriptionEditor from "@/components/admin/ProjectDescriptionEditor";
 
 const MAX_PHOTOS = PORTFOLIO_DETAIL_COUNT + 1;
 const PARALLEL = 3;
@@ -136,6 +137,8 @@ export default function ProjectGalleryCard({ project }: { project: PortfolioProj
       <div className="p-4 flex flex-col flex-1">
         <div className="font-display font-bold text-gray-900 text-sm uppercase tracking-wide">{project.title}</div>
         <div className="text-gray-400 text-xs mt-0.5 mb-3">{project.material}</div>
+
+        <ProjectDescriptionEditor projectKey={project.slot} />
 
         {photos.length > 0 && (
           <div className="grid grid-cols-5 gap-1.5 mb-3">

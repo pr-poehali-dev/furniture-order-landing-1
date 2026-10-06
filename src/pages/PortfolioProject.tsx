@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import Icon from "@/components/ui/icon";
-import { findProject, getProjectGallery, useSiteImages } from "@/lib/siteImages";
+import { findProject, getProjectGallery, getProjectText, useSiteImages } from "@/lib/siteImages";
 import { useSeo } from "@/lib/useSeo";
 
 export default function PortfolioProject() {
@@ -33,6 +33,7 @@ export default function PortfolioProject() {
 
   const { category, project } = found;
   const gallery = getProjectGallery(project.slot);
+  const description = getProjectText(project.slot);
   const activeIndex = Math.min(active, gallery.length - 1);
 
   return (
@@ -103,6 +104,9 @@ export default function PortfolioProject() {
           <div className="p-6 sm:p-8">
             <h1 className="font-display text-3xl font-bold text-gray-900 uppercase tracking-wide">{project.title}</h1>
             <p className="text-gray-500 mt-2">{project.material}</p>
+            {description && (
+              <p className="text-gray-700 mt-5 leading-relaxed whitespace-pre-line">{description}</p>
+            )}
             <div className="flex justify-end mt-6">
               <button
                 className="btn-orange px-7 py-3.5 rounded-xl text-sm"
