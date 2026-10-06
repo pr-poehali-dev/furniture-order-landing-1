@@ -1,3 +1,4 @@
+import hmac
 import json
 import os
 import re
@@ -10,7 +11,7 @@ URL_PREFIX = 'https://cdn.poehali.dev/'
 CORS = {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type',
+    'Access-Control-Allow-Headers': 'Content-Type, X-Admin-Password',
     'Access-Control-Max-Age': '86400',
 }
 
@@ -23,15 +24,30 @@ def respond(status: int, data: dict) -> dict:
     }
 
 
+def is_admin(event: dict) -> bool:
+    expected = os.environ.get('ADMIN_PASSWORD', '')
+    headers = {k.lower(): v for k, v in (event.get('headers') or {}).items()}
+    given = headers.get('x-admin-password', '')
+    return bool(expected) and hmac.compare_digest(given.encode(), expected.encode())
+
+
 def handler(event: dict, context) -> dict:
     '''
     Хранит привязку фото сайта к блокам (главный экран, каталог, портфолио).
-    GET — отдаёт все сохранённые фото. POST {items: {ключ: url}} — сохраняет,
-    пустой url удаляет фото и возвращает стандартное.
+    GET — отдаёт все сохранённые фото (публично). POST {items: {ключ: url}} — сохраняет
+    (только с паролем админа), пустой url удаляет фото. POST {action: "login"} — проверка пароля.
     '''
     method = event.get('httpMethod', 'GET')
     if method == 'OPTIONS':
         return {'statusCode': 200, 'headers': CORS, 'body': ''}
+
+    if method == 'POST' and not is_admin(event):
+        return respond(401, {'error': 'Неверный пароль'})
+
+    if method == 'POST':
+        body_check = json.loads(event.get('body') or '{}')
+        if body_check.get('action') == 'login':
+            return respond(200, {'ok': True})
 
     conn = psycopg2.connect(os.environ['DATABASE_URL'])
     try:

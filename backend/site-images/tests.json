@@ -1,6 +1,7 @@
 {
   "tests": [
     {"name": "Список фото", "method": "GET", "path": "/", "expectedStatus": 200, "expectedBody": {"images": {}}, "bodyMatcher": "partial"},
-    {"name": "Пустой POST", "method": "POST", "path": "/", "body": {"items": {}}, "expectedStatus": 400}
+    {"name": "Сохранение без пароля запрещено", "method": "POST", "path": "/", "body": {"items": {"hero": "https://cdn.poehali.dev/x.jpg"}}, "expectedStatus": 401},
+    {"name": "Вход с неверным паролем", "method": "POST", "path": "/", "headers": {"X-Admin-Password": "wrong-password"}, "body": {"action": "login"}, "expectedStatus": 401}
   ]
 }

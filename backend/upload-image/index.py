@@ -1,3 +1,4 @@
+import hmac
 import json
 import os
 import base64
@@ -15,7 +16,7 @@ def handler(event: dict, context) -> dict:
     cors_headers = {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Headers': 'Content-Type, X-Admin-Password',
         'Access-Control-Max-Age': '86400',
     }
 
@@ -27,6 +28,16 @@ def handler(event: dict, context) -> dict:
             'statusCode': 405,
             'headers': {**cors_headers, 'Content-Type': 'application/json'},
             'body': json.dumps({'error': 'Method not allowed'}),
+        }
+
+    expected = os.environ.get('ADMIN_PASSWORD', '')
+    headers = {k.lower(): v for k, v in (event.get('headers') or {}).items()}
+    given = headers.get('x-admin-password', '')
+    if not expected or not hmac.compare_digest(given.encode(), expected.encode()):
+        return {
+            'statusCode': 401,
+            'headers': {**cors_headers, 'Content-Type': 'application/json'},
+            'body': json.dumps({'error': 'Неверный пароль'}),
         }
 
     raw_body = event.get('body') or '{}'

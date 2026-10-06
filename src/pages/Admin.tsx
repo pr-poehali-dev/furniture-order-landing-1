@@ -8,7 +8,58 @@ import {
   resetOverride,
   uploadImage,
   useSiteImages,
+  adminLogin,
+  adminLogout,
+  getAdminPassword,
+  loadSiteImages,
+  migrateLocal,
 } from "@/lib/siteImages";
+
+function AdminLogin({ onSuccess }: { onSuccess: () => void }) {
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!password) return;
+    setLoading(true);
+    setError("");
+    try {
+      const ok = await adminLogin(password);
+      if (ok) onSuccess();
+      else setError("Неверный пароль");
+    } catch {
+      setError("Нет связи с сервером. Попробуйте ещё раз.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-950 flex items-center justify-center px-4">
+      <form onSubmit={handleSubmit} className="w-full max-w-sm bg-white rounded-3xl p-8 shadow-xl">
+        <div className="w-12 h-12 rounded-xl gradient-orange flex items-center justify-center mb-5">
+          <Icon name="Lock" size={22} className="text-white" />
+        </div>
+        <h1 className="font-display font-bold text-2xl text-gray-900 uppercase tracking-wide">Вход в админку</h1>
+        <p className="text-gray-500 text-sm mt-1 mb-6">Свой Стиль · управление фото</p>
+        <input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Пароль"
+          autoFocus
+          className="w-full px-4 py-3 rounded-xl border border-gray-200 text-gray-900 focus:outline-none focus:border-orange-500"
+        />
+        {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
+        <button type="submit" disabled={loading || !password} className="btn-orange w-full py-3 rounded-xl text-sm mt-4 disabled:opacity-60">
+          {loading ? "Проверяю..." : "Войти"}
+        </button>
+      </form>
+    </div>
+  );
+}
 
 const GROUPS = ["Главный экран", "Каталог", "Портфолио"] as const;
 
@@ -102,6 +153,20 @@ function SlotCard({ slot }: { slot: ImageSlot }) {
 }
 
 export default function Admin() {
+  const [authed, setAuthed] = useState(() => !!getAdminPassword());
+
+  const handleLogin = () => {
+    setAuthed(true);
+    loadSiteImages().then(() => migrateLocal()).catch(() => undefined);
+  };
+
+  const handleLogout = () => {
+    adminLogout();
+    setAuthed(false);
+  };
+
+  if (!authed) return <AdminLogin onSuccess={handleLogin} />;
+
   return (
     <div className="min-h-screen bg-gray-50">
       <header className="bg-gray-950 text-white">
@@ -115,10 +180,16 @@ export default function Admin() {
               <div className="text-white/50 text-xs">Свой Стиль · загрузка изображений сайта</div>
             </div>
           </div>
-          <a href="/" className="btn-outline-orange px-4 py-2 rounded-lg text-xs flex items-center gap-1.5">
-            <Icon name="ExternalLink" size={14} />
-            Открыть сайт
-          </a>
+          <div className="flex items-center gap-2">
+            <a href="/" className="btn-outline-orange px-4 py-2 rounded-lg text-xs flex items-center gap-1.5">
+              <Icon name="ExternalLink" size={14} />
+              Открыть сайт
+            </a>
+            <button onClick={handleLogout} className="px-3 py-2 rounded-lg text-xs text-white/70 hover:text-white flex items-center gap-1.5">
+              <Icon name="LogOut" size={14} />
+              Выйти
+            </button>
+          </div>
         </div>
       </header>
 

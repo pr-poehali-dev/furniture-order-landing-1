@@ -7,11 +7,11 @@
       "expectedStatus": 200
     },
     {
-      "name": "Reject empty upload",
+      "name": "Reject upload without password",
       "method": "POST",
       "path": "/",
-      "body": {},
-      "expectedStatus": 400,
+      "body": {"file": "aGVsbG8=", "contentType": "image/png"},
+      "expectedStatus": 401,
       "expectedBody": {"error": "string"},
       "bodyMatcher": "partial"
     }

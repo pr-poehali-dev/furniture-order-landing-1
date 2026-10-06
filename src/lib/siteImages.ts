@@ -212,6 +212,29 @@ export const IMAGE_SLOTS: ImageSlot[] = [
 
 export const IMAGES_API_URL = "https://functions.poehali.dev/c6c5c0ef-d08a-4655-9189-268225f67749";
 
+const ADMIN_PASS_KEY = "admin_password";
+
+export function getAdminPassword(): string {
+  return sessionStorage.getItem(ADMIN_PASS_KEY) || "";
+}
+
+export function adminLogout() {
+  sessionStorage.removeItem(ADMIN_PASS_KEY);
+}
+
+export async function adminLogin(password: string): Promise<boolean> {
+  const res = await fetch(IMAGES_API_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "X-Admin-Password": password },
+    body: JSON.stringify({ action: "login" }),
+  });
+  if (res.ok) {
+    sessionStorage.setItem(ADMIN_PASS_KEY, password);
+    return true;
+  }
+  return false;
+}
+
 let serverImages: Record<string, string> = {};
 let loadPromise: Promise<void> | null = null;
 
@@ -231,13 +254,14 @@ function readLocal(): Record<string, string> {
 async function postImages(items: Record<string, string>) {
   const res = await fetch(IMAGES_API_URL, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json", "X-Admin-Password": getAdminPassword() },
     body: JSON.stringify({ items }),
   });
   if (!res.ok) throw new Error("Не удалось сохранить фото");
 }
 
-async function migrateLocal() {
+export async function migrateLocal() {
+  if (!getAdminPassword()) return;
   const local = readLocal();
   const missing: Record<string, string> = {};
   for (const [key, url] of Object.entries(local)) {
@@ -326,7 +350,7 @@ export async function uploadImage(file: File): Promise<string> {
 
   const res = await fetch(UPLOAD_URL, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json", "X-Admin-Password": getAdminPassword() },
     body: JSON.stringify({ file: base64, contentType: file.type }),
   });
 
