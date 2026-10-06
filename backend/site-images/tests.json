@@ -1,0 +1,6 @@
+{
+  "tests": [
+    {"name": "Список фото", "method": "GET", "path": "/", "expectedStatus": 200, "expectedBody": {"images": {}}, "bodyMatcher": "partial"},
+    {"name": "Пустой POST", "method": "POST", "path": "/", "body": {"items": {}}, "expectedStatus": 400}
+  ]
+}

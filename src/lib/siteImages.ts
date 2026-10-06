@@ -210,7 +210,16 @@ export const IMAGE_SLOTS: ImageSlot[] = [
   ...buildPortfolioSlots(),
 ];
 
-export function loadOverrides(): Record<string, string> {
+export const IMAGES_API_URL = "https://functions.poehali.dev/c6c5c0ef-d08a-4655-9189-268225f67749";
+
+let serverImages: Record<string, string> = {};
+let loadPromise: Promise<void> | null = null;
+
+function notify() {
+  window.dispatchEvent(new Event("site-images-updated"));
+}
+
+function readLocal(): Record<string, string> {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     return raw ? JSON.parse(raw) : {};
@@ -219,18 +228,61 @@ export function loadOverrides(): Record<string, string> {
   }
 }
 
-export function saveOverride(key: string, url: string) {
-  const data = loadOverrides();
-  data[key] = url;
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-  window.dispatchEvent(new Event("site-images-updated"));
+async function postImages(items: Record<string, string>) {
+  const res = await fetch(IMAGES_API_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ items }),
+  });
+  if (!res.ok) throw new Error("Не удалось сохранить фото");
 }
 
-export function resetOverride(key: string) {
-  const data = loadOverrides();
-  delete data[key];
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-  window.dispatchEvent(new Event("site-images-updated"));
+async function migrateLocal() {
+  const local = readLocal();
+  const missing: Record<string, string> = {};
+  for (const [key, url] of Object.entries(local)) {
+    if (url && !serverImages[key]) missing[key] = url;
+  }
+  if (Object.keys(missing).length > 0) {
+    await postImages(missing);
+    serverImages = { ...serverImages, ...missing };
+    notify();
+  }
+  localStorage.removeItem(STORAGE_KEY);
+}
+
+export function loadSiteImages(): Promise<void> {
+  if (!loadPromise) {
+    loadPromise = (async () => {
+      const res = await fetch(IMAGES_API_URL);
+      if (!res.ok) throw new Error("Не удалось загрузить фото");
+      const data = await res.json();
+      serverImages = data.images || {};
+      notify();
+      await migrateLocal().catch(() => undefined);
+    })().catch(() => {
+      loadPromise = null;
+    });
+  }
+  return loadPromise;
+}
+
+export function loadOverrides(): Record<string, string> {
+  return serverImages;
+}
+
+export async function saveOverride(key: string, url: string) {
+  await postImages({ [key]: url });
+  serverImages = { ...serverImages, [key]: url };
+  notify();
+}
+
+export async function resetOverride(key: string) {
+  await postImages({ [key]: "" });
+  const next = { ...serverImages };
+  delete next[key];
+  serverImages = next;
+  notify();
 }
 
 export function getImageUrl(key: string): string {
@@ -256,10 +308,9 @@ export function useSiteImages() {
   useEffect(() => {
     const handler = () => setVersion((v) => v + 1);
     window.addEventListener("site-images-updated", handler);
-    window.addEventListener("storage", handler);
+    loadSiteImages();
     return () => {
       window.removeEventListener("site-images-updated", handler);
-      window.removeEventListener("storage", handler);
     };
   }, []);
   return (key: string) => getImageUrl(key) + (version ? `` : ``);

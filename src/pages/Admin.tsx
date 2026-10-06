@@ -26,9 +26,22 @@ function SlotCard({ slot }: { slot: ImageSlot }) {
     setUploading(true);
     try {
       const url = await uploadImage(file);
-      saveOverride(slot.key, url);
+      await saveOverride(slot.key, url);
     } catch {
       setError("Ошибка загрузки. Попробуйте ещё раз.");
+    } finally {
+      setUploading(false);
+      e.target.value = "";
+    }
+  };
+
+  const handleReset = async () => {
+    setError("");
+    setUploading(true);
+    try {
+      await resetOverride(slot.key);
+    } catch {
+      setError("Не удалось вернуть стандартное фото.");
     } finally {
       setUploading(false);
     }
@@ -73,7 +86,8 @@ function SlotCard({ slot }: { slot: ImageSlot }) {
           </label>
           {isCustom && (
             <button
-              onClick={() => resetOverride(slot.key)}
+              onClick={handleReset}
+              disabled={uploading}
               className="px-3 py-2.5 rounded-xl border border-gray-200 text-gray-500 hover:bg-gray-50 transition-colors"
               title="Вернуть стандартное"
             >
