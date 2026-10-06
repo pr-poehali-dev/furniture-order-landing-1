@@ -3,6 +3,7 @@ import { useSiteImages } from "@/lib/siteImages";
 import IndexHeader from "@/components/index/IndexHeader";
 import IndexCatalog from "@/components/index/IndexCatalog";
 import IndexPortfolio from "@/components/index/IndexPortfolio";
+import IndexServices from "@/components/index/IndexServices";
 import IndexSeoText from "@/components/index/IndexSeoText";
 import IndexFooter from "@/components/index/IndexFooter";
 
@@ -71,12 +72,14 @@ export default function Index() {
         setMobileMenu={setMobileMenu}
       />
 
+      <IndexPortfolio getImg={getImg} />
+
       <IndexCatalog
         getImg={getImg}
         handleFormSubmit={handleFormSubmit}
       />
 
-      <IndexPortfolio getImg={getImg} />
+      <IndexServices getImg={getImg} />
 
       <IndexSeoText />
 
