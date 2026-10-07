@@ -1,3 +1,4 @@
+import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import Icon from "@/components/ui/icon";
 import { PORTFOLIO_CATEGORIES, categoryCoverKey } from "@/lib/siteImages";
@@ -14,6 +15,21 @@ interface IndexPortfolioProps {
 }
 
 export default function IndexPortfolio({ getImg }: IndexPortfolioProps) {
+  const reviewsRef = useRef<HTMLDivElement>(null);
+  const [reviewIdx, setReviewIdx] = useState(0);
+
+  const goToReview = (idx: number) => {
+    const el = reviewsRef.current;
+    if (!el) return;
+    const next = Math.max(0, Math.min(REVIEWS.length - 1, idx));
+    el.scrollTo({ left: next * el.clientWidth, behavior: "smooth" });
+  };
+
+  const handleReviewsScroll = () => {
+    const el = reviewsRef.current;
+    if (el) setReviewIdx(Math.round(el.scrollLeft / el.clientWidth));
+  };
+
   return (
     <>
       {/* ===== PORTFOLIO ===== */}
@@ -77,9 +93,14 @@ export default function IndexPortfolio({ getImg }: IndexPortfolioProps) {
             </div>
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div
+            ref={reviewsRef}
+            onScroll={handleReviewsScroll}
+            className="flex sm:grid sm:grid-cols-2 lg:grid-cols-4 sm:gap-6 overflow-x-auto sm:overflow-visible snap-x snap-mandatory [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          >
             {REVIEWS.map((rev, i) => (
-              <div key={i} className="animate-on-scroll glass-card-light rounded-2xl p-6 card-hover">
+              <div key={i} className="w-full shrink-0 snap-center px-1 sm:px-0 sm:w-auto">
+              <div className="glass-card-light rounded-2xl p-6 card-hover h-full">
                 <div className="flex mb-3">
                   {[1,2,3,4,5].map(s => <Icon key={s} name="Star" size={14} className={s <= rev.rating ? "star-filled" : "text-gray-300"} />)}
                 </div>
@@ -92,10 +113,35 @@ export default function IndexPortfolio({ getImg }: IndexPortfolioProps) {
                   <div className="text-gray-300 text-xs">{rev.date}</div>
                 </div>
               </div>
+              </div>
             ))}
           </div>
 
-          <div className="text-center mt-12">
+          <div className="flex sm:hidden items-center justify-center gap-4 mt-6">
+            <button
+              onClick={() => goToReview(reviewIdx - 1)}
+              disabled={reviewIdx === 0}
+              aria-label="Предыдущий отзыв"
+              className="w-10 h-10 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-700 disabled:opacity-30 active:bg-orange-500 active:text-white transition-colors"
+            >
+              <Icon name="ChevronLeft" size={18} />
+            </button>
+            <div className="flex gap-1.5">
+              {REVIEWS.map((_, i) => (
+                <span key={i} className={`h-1.5 rounded-full transition-all ${i === reviewIdx ? "w-5 bg-orange-500" : "w-1.5 bg-gray-300"}`} />
+              ))}
+            </div>
+            <button
+              onClick={() => goToReview(reviewIdx + 1)}
+              disabled={reviewIdx === REVIEWS.length - 1}
+              aria-label="Следующий отзыв"
+              className="w-10 h-10 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-700 disabled:opacity-30 active:bg-orange-500 active:text-white transition-colors"
+            >
+              <Icon name="ChevronRight" size={18} />
+            </button>
+          </div>
+
+          <div className="text-center mt-8 sm:mt-12">
             <a
               href="https://2gis.ru/barnaul/firm/70000001089375194/tab/reviews"
               target="_blank"
