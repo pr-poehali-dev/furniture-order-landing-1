@@ -4,6 +4,7 @@ import IndexHeader from "@/components/index/IndexHeader";
 import IndexCatalog from "@/components/index/IndexCatalog";
 import IndexPortfolio from "@/components/index/IndexPortfolio";
 import IndexServices from "@/components/index/IndexServices";
+import IndexReviews from "@/components/index/IndexReviews";
 import IndexSeoText from "@/components/index/IndexSeoText";
 import IndexFooter from "@/components/index/IndexFooter";
 import { sendLead } from "@/lib/leads";
@@ -64,6 +65,8 @@ export default function Index() {
       <IndexCatalog getImg={getImg} />
 
       <IndexServices getImg={getImg} />
+
+      <IndexReviews />
 
       <IndexSeoText />
 
