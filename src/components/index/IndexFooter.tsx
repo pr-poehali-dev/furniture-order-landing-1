@@ -1,11 +1,6 @@
 import Icon from "@/components/ui/icon";
 import PhoneInput from "@/components/ui/phone-input";
 
-interface ChatMessage {
-  from: string;
-  text: string;
-}
-
 interface IndexFooterProps {
   formName: string;
   setFormName: (v: string) => void;
@@ -15,13 +10,6 @@ interface IndexFooterProps {
   formSending: boolean;
   formError: string;
   handleFormSubmit: (e: React.FormEvent) => void;
-  chatOpen: boolean;
-  setChatOpen: (v: boolean) => void;
-  chatMessages: ChatMessage[];
-  chatInput: string;
-  setChatInput: (v: string) => void;
-  handleSendChat: () => void;
-  chatEndRef: React.RefObject<HTMLDivElement>;
 }
 
 export default function IndexFooter({
@@ -33,13 +21,6 @@ export default function IndexFooter({
   formSending,
   formError,
   handleFormSubmit,
-  chatOpen,
-  setChatOpen,
-  chatMessages,
-  chatInput,
-  setChatInput,
-  handleSendChat,
-  chatEndRef,
 }: IndexFooterProps) {
   return (
     <>
@@ -168,70 +149,6 @@ export default function IndexFooter({
           </div>
         </div>
       </footer>
-
-      {/* ===== ONLINE CHAT ===== */}
-      <div className="fixed bottom-6 right-6 z-40 flex flex-col items-end gap-3">
-        {chatOpen && (
-          <div className="w-80 sm:w-96 bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-100" style={{ animation: "scale-in 0.25s ease-out forwards" }}>
-            <div className="gradient-orange px-5 py-4 flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="w-9 h-9 bg-white/20 rounded-full flex items-center justify-center">
-                  <Icon name="MessageCircle" size={18} className="text-white" />
-                </div>
-                <div>
-                  <div className="text-white font-display font-bold text-sm uppercase">Онлайн-консультант</div>
-                  <div className="flex items-center gap-1.5">
-                    <div className="w-2 h-2 bg-green-400 rounded-full" />
-                    <span className="text-white/80 text-xs">Онлайн</span>
-                  </div>
-                </div>
-              </div>
-              <button onClick={() => setChatOpen(false)} className="text-white/80 hover:text-white">
-                <Icon name="X" size={18} />
-              </button>
-            </div>
-
-            <div className="h-64 overflow-y-auto p-4 space-y-3 bg-gray-50">
-              {chatMessages.map((msg, i) => (
-                <div key={i} className={`flex ${msg.from === "user" ? "justify-end" : "justify-start"}`}>
-                  <div
-                    className={`max-w-[80%] px-4 py-2.5 text-sm leading-relaxed rounded-2xl ${
-                      msg.from === "user"
-                        ? "gradient-orange text-white"
-                        : "bg-white text-gray-700 shadow-sm border border-gray-100"
-                    }`}
-                  >
-                    {msg.text}
-                  </div>
-                </div>
-              ))}
-              <div ref={chatEndRef} />
-            </div>
-
-            <div className="p-3 bg-white border-t border-gray-100 flex gap-2">
-              <input
-                type="text"
-                placeholder="Задайте вопрос..."
-                value={chatInput}
-                onChange={(e) => setChatInput(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && handleSendChat()}
-                className="flex-1 bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-orange-400 placeholder-gray-400"
-              />
-              <button onClick={handleSendChat} className="btn-orange w-10 h-10 rounded-xl flex items-center justify-center shrink-0">
-                <Icon name="Send" size={16} className="text-white" />
-              </button>
-            </div>
-          </div>
-        )}
-
-        <button
-          onClick={() => setChatOpen(!chatOpen)}
-          className="w-14 h-14 gradient-orange rounded-2xl flex items-center justify-center shadow-lg hover:scale-110 transition-transform duration-200"
-          style={{ boxShadow: "0 8px 24px rgba(249,115,22,0.45)" }}
-        >
-          <Icon name={chatOpen ? "X" : "MessageCircle"} size={24} className="text-white" />
-        </button>
-      </div>
     </>
   );
 }

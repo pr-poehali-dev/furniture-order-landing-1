@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useSiteImages } from "@/lib/siteImages";
 import IndexHeader from "@/components/index/IndexHeader";
 import IndexCatalog from "@/components/index/IndexCatalog";
@@ -29,36 +29,10 @@ export default function Index() {
   useScrollAnimation();
   const getImg = useSiteImages();
 
-  const [chatOpen, setChatOpen] = useState(false);
-  const [chatMessages, setChatMessages] = useState([
-    { from: "bot", text: "Привет! Я онлайн-консультант «Свой Стиль». Задайте любой вопрос о нашей мебели или стоимости." },
-  ]);
-  const [chatInput, setChatInput] = useState("");
   const [formName, setFormName] = useState("");
   const [formPhone, setFormPhone] = useState("");
   const [formSent, setFormSent] = useState(false);
   const [mobileMenu, setMobileMenu] = useState(false);
-  const chatEndRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [chatMessages]);
-
-  const handleSendChat = () => {
-    if (!chatInput.trim()) return;
-    const userMsg = { from: "user", text: chatInput };
-    setChatMessages((prev) => [...prev, userMsg]);
-    setChatInput("");
-    setTimeout(() => {
-      setChatMessages((prev) => [
-        ...prev,
-        {
-          from: "bot",
-          text: "Спасибо за вопрос! Наш менеджер ответит в течение нескольких минут. Или оставьте телефон — перезвоним немедленно!",
-        },
-      ]);
-    }, 1000);
-  };
 
   const [formSending, setFormSending] = useState(false);
   const [formError, setFormError] = useState("");
@@ -102,13 +76,6 @@ export default function Index() {
         formSending={formSending}
         formError={formError}
         handleFormSubmit={handleFormSubmit}
-        chatOpen={chatOpen}
-        setChatOpen={setChatOpen}
-        chatMessages={chatMessages}
-        chatInput={chatInput}
-        setChatInput={setChatInput}
-        handleSendChat={handleSendChat}
-        chatEndRef={chatEndRef}
       />
     </div>
   );
