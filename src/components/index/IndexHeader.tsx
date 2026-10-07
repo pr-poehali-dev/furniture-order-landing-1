@@ -80,7 +80,7 @@ export default function IndexHeader({ getImg, mobileMenu, setMobileMenu }: Index
       </nav>
 
       {/* ===== HERO ===== */}
-      <section className="relative min-h-screen flex items-center overflow-hidden">
+      <section className="relative min-h-screen flex items-start sm:items-center overflow-hidden">
         <div className="absolute inset-0">
           <img src={getImg("hero")} alt="Мебель на заказ" className="w-full h-full object-cover scale-105" />
           <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/90 to-slate-950/40" />
@@ -92,7 +92,7 @@ export default function IndexHeader({ getImg, mobileMenu, setMobileMenu }: Index
         <div className="absolute bottom-0 right-0 w-[32rem] h-[32rem] rounded-full bg-orange-600/10 blur-[120px] pointer-events-none" />
         <div className="absolute inset-0 opacity-[0.04] pointer-events-none" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.5) 1px, transparent 1px)", backgroundSize: "64px 64px" }} />
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-8 w-full pt-24 pb-20 sm:py-32 grid lg:grid-cols-12 gap-10 items-center">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-8 w-full pt-[5.5rem] pb-20 sm:py-32 grid lg:grid-cols-12 gap-10 items-center">
           {/* left content */}
           <div className="lg:col-span-7" style={{ animation: "fade-up 0.8s ease-out forwards" }}>
             <div className="inline-flex items-center gap-2 backdrop-blur-md bg-white/5 border border-orange-500/30 rounded-full pl-1.5 pr-3 sm:pl-2 sm:pr-4 py-1 sm:py-1.5 mb-5 sm:mb-7">
