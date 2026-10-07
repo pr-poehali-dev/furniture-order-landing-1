@@ -32,8 +32,8 @@ export default function IndexHeader({ getImg, mobileMenu, setMobileMenu }: Index
               alt="Логотип Свой Стиль"
               className="h-14 w-14 object-contain"
             />
-            <span className="font-display font-bold text-xl text-white tracking-wide -ml-1">
-              СВОЙ<span className="gradient-text"> СТИЛЬ</span>
+            <span className="text-xl text-white -ml-1" style={{ fontFamily: '"Manrope", sans-serif', letterSpacing: "-0.02em" }}>
+              <span className="font-extrabold">СВОЙ</span><span className="gradient-text font-light"> СТИЛЬ</span>
             </span>
           </a>
           <div className="relative" ref={menuRef}>
