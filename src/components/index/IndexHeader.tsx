@@ -106,19 +106,19 @@ export default function IndexHeader({ getImg, mobileMenu, setMobileMenu }: Index
             <h1 className="font-display text-[2rem] sm:text-5xl lg:text-[3.75rem] font-bold sm:font-medium text-white leading-[1.1] tracking-tight mb-4 sm:mb-6">Корпусная мебель <span className="block sm:inline gradient-text">на заказ</span></h1>
             <p className="text-white/65 text-base sm:text-xl leading-relaxed mb-6 sm:mb-8 max-w-xl">Проектируем, производим и монтируем  точно по размерам вашей квартиры — без переплат и посредников.</p>
 
-            <div className="flex flex-col sm:flex-row gap-2.5 sm:gap-4 mb-7 sm:mb-10">
+            <div className="flex flex-col sm:flex-row gap-2.5 sm:gap-4 mb-7 sm:mb-10 px-6 sm:px-0">
               <button
-                className="group btn-orange px-6 py-3 sm:px-8 sm:py-4 rounded-xl sm:rounded-2xl text-sm sm:text-base text-white inline-flex items-center justify-center gap-2 shadow-lg shadow-orange-500/30"
+                className="group btn-orange px-5 py-3 sm:px-8 sm:py-4 rounded-xl sm:rounded-2xl text-xs sm:text-base text-white inline-flex items-center justify-center gap-2 shadow-lg shadow-orange-500/30"
                 onClick={() => document.getElementById("quiz")?.scrollIntoView({ behavior: "smooth" })}
               >
                 Рассчитать стоимость
-                <Icon name="ArrowRight" size={16} className="text-white transition-transform group-hover:translate-x-1" />
+                <Icon name="ArrowRight" size={14} className="text-white transition-transform group-hover:translate-x-1" />
               </button>
               <button
-                className="btn-outline-orange px-6 py-3 sm:px-8 sm:py-4 rounded-xl sm:rounded-2xl text-sm sm:text-base inline-flex items-center justify-center gap-2 bg-white/5 backdrop-blur-md"
+                className="btn-outline-orange px-5 py-3 sm:px-8 sm:py-4 rounded-xl sm:rounded-2xl text-xs sm:text-base inline-flex items-center justify-center gap-2 bg-white/5 backdrop-blur-md"
                 onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
               >
-                <Icon name="Ruler" size={16} />
+                <Icon name="Ruler" size={14} />
                 Записаться на замер
               </button>
             </div>
