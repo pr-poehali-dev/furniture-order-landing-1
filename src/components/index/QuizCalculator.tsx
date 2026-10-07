@@ -117,7 +117,7 @@ export default function QuizCalculator() {
           {type === "" ? (
             <>
               <div className="text-orange-400 text-sm font-semibold mb-3">Шаг 1</div>
-              <h3 className="font-display text-2xl font-bold text-white uppercase tracking-wide mb-6">Какую мебель хотите заказать?</h3>
+              <h3 className="section-title text-xl sm:text-2xl text-white text-center mb-6">Какую мебель хотите заказать?</h3>
               <div className="grid sm:grid-cols-2 gap-3">
                 <button
                   className="text-left px-5 py-4 rounded-xl border border-white/15 text-white/80 hover:border-orange-500 hover:bg-orange-500/10 hover:text-white transition-all duration-200 text-sm flex items-center gap-3"
@@ -144,7 +144,7 @@ export default function QuizCalculator() {
                       <Icon name="RotateCcw" size={13} /> Сначала
                     </button>
                   </div>
-                  <h3 className="font-display text-2xl font-bold text-white uppercase tracking-wide mb-6">{q.q}</h3>
+                  <h3 className="section-title text-xl sm:text-2xl text-white text-center mb-6">{q.q}</h3>
 
                   {q.type === "options" ? (
                     <div className="grid sm:grid-cols-2 gap-3">
