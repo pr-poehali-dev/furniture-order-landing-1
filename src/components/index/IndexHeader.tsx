@@ -38,12 +38,11 @@ export default function IndexHeader({ getImg, mobileMenu, setMobileMenu }: Index
           </a>
           <div className="relative" ref={menuRef}>
             <button
-              className="flex items-center gap-2.5 text-white backdrop-blur-md bg-white/5 border border-white/15 hover:bg-white/10 hover:border-white/30 transition-all rounded-xl px-4 py-2.5"
+              className="-mr-2 p-2 text-white/90 hover:text-orange-400 transition-colors"
               onClick={() => setMobileMenu(!mobileMenu)}
               aria-label="Разделы"
             >
-              <Icon name={mobileMenu ? "X" : "Menu"} size={20} className="text-white" />
-              <span className="font-display font-semibold text-sm tracking-wide">Разделы</span>
+              <Icon name={mobileMenu ? "X" : "Menu"} size={26} />
             </button>
             {mobileMenu && (
               <div className="absolute right-0 mt-2 w-56 backdrop-blur-xl bg-slate-950/90 border border-white/10 rounded-2xl shadow-2xl shadow-black/40 p-2 flex flex-col gap-1 text-white/80 text-sm">
