@@ -238,6 +238,11 @@ export async function adminLogin(password: string): Promise<boolean> {
 let serverImages: Record<string, string> = {};
 let serverTexts: Record<string, string> = {};
 let serverAdded: Record<string, number> = {};
+let imagesLoaded = false;
+
+export function isSiteImagesLoaded(): boolean {
+  return imagesLoaded;
+}
 
 export function getProjectText(projectKey: string): string {
   return serverTexts[projectKey] || "";
@@ -248,6 +253,14 @@ export function sortProjectsByNewest(projects: PortfolioProject[]): PortfolioPro
     .map((p, i) => ({ p, i, t: serverImages[p.slot] ? serverAdded[p.slot] || 0 : -1 }))
     .sort((a, b) => b.t - a.t || a.i - b.i)
     .map((x) => x.p);
+}
+
+export function isProjectPublished(project: PortfolioProject): boolean {
+  return !!serverImages[project.slot];
+}
+
+export function getPublishedProjects(category: PortfolioCategory): PortfolioProject[] {
+  return sortProjectsByNewest(category.projects.filter(isProjectPublished));
 }
 
 export const titleKey = (slot: string) => `${slot}_title`;
@@ -325,6 +338,7 @@ export function loadSiteImages(): Promise<void> {
       serverImages = data.images || {};
       serverTexts = data.texts || {};
       serverAdded = data.added || {};
+      imagesLoaded = true;
       notify();
       await migrateLocal().catch(() => undefined);
     })().catch(() => {

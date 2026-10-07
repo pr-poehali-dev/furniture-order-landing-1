@@ -1,13 +1,18 @@
 import { Link } from "react-router-dom";
 import Icon from "@/components/ui/icon";
 import IndexVideos from "@/components/index/IndexVideos";
-import { PORTFOLIO_CATEGORIES, categoryCoverKey } from "@/lib/siteImages";
+import { PORTFOLIO_CATEGORIES, categoryCoverKey, getPublishedProjects, isSiteImagesLoaded } from "@/lib/siteImages";
 
 interface IndexPortfolioProps {
   getImg: (key: string) => string;
 }
 
 export default function IndexPortfolio({ getImg }: IndexPortfolioProps) {
+  const loaded = isSiteImagesLoaded();
+  const categories = PORTFOLIO_CATEGORIES.map((cat) => ({ cat, count: getPublishedProjects(cat).length })).filter(
+    (c) => !loaded || c.count > 0,
+  );
+
   return (
     <>
       {/* ===== PORTFOLIO ===== */}
@@ -22,7 +27,7 @@ export default function IndexPortfolio({ getImg }: IndexPortfolioProps) {
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {PORTFOLIO_CATEGORIES.map((cat) => (
+            {categories.map(({ cat, count }) => (
               <Link
                 key={cat.slug}
                 to={`/portfolio/${cat.slug}`}
@@ -34,10 +39,12 @@ export default function IndexPortfolio({ getImg }: IndexPortfolioProps) {
                   <div className="absolute top-4 left-4">
                     <span className="bg-orange-500 text-white text-xs font-display font-semibold px-3 py-1 rounded-full uppercase tracking-wide">{cat.tag}</span>
                   </div>
-                  <div className="absolute top-4 right-4 flex items-center gap-1 bg-black/55 text-white text-xs font-semibold px-2.5 py-1 rounded-full">
-                    <Icon name="FolderOpen" size={13} className="text-white" />
-                    {cat.projects.length}
-                  </div>
+                  {loaded && (
+                    <div className="absolute top-4 right-4 flex items-center gap-1 bg-black/55 text-white text-xs font-semibold px-2.5 py-1 rounded-full">
+                      <Icon name="FolderOpen" size={13} className="text-white" />
+                      {count}
+                    </div>
+                  )}
                   <div className="absolute bottom-0 left-0 right-0 p-5">
                     <h3 className="font-display font-bold text-white text-xl uppercase">{cat.title}</h3>
                     <p className="text-white/70 text-xs mt-1">{cat.description}</p>

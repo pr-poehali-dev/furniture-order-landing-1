@@ -1,6 +1,6 @@
 import { Link, useParams } from "react-router-dom";
 import Icon from "@/components/ui/icon";
-import { findCategory, getProjectGallery, getProjectTitle, getProjectMaterial, sortProjectsByNewest, useSiteImages } from "@/lib/siteImages";
+import { findCategory, getProjectGallery, getProjectTitle, getProjectMaterial, getPublishedProjects, isSiteImagesLoaded, useSiteImages } from "@/lib/siteImages";
 import { useSeo } from "@/lib/useSeo";
 
 export default function PortfolioCategory() {
@@ -50,8 +50,21 @@ export default function PortfolioCategory() {
           <p className="text-gray-500 text-lg mt-3">{category.description}</p>
         </div>
 
+        {!isSiteImagesLoaded() ? (
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[0, 1, 2].map((i) => (
+              <div key={i} className="h-64 rounded-2xl bg-gray-200 animate-pulse" />
+            ))}
+          </div>
+        ) : getPublishedProjects(category).length === 0 ? (
+          <div className="bg-white rounded-2xl border border-gray-100 p-10 text-center">
+            <Icon name="Hammer" size={36} className="text-orange-500 mx-auto mb-3" />
+            <p className="text-gray-700 font-semibold">Скоро здесь появятся фото наших работ</p>
+            <Link to="/#contact" className="btn-orange inline-block mt-5 px-6 py-3 rounded-xl text-sm">Заказать расчёт</Link>
+          </div>
+        ) : (
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {sortProjectsByNewest(category.projects).map((proj) => {
+          {getPublishedProjects(category).map((proj) => {
             const count = getProjectGallery(proj.slot).length;
             return (
               <Link
@@ -82,6 +95,7 @@ export default function PortfolioCategory() {
             );
           })}
         </div>
+        )}
       </main>
     </div>
   );

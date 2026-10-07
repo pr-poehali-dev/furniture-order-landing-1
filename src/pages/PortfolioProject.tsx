@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import Icon from "@/components/ui/icon";
-import { findProject, getProjectGallery, getProjectText, getProjectTitle, getProjectMaterial, useSiteImages } from "@/lib/siteImages";
+import { findProject, getProjectGallery, getProjectText, getProjectTitle, getProjectMaterial, isProjectPublished, isSiteImagesLoaded, useSiteImages } from "@/lib/siteImages";
 import { useSeo } from "@/lib/useSeo";
 
 export default function PortfolioProject() {
@@ -23,7 +23,7 @@ export default function PortfolioProject() {
       : { title: "Проект не найден | Свой Стиль" }
   );
 
-  if (!found) {
+  if (!found || (isSiteImagesLoaded() && !isProjectPublished(found.project))) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center gap-4 bg-gray-50 px-4 text-center">
         <Icon name="ImageOff" size={48} className="text-gray-300" />
