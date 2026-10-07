@@ -24,7 +24,7 @@ export default function IndexPortfolio({ getImg }: IndexPortfolioProps) {
             <h2 className="font-display text-4xl sm:text-5xl font-bold text-gray-900 uppercase tracking-wide">
               Портфолио
             </h2>
-            <p className="text-gray-500 text-lg mt-4">Выберите категорию, чтобы посмотреть проекты</p>
+            <p className="text-gray-500 text-sm sm:text-lg mt-3 sm:mt-4">Выберите категорию, чтобы посмотреть проекты</p>
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
