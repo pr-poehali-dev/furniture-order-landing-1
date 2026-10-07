@@ -6,6 +6,7 @@ import IndexPortfolio from "@/components/index/IndexPortfolio";
 import IndexServices from "@/components/index/IndexServices";
 import IndexSeoText from "@/components/index/IndexSeoText";
 import IndexFooter from "@/components/index/IndexFooter";
+import { sendLead } from "@/lib/leads";
 
 function useScrollAnimation() {
   useEffect(() => {
@@ -59,9 +60,21 @@ export default function Index() {
     }, 1000);
   };
 
-  const handleFormSubmit = (e: React.FormEvent) => {
+  const [formSending, setFormSending] = useState(false);
+  const [formError, setFormError] = useState("");
+
+  const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setFormSent(true);
+    setFormSending(true);
+    setFormError("");
+    try {
+      await sendLead({ source: "measure", name: formName, phone: formPhone });
+      setFormSent(true);
+    } catch (err) {
+      setFormError(err instanceof Error ? err.message : "Не удалось отправить заявку");
+    } finally {
+      setFormSending(false);
+    }
   };
 
   return (
@@ -74,10 +87,7 @@ export default function Index() {
 
       <IndexPortfolio getImg={getImg} />
 
-      <IndexCatalog
-        getImg={getImg}
-        handleFormSubmit={handleFormSubmit}
-      />
+      <IndexCatalog getImg={getImg} />
 
       <IndexServices getImg={getImg} />
 
@@ -89,6 +99,8 @@ export default function Index() {
         formPhone={formPhone}
         setFormPhone={setFormPhone}
         formSent={formSent}
+        formSending={formSending}
+        formError={formError}
         handleFormSubmit={handleFormSubmit}
         chatOpen={chatOpen}
         setChatOpen={setChatOpen}

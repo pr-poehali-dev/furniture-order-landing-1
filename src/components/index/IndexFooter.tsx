@@ -11,6 +11,8 @@ interface IndexFooterProps {
   formPhone: string;
   setFormPhone: (v: string) => void;
   formSent: boolean;
+  formSending: boolean;
+  formError: string;
   handleFormSubmit: (e: React.FormEvent) => void;
   chatOpen: boolean;
   setChatOpen: (v: boolean) => void;
@@ -27,6 +29,8 @@ export default function IndexFooter({
   formPhone,
   setFormPhone,
   formSent,
+  formSending,
+  formError,
   handleFormSubmit,
   chatOpen,
   setChatOpen,
@@ -79,9 +83,10 @@ export default function IndexFooter({
                   />
                 </div>
               </div>
-              <button type="submit" className="btn-orange w-full py-4 rounded-xl text-base">
-                Вызвать замерщика бесплатно
+              <button type="submit" disabled={formSending} className="btn-orange w-full py-4 rounded-xl text-base disabled:opacity-60">
+                {formSending ? "Отправляем..." : "Вызвать замерщика бесплатно"}
               </button>
+              {formError && <p className="text-red-400 text-sm mt-3">{formError}</p>}
               <p className="text-white/30 text-xs mt-4">
                 Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности. Не передаём данные третьим лицам.
               </p>

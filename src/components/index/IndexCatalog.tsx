@@ -20,10 +20,9 @@ const ADVANTAGES = [
 
 interface IndexCatalogProps {
   getImg: (key: string) => string;
-  handleFormSubmit: (e: React.FormEvent) => void;
 }
 
-export default function IndexCatalog({ getImg, handleFormSubmit }: IndexCatalogProps) {
+export default function IndexCatalog({ getImg }: IndexCatalogProps) {
   return (
     <>
       {/* ===== QUIZ ===== */}
@@ -42,7 +41,7 @@ export default function IndexCatalog({ getImg, handleFormSubmit }: IndexCatalogP
             </p>
           </div>
 
-          <QuizCalculator handleFormSubmit={handleFormSubmit} />
+          <QuizCalculator />
         </div>
       </section>
 

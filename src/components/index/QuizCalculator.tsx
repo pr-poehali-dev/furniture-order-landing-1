@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Icon from "@/components/ui/icon";
+import { sendLead } from "@/lib/leads";
 
 type Question =
   | { id: string; q: string; type: "options"; options: string[] }
@@ -29,24 +30,38 @@ const WARDROBE_QUESTIONS: Question[] = [
   COMMON_TIMING,
 ];
 
-interface QuizCalculatorProps {
-  handleFormSubmit: (e: React.FormEvent) => void;
-}
-
-export default function QuizCalculator({ handleFormSubmit }: QuizCalculatorProps) {
+export default function QuizCalculator() {
   const [type, setType] = useState<"" | "kitchen" | "wardrobe">("");
   const [step, setStep] = useState(0);
   const [done, setDone] = useState(false);
   const [sliderVal, setSliderVal] = useState(3);
-  const [, setAnswers] = useState<Record<string, string>>({});
+  const [answers, setAnswers] = useState<Record<string, string>>({});
+  const [phone, setPhone] = useState("");
+  const [sending, setSending] = useState(false);
+  const [sent, setSent] = useState(false);
+  const [error, setError] = useState("");
 
   const questions = type === "kitchen" ? KITCHEN_QUESTIONS : type === "wardrobe" ? WARDROBE_QUESTIONS : [];
   // Шаг 0 — выбор типа мебели, далее — вопросы выбранной ветки
   const totalSteps = 1 + questions.length;
   const currentIndex = type === "" ? -1 : step;
 
-  const saveAnswer = (id: string, value: string) => {
-    setAnswers((prev) => ({ ...prev, [id]: value }));
+  const saveAnswer = (label: string, value: string) => {
+    setAnswers((prev) => ({ ...prev, [label]: value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSending(true);
+    setError("");
+    try {
+      await sendLead({ source: "quiz", phone, answers });
+      setSent(true);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Не удалось отправить заявку");
+    } finally {
+      setSending(false);
+    }
   };
 
   const goNext = () => {
@@ -60,16 +75,16 @@ export default function QuizCalculator({ handleFormSubmit }: QuizCalculatorProps
   const handleType = (t: "kitchen" | "wardrobe") => {
     setType(t);
     setStep(0);
-    saveAnswer("type", t === "kitchen" ? "Кухня" : "Шкаф");
+    saveAnswer("Мебель", t === "kitchen" ? "Кухня" : "Шкаф");
   };
 
   const handleOption = (q: Question, opt: string) => {
-    saveAnswer(q.id, opt);
+    saveAnswer(q.q, opt);
     goNext();
   };
 
   const handleSlider = (q: Question) => {
-    saveAnswer(q.id, `${sliderVal} ${(q as { unit: string }).unit}`);
+    saveAnswer(q.q, `${sliderVal} ${(q as { unit: string }).unit}`);
     goNext();
   };
 
@@ -79,6 +94,9 @@ export default function QuizCalculator({ handleFormSubmit }: QuizCalculatorProps
     setDone(false);
     setSliderVal(3);
     setAnswers({});
+    setPhone("");
+    setSent(false);
+    setError("");
   };
 
   // прогресс-полоски: первая — выбор типа, остальные — вопросы
@@ -179,17 +197,27 @@ export default function QuizCalculator({ handleFormSubmit }: QuizCalculatorProps
           <h3 className="font-display text-3xl font-bold text-white uppercase mb-3">Отлично!</h3>
           <p className="text-white/70 mb-2">Ваш предварительный расчёт готов.</p>
           <p className="text-orange-400 font-bold text-xl mb-6">Скидка 5% уже зарезервирована за вами!</p>
-          <p className="text-white/50 text-sm mb-8">Оставьте номер телефона — менеджер перезвонит и назовёт точную цену</p>
-          <form className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto" onSubmit={handleFormSubmit}>
-            <input
-              type="tel"
-              placeholder="+7 (___) ___-__-__"
-              className="flex-1 bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-orange-500 text-sm"
-            />
-            <button type="submit" className="btn-orange px-6 py-3 rounded-xl text-sm whitespace-nowrap">
-              Получить расчёт
-            </button>
-          </form>
+          {sent ? (
+            <p className="text-green-400 font-semibold">Спасибо! Менеджер перезвонит вам в ближайшее время и назовёт точную цену.</p>
+          ) : (
+            <>
+              <p className="text-white/50 text-sm mb-8">Оставьте номер телефона — менеджер перезвонит и назовёт точную цену</p>
+              <form className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto" onSubmit={handleSubmit}>
+                <input
+                  type="tel"
+                  required
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  placeholder="+7 (___) ___-__-__"
+                  className="flex-1 bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-orange-500 text-sm"
+                />
+                <button type="submit" disabled={sending} className="btn-orange px-6 py-3 rounded-xl text-sm whitespace-nowrap disabled:opacity-60">
+                  {sending ? "Отправляем..." : "Получить расчёт"}
+                </button>
+              </form>
+              {error && <p className="text-red-400 text-sm mt-3">{error}</p>}
+            </>
+          )}
         </div>
       )}
     </div>

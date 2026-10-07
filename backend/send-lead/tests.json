@@ -1,0 +1,6 @@
+{
+  "tests": [
+    {"name": "Пустой телефон отклоняется", "method": "POST", "path": "/", "body": {"source": "measure", "name": "Тест", "phone": "12"}, "expectedStatus": 400},
+    {"name": "GET запрещён", "method": "GET", "path": "/", "expectedStatus": 405}
+  ]
+}
