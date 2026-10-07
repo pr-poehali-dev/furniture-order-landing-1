@@ -1,6 +1,6 @@
 import { Link, useParams } from "react-router-dom";
 import Icon from "@/components/ui/icon";
-import { findCategory, getProjectGallery, getProjectTitle, getProjectMaterial, useSiteImages } from "@/lib/siteImages";
+import { findCategory, getProjectGallery, getProjectTitle, getProjectMaterial, sortProjectsByNewest, useSiteImages } from "@/lib/siteImages";
 import { useSeo } from "@/lib/useSeo";
 
 export default function PortfolioCategory() {
@@ -51,7 +51,7 @@ export default function PortfolioCategory() {
         </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {category.projects.map((proj) => {
+          {sortProjectsByNewest(category.projects).map((proj) => {
             const count = getProjectGallery(proj.slot).length;
             return (
               <Link

@@ -17,6 +17,9 @@ CORS = {
 }
 
 
+PROJECT_MAIN_RE = re.compile(r'^pf_[a-z]+_\d+$')
+
+
 def respond(status: int, data: dict) -> dict:
     return {
         'statusCode': status,
@@ -55,11 +58,13 @@ def handler(event: dict, context) -> dict:
         cur = conn.cursor()
 
         if method == 'GET':
-            cur.execute(f'SELECT slot_key, url FROM {SCHEMA}.site_images')
-            images = {k: u for k, u in cur.fetchall()}
+            cur.execute(f'SELECT slot_key, url, EXTRACT(EPOCH FROM created_at) FROM {SCHEMA}.site_images')
+            rows = cur.fetchall()
+            images = {k: u for k, u, _ in rows}
+            added = {k: int(t or 0) for k, _, t in rows if PROJECT_MAIN_RE.match(k)}
             cur.execute(f'SELECT project_key, description FROM {SCHEMA}.project_texts')
             texts = {k: d for k, d in cur.fetchall()}
-            return respond(200, {'images': images, 'texts': texts})
+            return respond(200, {'images': images, 'texts': texts, 'added': added})
 
         if method == 'POST':
             body = json.loads(event.get('body') or '{}')
