@@ -47,8 +47,8 @@ export default function IndexPortfolio({ getImg }: IndexPortfolioProps) {
                   <div className="absolute bottom-0 left-0 right-0 p-5">
                     <h3 className="font-display font-bold text-white text-xl uppercase">{cat.title}</h3>
                     <p className="text-white/70 text-xs mt-1">{cat.description}</p>
-                    <div className="flex items-center justify-between mt-3">
-                      <span className="text-orange-400 font-display font-bold text-sm uppercase">Смотреть проекты</span>
+                    <div className="flex items-center justify-end gap-2 mt-3">
+                      <span className="text-orange-400 font-display font-bold text-[11px] uppercase tracking-wide">Смотреть проекты</span>
                       <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center group-hover:bg-orange-500 transition-colors duration-300">
                         <Icon name="ArrowRight" size={14} className="text-white" />
                       </div>
