@@ -1,6 +1,7 @@
 {
   "tests": [
     {"name": "Пустой телефон отклоняется", "method": "POST", "path": "/", "body": {"source": "measure", "name": "Тест", "phone": "12"}, "expectedStatus": 400},
-    {"name": "GET запрещён", "method": "GET", "path": "/", "expectedStatus": 405}
+    {"name": "Список без пароля запрещён", "method": "GET", "path": "/", "expectedStatus": 401},
+    {"name": "Изменение без пароля запрещено", "method": "PUT", "path": "/", "body": {"id": 1, "status": "done"}, "expectedStatus": 401}
   ]
 }

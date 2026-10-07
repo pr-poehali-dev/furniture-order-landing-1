@@ -17,6 +17,7 @@ import {
   categoryCoverKey,
 } from "@/lib/siteImages";
 import ProjectGalleryCard from "@/components/admin/ProjectGalleryCard";
+import LeadsPanel from "@/components/admin/LeadsPanel";
 
 function AdminLogin({ onSuccess }: { onSuccess: () => void }) {
   const [password, setPassword] = useState("");
@@ -46,7 +47,7 @@ function AdminLogin({ onSuccess }: { onSuccess: () => void }) {
           <Icon name="Lock" size={22} className="text-white" />
         </div>
         <h1 className="font-display font-bold text-2xl text-gray-900 uppercase tracking-wide">Вход в админку</h1>
-        <p className="text-gray-500 text-sm mt-1 mb-6">Свой Стиль · управление фото</p>
+        <p className="text-gray-500 text-sm mt-1 mb-6">Свой Стиль · заявки и фото</p>
         <input
           type="password"
           value={password}
@@ -157,6 +158,7 @@ function SlotCard({ slot }: { slot: ImageSlot }) {
 
 export default function Admin() {
   const [authed, setAuthed] = useState(() => !!getAdminPassword());
+  const [tab, setTab] = useState<"leads" | "photos">("leads");
   const [activeCat, setActiveCat] = useState(PORTFOLIO_CATEGORIES[0].slug);
   const category = PORTFOLIO_CATEGORIES.find((c) => c.slug === activeCat);
 
@@ -178,11 +180,11 @@ export default function Admin() {
         <div className="max-w-6xl mx-auto px-4 sm:px-8 py-6 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 rounded gradient-orange flex items-center justify-center">
-              <Icon name="ImagePlus" size={18} className="text-white" />
+              <Icon name="LayoutDashboard" size={18} className="text-white" />
             </div>
             <div>
-              <div className="font-display font-bold text-lg tracking-wide uppercase">Управление фото</div>
-              <div className="text-white/50 text-xs">Свой Стиль · загрузка изображений сайта</div>
+              <div className="font-display font-bold text-lg tracking-wide uppercase">Админка</div>
+              <div className="text-white/50 text-xs">Свой Стиль · заявки и фото сайта</div>
             </div>
           </div>
           <div className="flex items-center gap-2">
@@ -198,7 +200,29 @@ export default function Admin() {
         </div>
       </header>
 
+      <div className="bg-gray-950 border-t border-white/10">
+        <div className="max-w-6xl mx-auto px-4 sm:px-8 flex gap-1">
+          {([
+            { id: "leads", label: "Заявки", icon: "Inbox" },
+            { id: "photos", label: "Фото сайта", icon: "Image" },
+          ] as const).map((t) => (
+            <button
+              key={t.id}
+              onClick={() => setTab(t.id)}
+              className={`px-4 py-3 text-sm font-semibold flex items-center gap-2 border-b-2 transition-colors ${tab === t.id ? "border-orange-500 text-white" : "border-transparent text-white/50 hover:text-white"}`}
+            >
+              <Icon name={t.icon} size={16} />
+              {t.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
       <main className="max-w-6xl mx-auto px-4 sm:px-8 py-8">
+        {tab === "leads" ? (
+          <LeadsPanel />
+        ) : (
+        <>
         <div className="bg-orange-50 border border-orange-200 rounded-2xl p-4 mb-8 flex items-start gap-3">
           <Icon name="Info" size={18} className="text-orange-500 mt-0.5 shrink-0" />
           <p className="text-gray-600 text-sm leading-relaxed">
@@ -256,6 +280,8 @@ export default function Admin() {
             </>
           )}
         </section>
+        </>
+        )}
       </main>
     </div>
   );

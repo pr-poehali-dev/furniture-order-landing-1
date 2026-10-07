@@ -1,3 +1,4 @@
+import hmac
 import json
 import os
 import re
@@ -12,8 +13,8 @@ SOURCES = {'measure': 'Вызов замерщика', 'quiz': 'Квиз «Уз�
 
 CORS = {
     'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'POST, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type',
+    'Access-Control-Allow-Methods': 'GET, POST, PUT, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type, X-Admin-Password',
     'Access-Control-Max-Age': '86400',
 }
 
@@ -43,14 +44,76 @@ def send_email(subject: str, text: str) -> bool:
     return True
 
 
+STATUSES = ('new', 'in_work', 'done', 'rejected')
+
+
+def is_admin(event: dict) -> bool:
+    expected = os.environ.get('ADMIN_PASSWORD', '')
+    headers = {k.lower(): v for k, v in (event.get('headers') or {}).items()}
+    given = headers.get('x-admin-password', '')
+    return bool(expected) and hmac.compare_digest(given.encode(), expected.encode())
+
+
+def list_leads() -> dict:
+    conn = psycopg2.connect(os.environ['DATABASE_URL'])
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            f'SELECT id, source, name, phone, details, status, comment, email_sent, created_at '
+            f'FROM {SCHEMA}.leads ORDER BY created_at DESC LIMIT 500'
+        )
+        cols = ['id', 'source', 'name', 'phone', 'details', 'status', 'comment', 'email_sent', 'created_at']
+        items = []
+        for row in cur.fetchall():
+            item = dict(zip(cols, row))
+            item['created_at'] = item['created_at'].isoformat()
+            item['source_label'] = SOURCES.get(item['source'], item['source'])
+            items.append(item)
+    finally:
+        conn.close()
+    return respond(200, {'items': items})
+
+
+def update_lead(body: dict) -> dict:
+    lead_id = body.get('id')
+    if not isinstance(lead_id, int):
+        return respond(400, {'error': 'Не указана заявка'})
+    sets, params = [], []
+    if 'status' in body:
+        if body['status'] not in STATUSES:
+            return respond(400, {'error': 'Неизвестный статус'})
+        sets.append('status = %s')
+        params.append(body['status'])
+    if 'comment' in body:
+        sets.append('comment = %s')
+        params.append(clean(body['comment'], 2000) or None)
+    if not sets:
+        return respond(400, {'error': 'Нечего обновлять'})
+    conn = psycopg2.connect(os.environ['DATABASE_URL'])
+    try:
+        cur = conn.cursor()
+        cur.execute(f'UPDATE {SCHEMA}.leads SET {", ".join(sets)} WHERE id = %s', (*params, lead_id))
+        conn.commit()
+    finally:
+        conn.close()
+    return respond(200, {'ok': True})
+
+
 def handler(event: dict, context) -> dict:
     '''
-    Принимает заявки с сайта (вызов замерщика, квиз), сохраняет их в базу
-    и отправляет письмо на почту владельца.
+    Заявки с сайта. POST — принимает заявку (замерщик, квиз), сохраняет и шлёт письмо.
+    GET — список заявок, PUT {id, status?, comment?} — смена статуса/комментария (только админ).
     '''
-    if event.get('httpMethod') == 'OPTIONS':
+    method = event.get('httpMethod')
+    if method == 'OPTIONS':
         return {'statusCode': 200, 'headers': CORS, 'body': ''}
-    if event.get('httpMethod') != 'POST':
+    if method in ('GET', 'PUT'):
+        if not is_admin(event):
+            return respond(401, {'error': 'Нужен пароль администратора'})
+        if method == 'GET':
+            return list_leads()
+        return update_lead(json.loads(event.get('body') or '{}'))
+    if method != 'POST':
         return respond(405, {'error': 'Method not allowed'})
 
     body = json.loads(event.get('body') or '{}')

@@ -1,0 +1,2 @@
+ALTER TABLE t_p97508351_furniture_order_land.leads ADD COLUMN IF NOT EXISTS status VARCHAR(16) NOT NULL DEFAULT 'new';
+ALTER TABLE t_p97508351_furniture_order_land.leads ADD COLUMN IF NOT EXISTS comment TEXT;
