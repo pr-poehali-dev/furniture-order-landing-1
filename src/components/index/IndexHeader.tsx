@@ -93,32 +93,32 @@ export default function IndexHeader({ getImg, mobileMenu, setMobileMenu }: Index
         <div className="absolute bottom-0 right-0 w-[32rem] h-[32rem] rounded-full bg-orange-600/10 blur-[120px] pointer-events-none" />
         <div className="absolute inset-0 opacity-[0.04] pointer-events-none" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.5) 1px, transparent 1px)", backgroundSize: "64px 64px" }} />
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-8 w-full py-32 grid lg:grid-cols-12 gap-10 items-center">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-8 w-full pt-24 pb-20 sm:py-32 grid lg:grid-cols-12 gap-10 items-center">
           {/* left content */}
           <div className="lg:col-span-7" style={{ animation: "fade-up 0.8s ease-out forwards" }}>
-            <div className="inline-flex items-center gap-2 backdrop-blur-md bg-white/5 border border-orange-500/30 rounded-full pl-2 pr-4 py-1.5 mb-7">
-              <span className="flex items-center gap-1.5 bg-orange-500 text-white text-xs font-bold px-2.5 py-1 rounded-full">
+            <div className="inline-flex items-center gap-2 backdrop-blur-md bg-white/5 border border-orange-500/30 rounded-full pl-1.5 pr-3 sm:pl-2 sm:pr-4 py-1 sm:py-1.5 mb-5 sm:mb-7">
+              <span className="flex items-center gap-1.5 bg-orange-500 text-white text-[10px] sm:text-xs font-bold px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full shrink-0">
                 <Icon name="Sparkles" size={12} className="text-white" /> ТОП
               </span>
-              <span className="text-white/80 text-sm font-medium">Производство в Барнауле · 15 лет на рынке</span>
+              <span className="text-white/80 text-xs sm:text-sm font-medium whitespace-nowrap">Производство в Барнауле<span className="hidden sm:inline"> · 15 лет на рынке</span><span className="sm:hidden"> · 15 лет</span></span>
             </div>
 
-            <h1 className="font-display text-4xl sm:text-5xl lg:text-[3.75rem] font-medium text-white leading-[1.08] tracking-tight mb-6">Корпусная мебель на заказ</h1>
-            <p className="text-white/65 sm:text-xl leading-relaxed mb-8 max-w-xl text-lg">Проектируем, производим и монтируем  точно по размерам вашей квартиры — без переплат и посредников.</p>
+            <h1 className="font-display text-[2rem] sm:text-5xl lg:text-[3.75rem] font-bold sm:font-medium text-white leading-[1.1] tracking-tight mb-4 sm:mb-6">Корпусная мебель <span className="block sm:inline gradient-text">на заказ</span></h1>
+            <p className="text-white/65 text-base sm:text-xl leading-relaxed mb-6 sm:mb-8 max-w-xl">Проектируем, производим и монтируем  точно по размерам вашей квартиры — без переплат и посредников.</p>
 
-            <div className="flex flex-col sm:flex-row gap-4 mb-10">
+            <div className="flex flex-col sm:flex-row gap-2.5 sm:gap-4 mb-7 sm:mb-10">
               <button
-                className="group btn-orange px-8 py-4 rounded-2xl text-base text-white inline-flex items-center justify-center gap-2 shadow-lg shadow-orange-500/30"
+                className="group btn-orange px-6 py-3 sm:px-8 sm:py-4 rounded-xl sm:rounded-2xl text-sm sm:text-base text-white inline-flex items-center justify-center gap-2 shadow-lg shadow-orange-500/30"
                 onClick={() => document.getElementById("quiz")?.scrollIntoView({ behavior: "smooth" })}
               >
                 Рассчитать стоимость
-                <Icon name="ArrowRight" size={18} className="text-white transition-transform group-hover:translate-x-1" />
+                <Icon name="ArrowRight" size={16} className="text-white transition-transform group-hover:translate-x-1" />
               </button>
               <button
-                className="btn-outline-orange px-8 py-4 rounded-2xl text-base inline-flex items-center justify-center gap-2 bg-white/5 backdrop-blur-md"
+                className="btn-outline-orange px-6 py-3 sm:px-8 sm:py-4 rounded-xl sm:rounded-2xl text-sm sm:text-base inline-flex items-center justify-center gap-2 bg-white/5 backdrop-blur-md"
                 onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
               >
-                <Icon name="Ruler" size={18} />
+                <Icon name="Ruler" size={16} />
                 Записаться на замер
               </button>
             </div>
