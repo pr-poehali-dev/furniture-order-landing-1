@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { getAdminPassword } from "@/lib/siteImages";
 
 const VIDEOS_URL = "https://functions.poehali.dev/4ece7b63-b40b-488c-8424-8a4c92c1a1a3";
-const CHUNK_SIZE = 2 * 1024 * 1024;
-export const MAX_VIDEO_MB = 300;
+const CHUNK_SIZE = 1024 * 1024;
+export const MAX_VIDEO_MB = 100;
 
 export interface Video {
   id: number;
@@ -51,27 +51,29 @@ function blobToBase64(blob: Blob): Promise<string> {
   });
 }
 
-type Part = { PartNumber: number; ETag: string };
+async function withRetry<T>(fn: () => Promise<T>, attempts = 6): Promise<T> {
+  for (let i = 1; ; i++) {
+    try {
+      return await fn();
+    } catch (e) {
+      if (i >= attempts || (e instanceof Error && e.message === "Неверный пароль")) throw e;
+      await new Promise((r) => setTimeout(r, 1000 * i));
+    }
+  }
+}
 
 export async function uploadVideoFile(file: File, onProgress: (pct: number) => void): Promise<string> {
   const contentType = file.type || "video/mp4";
-  const init = await post<{ key: string; uploadId: string; parts: Part[] }>({ action: "init", contentType });
-  let parts: Part[] = [];
+  const init = await withRetry(() => post<{ key: string }>({ action: "init", contentType }));
+  let count = 0;
   for (let offset = 0; offset < file.size; offset += CHUNK_SIZE) {
     const data = await blobToBase64(file.slice(offset, offset + CHUNK_SIZE));
-    let attempt = 0;
-    for (;;) {
-      try {
-        const res = await post<{ parts: Part[] }>({ action: "chunk", key: init.key, uploadId: init.uploadId, parts, data });
-        parts = res.parts;
-        break;
-      } catch (e) {
-        if (++attempt >= 3) throw e;
-      }
-    }
-    onProgress(Math.min(99, Math.round(((offset + CHUNK_SIZE) / file.size) * 100)));
+    const index = count;
+    await withRetry(() => post({ action: "chunk", key: init.key, index, data }));
+    count++;
+    onProgress(Math.min(95, Math.round(((offset + CHUNK_SIZE) / file.size) * 95)));
   }
-  const done = await post<{ url: string }>({ action: "complete", key: init.key, uploadId: init.uploadId, parts });
+  const done = await withRetry(() => post<{ url: string }>({ action: "complete", key: init.key, count }), 4);
   onProgress(100);
   return done.url;
 }

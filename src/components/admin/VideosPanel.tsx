@@ -111,15 +111,19 @@ export default function VideosPanel() {
     try {
       setStage("Готовлю обложку...");
       const posterBlob = await capturePoster(file);
-      const poster_url = posterBlob ? await uploadImage(new File([posterBlob], "poster.jpg", { type: "image/jpeg" })) : null;
+      const poster_url = posterBlob ? await uploadImage(new File([posterBlob], "poster.jpg", { type: "image/jpeg" })).catch(() => null) : null;
       setStage("Загружаю видео...");
       const video_url = await uploadVideoFile(file, setProgress);
       setStage("Сохраняю...");
       const title = file.name.replace(/\.[^.]+$/, "").slice(0, 200);
       const { id } = await createVideo({ title, video_url, poster_url });
       setVideos((prev) => [...prev, { id, title, video_url, poster_url }]);
-    } catch {
-      setError("Загрузка прервалась. Проверьте интернет и попробуйте ещё раз.");
+    } catch (err) {
+      setError(
+        err instanceof Error && err.message === "Неверный пароль"
+          ? "Сессия устарела — выйдите из админки и войдите заново."
+          : "Загрузка прервалась. Проверьте интернет и попробуйте ещё раз.",
+      );
     } finally {
       setProgress(null);
       setStage("");

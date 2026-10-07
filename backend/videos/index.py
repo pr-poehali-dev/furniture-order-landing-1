@@ -9,7 +9,6 @@ import psycopg2
 
 SCHEMA = os.environ.get('MAIN_DB_SCHEMA', 't_p97508351_furniture_order_land')
 URL_PREFIX = 'https://cdn.poehali.dev/'
-MIN_PART = 5 * 1024 * 1024
 KEY_RE = re.compile(r'^site-videos/[a-f0-9]{32}\.(mp4|mov|webm)$')
 EXTS = {'video/mp4': 'mp4', 'video/quicktime': 'mov', 'video/webm': 'webm'}
 
@@ -49,13 +48,6 @@ def db():
     return psycopg2.connect(os.environ['DATABASE_URL'])
 
 
-def read_buffer(s3, key: str) -> bytes:
-    try:
-        return s3.get_object(Bucket='files', Key=f'{key}.buf')['Body'].read()
-    except s3.exceptions.NoSuchKey:
-        return b''
-
-
 def list_videos() -> dict:
     conn = db()
     try:
@@ -71,37 +63,32 @@ def handle_upload(action: str, body: dict) -> dict:
     s3 = s3_client()
     if action == 'init':
         ext = EXTS.get(body.get('contentType', ''), 'mp4')
-        key = f'site-videos/{uuid.uuid4().hex}.{ext}'
-        content_type = body.get('contentType') if body.get('contentType') in EXTS else 'video/mp4'
-        res = s3.create_multipart_upload(Bucket='files', Key=key, ContentType=content_type)
-        return respond(200, {'key': key, 'uploadId': res['UploadId'], 'parts': []})
+        return respond(200, {'key': f'site-videos/{uuid.uuid4().hex}.{ext}'})
 
     key = body.get('key', '')
-    upload_id = body.get('uploadId', '')
-    parts = body.get('parts') or []
-    if not KEY_RE.match(key) or not upload_id:
+    if not KEY_RE.match(key):
         return respond(400, {'error': 'Неверные данные загрузки'})
 
     if action == 'chunk':
-        data = read_buffer(s3, key) + base64.b64decode(body.get('data', ''))
-        if len(data) >= MIN_PART:
-            num = len(parts) + 1
-            res = s3.upload_part(Bucket='files', Key=key, UploadId=upload_id, PartNumber=num, Body=data)
-            parts.append({'PartNumber': num, 'ETag': res['ETag']})
-            s3.delete_object(Bucket='files', Key=f'{key}.buf')
-        else:
-            s3.put_object(Bucket='files', Key=f'{key}.buf', Body=data)
-        return respond(200, {'parts': parts})
+        num = int(body.get('index', 0))
+        s3.put_object(Bucket='files', Key=f'tmp-{key}/{num:05d}', Body=base64.b64decode(body.get('data', '')))
+        return respond(200, {'ok': True})
 
     if action == 'complete':
-        data = read_buffer(s3, key)
-        if data or not parts:
-            num = len(parts) + 1
-            res = s3.upload_part(Bucket='files', Key=key, UploadId=upload_id, PartNumber=num, Body=data)
-            parts.append({'PartNumber': num, 'ETag': res['ETag']})
-        s3.complete_multipart_upload(Bucket='files', Key=key, UploadId=upload_id, MultipartUpload={'Parts': parts})
-        if data:
-            s3.delete_object(Bucket='files', Key=f'{key}.buf')
+        count = int(body.get('count', 0))
+        ext = key.rsplit('.', 1)[1]
+        content_type = {v: k for k, v in EXTS.items()}[ext]
+        path = f'/tmp/{uuid.uuid4().hex}'
+        with open(path, 'wb') as f:
+            for i in range(count):
+                obj = s3.get_object(Bucket='files', Key=f'tmp-{key}/{i:05d}')
+                for piece in obj['Body'].iter_chunks(1024 * 1024):
+                    f.write(piece)
+        with open(path, 'rb') as f:
+            s3.put_object(Bucket='files', Key=key, Body=f, ContentType=content_type)
+        os.remove(path)
+        for i in range(count):
+            s3.delete_object(Bucket='files', Key=f'tmp-{key}/{i:05d}')
         url = f"https://cdn.poehali.dev/projects/{os.environ['AWS_ACCESS_KEY_ID']}/bucket/{key}"
         return respond(200, {'url': url})
 
@@ -148,7 +135,7 @@ def handle_manage(action: str, body: dict) -> dict:
 def handler(event: dict, context) -> dict:
     '''
     Видеообзоры сайта. GET — список роликов (публично).
-    POST (только админ): init/chunk/complete — загрузка видеофайла частями в хранилище,
+    POST (только админ): init/chunk/complete — загрузка видеофайла частями по 1 МБ и склейка в один файл,
     create/update/delete/reorder — управление списком роликов.
     '''
     method = event.get('httpMethod', 'GET')
