@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import Icon from "@/components/ui/icon";
+import IndexVideos from "@/components/index/IndexVideos";
 import { PORTFOLIO_CATEGORIES, categoryCoverKey } from "@/lib/siteImages";
 
 const REVIEWS = [
@@ -76,6 +77,8 @@ export default function IndexPortfolio({ getImg }: IndexPortfolioProps) {
           </div>
         </div>
       </section>
+
+      <IndexVideos />
 
       {/* ===== REVIEWS ===== */}
       <section id="reviews" className="py-24 bg-gray-50">

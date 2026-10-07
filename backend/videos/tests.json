@@ -1,0 +1,6 @@
+{
+  "tests": [
+    {"name": "Список видео", "method": "GET", "path": "/", "expectedStatus": 200, "expectedBody": {"items": []}, "bodyMatcher": "partial"},
+    {"name": "Без пароля запрещено", "method": "POST", "path": "/", "body": {"action": "init"}, "expectedStatus": 401}
+  ]
+}

@@ -18,6 +18,7 @@ import {
 } from "@/lib/siteImages";
 import ProjectGalleryCard from "@/components/admin/ProjectGalleryCard";
 import LeadsPanel from "@/components/admin/LeadsPanel";
+import VideosPanel from "@/components/admin/VideosPanel";
 
 function AdminLogin({ onSuccess }: { onSuccess: () => void }) {
   const [password, setPassword] = useState("");
@@ -158,7 +159,7 @@ function SlotCard({ slot }: { slot: ImageSlot }) {
 
 export default function Admin() {
   const [authed, setAuthed] = useState(() => !!getAdminPassword());
-  const [tab, setTab] = useState<"leads" | "photos">("leads");
+  const [tab, setTab] = useState<"leads" | "photos" | "videos">("leads");
   const [activeCat, setActiveCat] = useState(PORTFOLIO_CATEGORIES[0].slug);
   const category = PORTFOLIO_CATEGORIES.find((c) => c.slug === activeCat);
 
@@ -205,6 +206,7 @@ export default function Admin() {
           {([
             { id: "leads", label: "Заявки", icon: "Inbox" },
             { id: "photos", label: "Фото сайта", icon: "Image" },
+            { id: "videos", label: "Видео", icon: "Video" },
           ] as const).map((t) => (
             <button
               key={t.id}
@@ -221,6 +223,8 @@ export default function Admin() {
       <main className="max-w-6xl mx-auto px-4 sm:px-8 py-8">
         {tab === "leads" ? (
           <LeadsPanel />
+        ) : tab === "videos" ? (
+          <VideosPanel />
         ) : (
         <>
         <div className="bg-orange-50 border border-orange-200 rounded-2xl p-4 mb-8 flex items-start gap-3">

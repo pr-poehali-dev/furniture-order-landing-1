@@ -49,6 +49,7 @@ export default function IndexHeader({ getImg, mobileMenu, setMobileMenu }: Index
                 {[
                   { href: "#catalog", label: "Каталог", icon: "LayoutGrid" },
                   { href: "#portfolio", label: "Портфолио", icon: "Images" },
+                  { href: "#videos", label: "Видеообзоры", icon: "Video" },
                   { href: "#steps", label: "Как работаем", icon: "ListChecks" },
                   { href: "#reviews", label: "Отзывы", icon: "Star" },
                 ].map((item) => (
