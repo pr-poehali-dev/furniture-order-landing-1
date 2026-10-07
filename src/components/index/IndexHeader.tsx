@@ -80,7 +80,7 @@ export default function IndexHeader({ getImg, mobileMenu, setMobileMenu }: Index
       </nav>
 
       {/* ===== HERO ===== */}
-      <section className="relative min-h-screen flex items-start sm:items-center overflow-hidden">
+      <section className="relative min-h-[100svh] sm:min-h-screen flex flex-col sm:flex-row sm:items-center overflow-hidden">
         <div className="absolute inset-0">
           <img src={getImg("hero")} alt="Мебель на заказ" className="w-full h-full object-cover scale-105" />
           <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/90 to-slate-950/40" />
@@ -92,9 +92,10 @@ export default function IndexHeader({ getImg, mobileMenu, setMobileMenu }: Index
         <div className="absolute bottom-0 right-0 w-[32rem] h-[32rem] rounded-full bg-orange-600/10 blur-[120px] pointer-events-none" />
         <div className="absolute inset-0 opacity-[0.04] pointer-events-none" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.5) 1px, transparent 1px)", backgroundSize: "64px 64px" }} />
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-8 w-full pt-[5.5rem] pb-20 sm:py-32 grid lg:grid-cols-12 gap-10 items-center">
+        <div className="relative flex-1 flex flex-col sm:block max-w-7xl mx-auto px-4 sm:px-8 w-full pt-[5.5rem] pb-5 sm:py-32 lg:grid lg:grid-cols-12 gap-10 items-center">
           {/* left content */}
-          <div className="lg:col-span-7" style={{ animation: "fade-up 0.8s ease-out forwards" }}>
+          <div className="flex-1 flex flex-col justify-between gap-6 sm:block lg:col-span-7" style={{ animation: "fade-up 0.8s ease-out forwards" }}>
+            <div>
             <div className="inline-flex items-center gap-2 backdrop-blur-md bg-white/5 border border-orange-500/30 rounded-full pl-1.5 pr-3 sm:pl-2 sm:pr-4 py-1 sm:py-1.5 mb-5 sm:mb-7">
               <span className="flex items-center gap-1.5 bg-orange-500 text-white text-[10px] sm:text-xs font-bold px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full shrink-0">
                 <Icon name="Sparkles" size={12} className="text-white" /> ТОП
@@ -106,9 +107,10 @@ export default function IndexHeader({ getImg, mobileMenu, setMobileMenu }: Index
               Корпусная мебель
               <em className="block gradient-text mt-1">на заказ</em>
             </h1>
-            <p className="text-white/65 text-base sm:text-xl leading-relaxed mb-6 sm:mb-8 max-w-xl">Проектируем, производим и монтируем  точно по размерам вашей квартиры — без переплат и посредников.</p>
+            <p className="text-white/65 text-base sm:text-xl leading-relaxed sm:mb-8 max-w-xl">Проектируем, производим и монтируем точно по размерам вашей квартиры — без переплат и посредников.</p>
+            </div>
 
-            <div className="flex flex-col sm:flex-row gap-2.5 sm:gap-4 mb-7 sm:mb-10 px-6 sm:px-0">
+            <div className="flex flex-col sm:flex-row gap-2.5 sm:gap-4 sm:mb-10 px-6 sm:px-0">
               <button
                 className="group btn-orange px-5 py-3 sm:px-8 sm:py-4 rounded-xl sm:rounded-2xl text-xs sm:text-base text-white inline-flex items-center justify-center gap-2 shadow-lg shadow-orange-500/30"
                 onClick={() => document.getElementById("quiz")?.scrollIntoView({ behavior: "smooth" })}
@@ -139,6 +141,11 @@ export default function IndexHeader({ getImg, mobileMenu, setMobileMenu }: Index
                   {b.text}
                 </div>
               ))}
+            </div>
+
+            <div className="sm:hidden flex flex-col items-center gap-0.5 text-white/40 animate-bounce pointer-events-none">
+              <span className="text-[10px] uppercase tracking-widest">Листайте</span>
+              <Icon name="ChevronDown" size={18} className="text-white/40" />
             </div>
           </div>
 
@@ -198,7 +205,7 @@ export default function IndexHeader({ getImg, mobileMenu, setMobileMenu }: Index
           </div>
         </div>
 
-        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-white/40 animate-bounce pointer-events-none">
+        <div className="hidden sm:flex absolute bottom-6 left-1/2 -translate-x-1/2 flex-col items-center gap-1 text-white/40 animate-bounce pointer-events-none">
           <span className="text-[10px] uppercase tracking-widest">Листайте</span>
           <Icon name="ChevronDown" size={18} className="text-white/40" />
         </div>
