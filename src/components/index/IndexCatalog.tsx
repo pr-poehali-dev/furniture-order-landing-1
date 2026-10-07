@@ -1,5 +1,6 @@
 import Icon from "@/components/ui/icon";
 import QuizCalculator from "@/components/index/QuizCalculator";
+import StepsMobileSlider from "@/components/index/StepsMobileSlider";
 
 const STEPS = [
   { icon: "Phone", num: "01", title: "Оставьте заявку", desc: "Позвоните или оставьте номер на сайте — мы свяжемся с вами и ответим на все вопросы." },
@@ -48,14 +49,16 @@ export default function IndexCatalog({ getImg }: IndexCatalogProps) {
       {/* ===== STEPS ===== */}
       <section id="steps" className="py-24 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-8">
-          <div className="animate-on-scroll text-center mb-16">
+          <div className="animate-on-scroll text-center mb-10 sm:mb-16">
             <div className="text-orange-500 font-display font-semibold text-sm tracking-widest uppercase mb-3">Процесс работы</div>
             <h2 className="font-display sm:text-5xl font-bold text-gray-900 uppercase tracking-wide text-4xl">
               5 шагов к новой мебели
             </h2>
           </div>
 
-          <div className="relative">
+          <StepsMobileSlider steps={STEPS} />
+
+          <div className="relative hidden sm:block">
             <div className="hidden lg:block absolute top-14 left-0 right-0 h-px bg-gradient-to-r from-transparent via-orange-300 to-transparent" />
             <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-6">
               {STEPS.map((step, i) => (
