@@ -102,12 +102,9 @@ export default function IndexHeader({ getImg, mobileMenu, setMobileMenu }: Index
               <span className="text-white/80 text-xs sm:text-sm font-medium whitespace-nowrap">Производство в Барнауле<span className="hidden sm:inline"> · 15 лет на рынке</span><span className="sm:hidden"> · 15 лет</span></span>
             </div>
 
-            <h1 className="hero-title text-[2.6rem] sm:text-6xl lg:text-[4.5rem] text-white mb-5 sm:mb-7">
+            <h1 className="hero-title text-[2.5rem] sm:text-6xl lg:text-[4.5rem] text-white mb-5 sm:mb-7">
               Корпусная мебель
-              <span className="flex items-center gap-3 sm:gap-4 mt-1">
-                <span className="h-px w-10 sm:w-16 bg-gradient-to-r from-transparent to-orange-400" />
-                <em className="gradient-text pr-2">на заказ</em>
-              </span>
+              <em className="block gradient-text mt-1">на заказ</em>
             </h1>
             <p className="text-white/65 text-base sm:text-xl leading-relaxed mb-6 sm:mb-8 max-w-xl">Проектируем, производим и монтируем  точно по размерам вашей квартиры — без переплат и посредников.</p>
 
