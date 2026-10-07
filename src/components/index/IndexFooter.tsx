@@ -1,4 +1,5 @@
 import Icon from "@/components/ui/icon";
+import PhoneInput from "@/components/ui/phone-input";
 
 interface ChatMessage {
   from: string;
@@ -73,11 +74,9 @@ export default function IndexFooter({
                 </div>
                 <div>
                   <label className="text-white/60 text-sm mb-2 block text-left">Телефон</label>
-                  <input
-                    type="tel"
-                    placeholder="+7 (___) ___-__-__"
+                  <PhoneInput
                     value={formPhone}
-                    onChange={(e) => setFormPhone(e.target.value)}
+                    onChange={setFormPhone}
                     className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3.5 text-white placeholder-white/30 focus:outline-none focus:border-orange-500 transition-colors text-sm"
                     required
                   />

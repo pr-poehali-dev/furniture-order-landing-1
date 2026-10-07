@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Icon from "@/components/ui/icon";
+import PhoneInput from "@/components/ui/phone-input";
 import { sendLead } from "@/lib/leads";
 
 type Question =
@@ -203,12 +204,10 @@ export default function QuizCalculator() {
             <>
               <p className="text-white/50 text-sm mb-8">Оставьте номер телефона — менеджер перезвонит и назовёт точную цену</p>
               <form className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto" onSubmit={handleSubmit}>
-                <input
-                  type="tel"
+                <PhoneInput
                   required
                   value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  placeholder="+7 (___) ___-__-__"
+                  onChange={setPhone}
                   className="flex-1 bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-orange-500 text-sm"
                 />
                 <button type="submit" disabled={sending} className="btn-orange px-6 py-3 rounded-xl text-sm whitespace-nowrap disabled:opacity-60">
