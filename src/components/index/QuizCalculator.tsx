@@ -178,7 +178,7 @@ export default function QuizCalculator({ handleFormSubmit }: QuizCalculatorProps
           </div>
           <h3 className="font-display text-3xl font-bold text-white uppercase mb-3">Отлично!</h3>
           <p className="text-white/70 mb-2">Ваш предварительный расчёт готов.</p>
-          <p className="text-orange-400 font-bold text-xl mb-6">Скидка 10% уже зарезервирована за вами!</p>
+          <p className="text-orange-400 font-bold text-xl mb-6">Скидка 5% уже зарезервирована за вами!</p>
           <p className="text-white/50 text-sm mb-8">Оставьте номер телефона — менеджер перезвонит и назовёт точную цену</p>
           <form className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto" onSubmit={handleFormSubmit}>
             <input

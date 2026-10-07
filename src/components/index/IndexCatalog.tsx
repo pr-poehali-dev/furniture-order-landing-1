@@ -38,7 +38,7 @@ export default function IndexCatalog({ getImg, handleFormSubmit }: IndexCatalogP
               Узнайте цену за<br /><span className="gradient-text">2 минуты</span>
             </h2>
             <p className="text-white/60 text-lg">
-              Ответьте на несколько вопросов — получите предварительный расчёт и скидку <strong className="text-orange-400">10%</strong> на первый заказ
+              Ответьте на несколько вопросов — получите предварительный расчёт и скидку <strong className="text-orange-400">5%</strong> на первый заказ
             </p>
           </div>
 
