@@ -32,7 +32,7 @@ export default function IndexFooter({
         <div className="max-w-2xl mx-auto px-4 sm:px-8 relative z-10 text-center">
           <div className="animate-on-scroll">
             <div className="text-orange-500 font-display font-semibold text-sm tracking-widest uppercase mb-3">Бесплатно</div>
-            <h2 className="font-display sm:text-5xl font-bold text-white uppercase tracking-wide mb-4 text-4xl">
+            <h2 className="section-title text-[1.75rem] sm:text-4xl lg:text-[2.75rem] text-white mb-4">
               Закажите бесплатный<br />
               <span className="gradient-text">выезд замерщика</span>
             </h2>

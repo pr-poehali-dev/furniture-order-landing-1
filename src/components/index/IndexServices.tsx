@@ -10,7 +10,7 @@ export default function IndexServices({ getImg }: IndexServicesProps) {
       <div className="max-w-7xl mx-auto px-4 sm:px-8">
         <div className="animate-on-scroll text-center mb-16">
           <div className="text-orange-500 font-display font-semibold text-sm tracking-widest uppercase mb-3">Наши возможности</div>
-          <h2 className="font-display text-4xl sm:text-5xl font-bold text-gray-900 uppercase tracking-wide">
+          <h2 className="section-title text-[1.75rem] sm:text-4xl lg:text-[2.75rem] text-gray-900">
             Что мы делаем
           </h2>
           <p className="text-gray-500 text-lg mt-4 max-w-xl mx-auto">

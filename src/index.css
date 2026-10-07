@@ -121,6 +121,14 @@
     background: linear-gradient(135deg, #0a0f1a 0%, #1a1f2e 40%, #2d1a0e 100%);
   }
 
+  .section-title {
+    font-family: "Unbounded", "Montserrat", sans-serif;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    text-transform: none;
+  }
+
   .gradient-text {
     background: linear-gradient(135deg, #f97316, #fb923c, #fbbf24);
     -webkit-background-clip: text;

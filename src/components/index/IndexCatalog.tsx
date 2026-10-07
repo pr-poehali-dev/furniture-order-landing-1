@@ -34,7 +34,7 @@ export default function IndexCatalog({ getImg }: IndexCatalogProps) {
         <div className="max-w-3xl mx-auto px-4 sm:px-8 relative z-10">
           <div className="animate-on-scroll text-center mb-12">
             <div className="text-orange-500 font-display font-semibold text-sm tracking-widest uppercase mb-3">Быстрый расчёт</div>
-            <h2 className="font-display sm:text-5xl font-bold text-white uppercase tracking-wide mb-4 text-4xl">
+            <h2 className="section-title text-[1.75rem] sm:text-4xl lg:text-[2.75rem] text-white mb-4">
               Узнайте цену за<br /><span className="gradient-text">2 минуты</span>
             </h2>
             <p className="text-white/60 text-lg">
@@ -51,7 +51,7 @@ export default function IndexCatalog({ getImg }: IndexCatalogProps) {
         <div className="max-w-7xl mx-auto px-4 sm:px-8">
           <div className="animate-on-scroll text-center mb-10 sm:mb-16">
             <div className="text-orange-500 font-display font-semibold text-sm tracking-widest uppercase mb-3">Процесс работы</div>
-            <h2 className="font-display sm:text-5xl font-bold text-gray-900 uppercase tracking-wide text-4xl">
+            <h2 className="section-title text-[1.75rem] sm:text-4xl lg:text-[2.75rem] text-gray-900">
               5 шагов к новой мебели
             </h2>
           </div>
@@ -88,7 +88,7 @@ export default function IndexCatalog({ getImg }: IndexCatalogProps) {
         <div className="max-w-7xl mx-auto px-4 sm:px-8 relative z-10">
           <div className="animate-on-scroll text-center mb-16">
             <div className="text-orange-500 font-display font-semibold text-sm tracking-widest uppercase mb-3">Почему мы</div>
-            <h2 className="font-display text-4xl sm:text-5xl font-bold text-white uppercase tracking-wide">
+            <h2 className="section-title text-[1.75rem] sm:text-4xl lg:text-[2.75rem] text-white">
               Наши <span className="gradient-text">преимущества</span>
             </h2>
           </div>

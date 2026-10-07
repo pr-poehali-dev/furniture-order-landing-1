@@ -6,8 +6,8 @@ export default function IndexSeoText() {
     >
       <div className="max-w-4xl mx-auto">
         <h2
-          className="text-2xl md:text-3xl font-bold mb-6"
-          style={{ fontFamily: "'Montserrat', sans-serif", color: "#f3f4f6" }}
+          className="section-title text-2xl md:text-3xl mb-6"
+          style={{ color: "#f3f4f6" }}
         >
           Корпусная мебель на заказ в Барнауле
         </h2>

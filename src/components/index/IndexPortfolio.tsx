@@ -37,7 +37,7 @@ export default function IndexPortfolio({ getImg }: IndexPortfolioProps) {
         <div className="max-w-7xl mx-auto px-4 sm:px-8">
           <div className="animate-on-scroll text-center mb-16">
             <div className="text-orange-500 font-display font-semibold text-sm tracking-widest uppercase mb-3">Готовые работы</div>
-            <h2 className="font-display text-4xl sm:text-5xl font-bold text-gray-900 uppercase tracking-wide">
+            <h2 className="section-title text-[1.75rem] sm:text-4xl lg:text-[2.75rem] text-gray-900">
               Портфолио
             </h2>
             <p className="text-gray-500 text-sm sm:text-lg mt-3 sm:mt-4">Выберите категорию, чтобы посмотреть проекты</p>
@@ -82,7 +82,7 @@ export default function IndexPortfolio({ getImg }: IndexPortfolioProps) {
         <div className="max-w-7xl mx-auto px-4 sm:px-8">
           <div className="animate-on-scroll text-center mb-16">
             <div className="text-orange-500 font-display font-semibold text-sm tracking-widest uppercase mb-3">Что говорят клиенты</div>
-            <h2 className="font-display text-4xl sm:text-5xl font-bold text-gray-900 uppercase tracking-wide mb-4">
+            <h2 className="section-title text-[1.75rem] sm:text-4xl lg:text-[2.75rem] text-gray-900 mb-4">
               Отзывы
             </h2>
             <div className="flex items-center justify-center gap-3">
